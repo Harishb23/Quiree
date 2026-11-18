@@ -1,0 +1,196 @@
+@use '../../styles/tokens' as *;
+
+.socialList {
+  display: grid;
+  gap: 12px;
+}
+
+.socialRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.socialIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: $violet-200;
+  background: rgba($violet-500, 0.16);
+}
+
+.grow {
+  flex: 1;
+}
+
+.removeBtn {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: $text-muted-dark;
+
+  &:hover {
+    color: #fca5a5;
+    border-color: rgba($red-500, 0.4);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// Repeatable section editor
+.repeatable {
+  display: grid;
+  gap: 14px;
+}
+
+.item {
+  position: relative;
+  padding: 16px;
+  border-radius: $radius-md;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+
+  strong {
+    font-size: 13px;
+    color: $text-muted-dark;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.itemActions {
+  display: flex;
+  gap: 6px;
+}
+
+.itemBtn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  background: transparent;
+  color: $text-muted-dark;
+
+  &:hover:not(:disabled) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.itemBtnDanger:hover:not(:disabled) {
+  color: #fca5a5;
+}
+
+.emptyHint {
+  padding: 16px;
+  border-radius: $radius-md;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  color: $text-muted-dark;
+  font-size: 13.5px;
+  text-align: center;
+}
+
+// Skill tags editor
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px 5px 12px;
+  border-radius: $radius-pill;
+  font-size: 13px;
+  background: rgba($violet-500, 0.2);
+  border: 1px solid rgba($violet-300, 0.3);
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+
+    &:hover {
+      background: rgba($red-500, 0.5);
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+.skillGroup {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: $radius-md;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+
+  h4 {
+    font-size: 13px;
+    color: $violet-200;
+  }
+}
+
+.inlineAdd {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  > :first-child {
+    flex: 2 1 180px;
+  }
+
+  > :nth-child(2) {
+    flex: 1 1 160px;
+  }
+}

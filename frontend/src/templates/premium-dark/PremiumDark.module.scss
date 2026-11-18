@@ -1,0 +1,206 @@
+@use '../../styles/tokens' as *;
+@use '../shared/resume' as r;
+
+$gold: #f2cc7a;
+$gold-2: #d9a441;
+$bg: #07060f;
+
+@include r.resume-slots(
+  (
+    fg: #ece9f7,
+    muted: rgba(226, 222, 245, 0.68),
+    heading: #fff,
+    accent: $gold,
+    accent-2: $violet-400,
+    card-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    card-border: rgba(242, 204, 122, 0.16),
+    card-shadow: (0 24px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06)),
+    tag-bg: rgba($gold, 0.1),
+    tag-fg: $gold,
+    tag-border: rgba($gold, 0.28),
+    line: rgba($gold, 0.2),
+    title-font: $font-serif,
+    title-size: 21px,
+    title-color: #fff,
+    icon-bg: rgba($gold, 0.12),
+    inner-bg: rgba(255, 255, 255, 0.04),
+    inner-border: rgba(255, 255, 255, 0.08),
+  )
+);
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 0 56px;
+  font-family: $font-sans;
+  color: #ece9f7;
+  background:
+    radial-gradient(1000px 600px at 50% -20%, rgba($violet-600, 0.35), transparent 60%),
+    linear-gradient(180deg, #0c0a1c 0%, $bg 60%);
+  overflow: hidden;
+}
+
+.glowA,
+.glowB {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.glowA {
+  width: 420px;
+  height: 420px;
+  top: 120px;
+  left: -120px;
+  background: rgba($gold-2, 0.16);
+}
+
+.glowB {
+  width: 520px;
+  height: 520px;
+  bottom: -160px;
+  right: -140px;
+  background: rgba($violet-500, 0.22);
+}
+
+.container {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  @include down($bp-sm) {
+    padding: 0 16px;
+  }
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 28px;
+  padding: 34px;
+  border-radius: $radius-xl;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba($gold, 0.22);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    padding: 24px 18px;
+  }
+}
+
+.heroIdentity {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+
+  @include down($bp-sm) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.avatarRing {
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, $gold, $gold-2, $violet-400, $gold);
+  box-shadow: 0 0 40px rgba($gold, 0.25);
+}
+
+.heroAvatar {
+  width: 150px;
+  height: 150px;
+  font-size: 46px;
+  border: 4px solid $bg;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: $gold;
+}
+
+.name {
+  margin-top: 6px;
+  font-family: $font-serif;
+  font-size: clamp(32px, 4.6vw, 50px);
+  @include gradient-text(linear-gradient(120deg, #fff 30%, $gold 100%));
+}
+
+.headline {
+  margin-top: 6px;
+  font-size: 17px;
+  color: rgba(236, 233, 247, 0.8);
+}
+
+.heroSocial {
+  margin-top: 16px;
+
+  @include down($bp-sm) {
+    justify-content: center;
+  }
+}
+
+.heroContact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+  padding-left: 28px;
+  border-left: 1px solid rgba($gold, 0.18);
+
+  @include down($bp-md) {
+    padding: 20px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba($gold, 0.18);
+  }
+}
+
+.actions {
+  @include r.actions-row;
+}
+
+.wide {
+  width: 100%;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 22px;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.timelineDot {
+  box-shadow:
+    0 0 0 4px rgba($gold, 0.15),
+    0 0 18px rgba($gold, 0.6);
+}
+
+.socialLink:hover {
+  color: $bg;
+}
+
+.footer {
+  text-align: center;
+}

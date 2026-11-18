@@ -1,0 +1,112 @@
+// Design tokens & mixins shared by every SCSS module.
+// Usage in a module: @use '../../styles/tokens' as *;
+
+$font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+$font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+// Brand palette
+$violet-50: #f4f1ff;
+$violet-100: #e9e3ff;
+$violet-200: #d4c8ff;
+$violet-300: #b6a2ff;
+$violet-400: #9a7dff;
+$violet-500: #7c5cff;
+$violet-600: #6a43f5;
+$violet-700: #5631d6;
+$purple-500: #a855f7;
+$pink-500: #ec4899;
+$cyan-400: #22d3ee;
+$blue-500: #3b82f6;
+$green-500: #22c55e;
+$amber-400: #fbbf24;
+$red-500: #ef4444;
+
+$ink-950: #070513;
+$ink-900: #0b0820;
+$ink-850: #110c2c;
+$ink-800: #171037;
+$ink-700: #221a4d;
+$ink-600: #3a3170;
+
+$gradient-brand: linear-gradient(135deg, $violet-500 0%, $purple-500 100%);
+$gradient-brand-hover: linear-gradient(135deg, $violet-600 0%, #9333ea 100%);
+$gradient-aurora: radial-gradient(1200px 600px at 10% -10%, rgba($violet-500, 0.45), transparent 60%),
+  radial-gradient(900px 500px at 100% 0%, rgba($purple-500, 0.35), transparent 55%),
+  radial-gradient(800px 600px at 50% 120%, rgba($blue-500, 0.25), transparent 60%);
+
+$text-on-dark: #f4f2ff;
+$text-muted-dark: rgba(228, 223, 255, 0.68);
+$text-on-light: #1b1340;
+$text-muted-light: #5d567d;
+
+$radius-sm: 10px;
+$radius-md: 14px;
+$radius-lg: 20px;
+$radius-xl: 28px;
+$radius-pill: 999px;
+
+$shadow-soft: 0 10px 30px -12px rgba(16, 8, 48, 0.45);
+$shadow-glow: 0 12px 40px -10px rgba($violet-500, 0.55);
+$shadow-card-light: 0 18px 50px -24px rgba(40, 20, 120, 0.35);
+
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+// Breakpoints
+$bp-sm: 600px;
+$bp-md: 900px;
+$bp-lg: 1200px;
+
+@mixin up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin down($bp) {
+  @media (max-width: ($bp - 1px)) {
+    @content;
+  }
+}
+
+// Dark frosted glass surface
+@mixin glass-dark($alpha: 0.06, $blur: 18px) {
+  background: linear-gradient(160deg, rgba(255, 255, 255, $alpha + 0.04), rgba(255, 255, 255, $alpha - 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur($blur) saturate(140%);
+  -webkit-backdrop-filter: blur($blur) saturate(140%);
+  box-shadow: $shadow-soft, inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+// Light frosted glass surface
+@mixin glass-light($alpha: 0.6, $blur: 18px) {
+  background: rgba(255, 255, 255, $alpha);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur($blur) saturate(150%);
+  -webkit-backdrop-filter: blur($blur) saturate(150%);
+  box-shadow: $shadow-card-light, inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+@mixin focus-ring($color: $violet-400) {
+  outline: 2px solid $color;
+  outline-offset: 2px;
+}
+
+@mixin gradient-text($gradient: $gradient-brand) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

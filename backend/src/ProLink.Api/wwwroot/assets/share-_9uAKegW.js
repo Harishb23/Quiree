@@ -1,0 +1,6 @@
+import{b as n}from"./index-Bt619y6W.js";/**
+ * @license lucide-react v1.66.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const c={name:"copy",size:24,node:[["rect",{width:"14",height:"14",x:"8",y:"8",rx:"2",ry:"2",key:"17jyea"}],["path",{d:"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2",key:"zix9uf"}]]};c.node;const d=n(c);async function r(o){var a;try{return await navigator.clipboard.writeText(o),!0}catch{const e=document.createElement("textarea");e.value=o,e.setAttribute("readonly",""),e.style.position="fixed",e.style.opacity="0",document.body.appendChild(e),e.select();const t=((a=document.execCommand)==null?void 0:a.call(document,"copy"))??!1;return e.remove(),t}}async function s(o,a,e){if(typeof navigator.share=="function")try{return await navigator.share({url:o,title:a,text:e}),"shared"}catch(t){if((t==null?void 0:t.name)==="AbortError")return"failed"}return await r(o)?"copied":"failed"}function u(o,a){const e=URL.createObjectURL(o),t=document.createElement("a");t.href=e,t.download=a,document.body.appendChild(t),t.click(),t.remove(),setTimeout(()=>URL.revokeObjectURL(e),1e3)}export{d as C,r as c,u as d,s};

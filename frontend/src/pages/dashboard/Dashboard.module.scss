@@ -1,0 +1,289 @@
+@use '../../styles/tokens' as *;
+
+// Shared styles for dashboard pages.
+
+.pageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 26px;
+
+    @include down($bp-sm) {
+      font-size: 22px;
+    }
+  }
+
+  p {
+    margin-top: 4px;
+    color: $text-muted-dark;
+    font-size: 14px;
+  }
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.grid2 {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.formGrid {
+  display: grid;
+  gap: 16px;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.span2 {
+  @include up($bp-sm) {
+    grid-column: 1 / -1;
+  }
+}
+
+.stats {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin-bottom: 20px;
+}
+
+.stat {
+  @include glass-dark(0.05);
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border-radius: $radius-lg;
+  transition:
+    transform 0.25s $ease,
+    border-color 0.25s $ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba($violet-300, 0.35);
+  }
+
+  svg {
+    width: 26px;
+    height: 26px;
+    margin-bottom: 14px;
+  }
+
+  strong {
+    display: block;
+    font-size: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    font-size: 13px;
+    color: $text-muted-dark;
+  }
+}
+
+.statViolet svg {
+  color: $violet-300;
+}
+
+.statGreen svg {
+  color: #4ade80;
+}
+
+.statPink svg {
+  color: #f0abfc;
+}
+
+.statAmber svg {
+  color: $amber-400;
+}
+
+.statCyan svg {
+  color: $cyan-400;
+}
+
+.muted {
+  color: $text-muted-dark;
+  font-size: 13.5px;
+}
+
+.mono {
+  font-family: $font-mono;
+  font-size: 12.5px;
+  word-break: break-all;
+}
+
+.listRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.listRowMain {
+  flex: 1;
+  min-width: 0;
+
+  strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+
+  span {
+    display: block;
+    font-size: 12.5px;
+    color: $text-muted-dark;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.modeIcon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: $violet-200;
+  background: rgba($violet-500, 0.18);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.qrBox {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  padding: 12px;
+  border-radius: $radius-md;
+  background: #fff;
+
+  img {
+    display: block;
+  }
+}
+
+.progressTrack {
+  height: 8px;
+  border-radius: $radius-pill;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: inherit;
+  background: $gradient-brand;
+  transition: width 0.6s $ease;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+
+  th,
+  td {
+    padding: 11px 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    white-space: nowrap;
+  }
+
+  th {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $text-muted-dark;
+  }
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.iconBtn {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: $text-muted-dark;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+
+  &:hover:not(:disabled) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.iconBtnDanger:hover:not(:disabled) {
+  color: #fca5a5;
+  border-color: rgba($red-500, 0.4);
+}
+
+.previewFrame {
+  border-radius: $radius-md;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+}
+
+.cardStage {
+  padding: 20px 0;
+  border-radius: $radius-md;
+  background:
+    radial-gradient(400px 300px at 0% 0%, rgba($violet-300, 0.4), transparent 70%),
+    #efecfa;
+}

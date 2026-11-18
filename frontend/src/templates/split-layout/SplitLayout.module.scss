@@ -1,0 +1,199 @@
+@use '../../styles/tokens' as *;
+@use '../shared/resume' as r;
+
+$indigo: #1e1b4b;
+$accent: #6366f1;
+$teal: #14b8a6;
+$ink: #1e1b3a;
+
+@include r.resume-slots(
+  (
+    fg: $ink,
+    muted: #5b5878,
+    heading: $ink,
+    accent: $accent,
+    accent-2: $teal,
+    card-bg: rgba(255, 255, 255, 0.78),
+    card-border: rgba(99, 102, 241, 0.12),
+    card-shadow: 0 18px 44px -30px rgba(30, 27, 75, 0.45),
+    card-radius: 20px,
+    tag-bg: rgba($accent, 0.09),
+    tag-fg: #3730a3,
+    tag-border: rgba($accent, 0.22),
+    line: rgba($accent, 0.22),
+    icon-bg: rgba($accent, 0.1),
+    inner-bg: #f7f7fd,
+    inner-border: #e6e6f6,
+  )
+);
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(300px, 400px) minmax(0, 1fr);
+  min-height: 100vh;
+  font-family: $font-sans;
+  color: $ink;
+  background:
+    radial-gradient(600px 400px at 100% 0%, rgba($teal, 0.12), transparent 60%),
+    linear-gradient(180deg, #f1f1fb, #e9eaf8);
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ---------- Identity column ----------
+.identity {
+  position: relative;
+  color: #eef0ff;
+  background:
+    radial-gradient(500px 360px at 0% 0%, rgba($accent, 0.55), transparent 70%),
+    radial-gradient(400px 300px at 100% 100%, rgba($teal, 0.35), transparent 70%),
+    $indigo;
+}
+
+.identityInner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 44px 30px;
+  text-align: center;
+
+  @include down($bp-md) {
+    position: static;
+    max-height: none;
+    padding: 36px 18px 30px;
+  }
+
+  .compact & {
+    position: static;
+    max-height: none;
+  }
+}
+
+.idAvatar {
+  width: 170px;
+  height: 170px;
+  font-size: 52px;
+  border: 4px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 0 0 10px rgba(255, 255, 255, 0.08),
+    0 30px 60px -24px rgba(0, 0, 0, 0.6);
+}
+
+.name {
+  margin-top: 6px;
+  font-size: clamp(28px, 3.4vw, 36px);
+  font-weight: 800;
+  color: #fff;
+}
+
+.designation {
+  margin-top: -8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #c7d2fe;
+}
+
+.company {
+  margin-top: -12px;
+  font-size: 14px;
+  color: rgba(238, 240, 255, 0.65);
+}
+
+.actions {
+  @include r.actions-row;
+  justify-content: center;
+}
+
+.idContact {
+  align-self: stretch;
+  padding: 18px;
+  border-radius: 18px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+
+  .contactIcon {
+    background: rgba(255, 255, 255, 0.1);
+    color: #a5f3fc;
+  }
+
+  a.contactValue:hover {
+    color: #a5f3fc;
+  }
+}
+
+.identity .socialLink {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+
+  &:hover {
+    background: $teal;
+  }
+}
+
+.idSkills {
+  align-self: stretch;
+  text-align: left;
+  color: #eef0ff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+
+  .sectionTitle {
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tagGroupTitle {
+    color: rgba(238, 240, 255, 0.6);
+  }
+
+  .tag {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.identity .profileUrl {
+  color: rgba(238, 240, 255, 0.55);
+}
+
+// ---------- Content column ----------
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+  max-width: 900px;
+  padding: 44px 40px 56px;
+
+  @include down($bp-sm) {
+    padding: 22px 14px 40px;
+  }
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.section:hover {
+  transform: translateY(-2px);
+}
+
+.pair:empty {
+  display: none;
+}

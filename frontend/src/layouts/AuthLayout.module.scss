@@ -1,0 +1,126 @@
+@use '../styles/tokens' as *;
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(380px, 0.9fr) 1.1fr;
+  }
+}
+
+.brandPanel {
+  position: relative;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 48px;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(160deg, rgba($violet-600, 0.25), rgba($ink-900, 0.2));
+
+  @include up($bp-md) {
+    display: flex;
+  }
+}
+
+.pitch {
+  position: relative;
+  z-index: 1;
+  max-width: 440px;
+  margin: auto 0;
+
+  h2 {
+    margin: 18px 0 26px;
+    font-size: 34px;
+    line-height: 1.15;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $text-muted-dark;
+
+    svg {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      padding: 8px;
+      border-radius: 12px;
+      color: $violet-200;
+      background: rgba($violet-500, 0.2);
+    }
+  }
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: $radius-pill;
+  font-size: 13px;
+  font-weight: 600;
+  color: $violet-100;
+  background: rgba($violet-500, 0.22);
+  border: 1px solid rgba($violet-300, 0.3);
+}
+
+.glowA,
+.glowB {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.glowA {
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  top: 10%;
+  background: rgba($purple-500, 0.35);
+}
+
+.glowB {
+  width: 260px;
+  height: 260px;
+  left: -60px;
+  bottom: -40px;
+  background: rgba($blue-500, 0.3);
+}
+
+.formPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 16px;
+}
+
+.mobileLogo {
+  @include up($bp-md) {
+    display: none;
+  }
+}
+
+.card {
+  @include glass-dark(0.05);
+  width: 100%;
+  max-width: 460px;
+  padding: 34px 30px;
+  border-radius: $radius-xl;
+
+  @include down($bp-sm) {
+    padding: 26px 18px;
+  }
+}

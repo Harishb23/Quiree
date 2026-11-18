@@ -1,0 +1,222 @@
+@use '../../styles/tokens' as *;
+@use '../shared/resume' as r;
+
+$navy: #0f1f3d;
+$navy-2: #1b3264;
+$steel: #2f6fd6;
+$ink: #14213d;
+$muted: #55627a;
+
+@include r.resume-slots(
+  (
+    fg: $ink,
+    muted: $muted,
+    heading: $ink,
+    accent: $steel,
+    accent-2: #5aa0ff,
+    card-bg: transparent,
+    card-border: transparent,
+    card-shadow: none,
+    card-blur: 0px,
+    card-radius: 0,
+    card-padding: 0,
+    tag-bg: rgba($steel, 0.08),
+    tag-fg: $navy-2,
+    tag-border: rgba($steel, 0.2),
+    line: rgba($steel, 0.25),
+    title-size: 17px,
+    title-color: $navy,
+    title-transform: uppercase,
+    title-spacing: 0.06em,
+    icon-bg: rgba($steel, 0.1),
+    inner-bg: #f6f8fc,
+    inner-border: #e3e9f3,
+  )
+);
+
+.page {
+  min-height: 100vh;
+  padding: 36px 16px 56px;
+  font-family: $font-sans;
+  color: $ink;
+  background:
+    linear-gradient(180deg, #dfe6f3 0, #eef2f8 320px),
+    #eef2f8;
+
+  @include down($bp-sm) {
+    padding: 0;
+  }
+}
+
+.frame {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  max-width: 1160px;
+  margin: 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 40px 80px -40px rgba(15, 31, 61, 0.45);
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    border-radius: 0;
+  }
+}
+
+// ---------- Sidebar (dark) ----------
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: 36px 28px;
+  color: #e7edf8;
+  background:
+    radial-gradient(400px 300px at 0% 0%, rgba(90, 160, 255, 0.25), transparent 70%),
+    linear-gradient(180deg, $navy-2, $navy);
+
+  @include down($bp-sm) {
+    padding: 28px 18px;
+  }
+
+  .section {
+    color: #e7edf8;
+  }
+
+  .sectionTitle,
+  .sideTitle {
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .tagGroupTitle,
+  .eduMeta,
+  .certMeta,
+  .summary {
+    color: rgba(231, 237, 248, 0.7);
+  }
+
+  .tag {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .eduDegree,
+  .certName {
+    color: #fff;
+  }
+
+  .eduInstitution,
+  .certLink {
+    color: #9cc3ff;
+  }
+
+  .eduItem,
+  .certItem {
+    border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .contactIcon {
+    background: rgba(255, 255, 255, 0.1);
+    color: #9cc3ff;
+  }
+
+  a.contactValue:hover {
+    color: #9cc3ff;
+  }
+
+  .socialLink {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.14);
+
+    &:hover {
+      background: $steel;
+    }
+  }
+
+  .profileUrl {
+    color: rgba(231, 237, 248, 0.55);
+  }
+}
+
+.sideAvatar {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto;
+  font-size: 50px;
+  border-radius: 24px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.sideSections {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+// ---------- Main ----------
+.main {
+  min-width: 0;
+}
+
+.header {
+  padding: 44px 44px 30px;
+  background: linear-gradient(180deg, #f3f6fb, #fff);
+  border-bottom: 4px solid $steel;
+
+  @include down($bp-sm) {
+    padding: 28px 18px 22px;
+  }
+}
+
+.name {
+  font-size: clamp(30px, 4.5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: $navy;
+}
+
+.designation {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: $steel;
+}
+
+.company {
+  font-size: 15px;
+  color: $muted;
+}
+
+.actions {
+  @include r.actions-row;
+  margin-top: 20px;
+}
+
+.mainSections {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding: 34px 44px 44px;
+
+  @include down($bp-sm) {
+    padding: 24px 18px 32px;
+  }
+
+  .sectionTitle {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e3e9f3;
+  }
+}
+
+.timelineDot {
+  border-radius: 3px;
+}

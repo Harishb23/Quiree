@@ -1,0 +1,290 @@
+@use '../../styles/tokens' as *;
+@use '../shared/resume' as r;
+
+$cyan: #22d3ee;
+$magenta: #e879f9;
+$lime: #a3e635;
+$bg: #04050b;
+$fg: #d8f6ff;
+
+@include r.resume-slots(
+  (
+    fg: $fg,
+    muted: rgba(200, 230, 245, 0.68),
+    heading: #fff,
+    accent: $cyan,
+    accent-2: $magenta,
+    card-bg: rgba(10, 18, 32, 0.66),
+    card-border: rgba($cyan, 0.22),
+    card-shadow: (0 0 0 1px rgba($cyan, 0.04), 0 0 40px -18px rgba($cyan, 0.45)),
+    card-blur: 10px,
+    card-radius: 14px,
+    tag-bg: rgba($cyan, 0.08),
+    tag-fg: $cyan,
+    tag-border: rgba($cyan, 0.35),
+    line: rgba($magenta, 0.35),
+    title-font: $font-mono,
+    title-size: 17px,
+    title-color: #fff,
+    icon-bg: rgba($cyan, 0.1),
+    inner-bg: rgba(255, 255, 255, 0.025),
+    inner-border: rgba($magenta, 0.2),
+  )
+);
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 0 56px;
+  font-family: $font-sans;
+  color: $fg;
+  background:
+    radial-gradient(800px 500px at 90% -10%, rgba($magenta, 0.18), transparent 60%),
+    radial-gradient(700px 500px at 0% 40%, rgba($cyan, 0.14), transparent 60%),
+    $bg;
+  overflow: hidden;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba($cyan, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($cyan, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  @include down($bp-sm) {
+    padding: 0 14px;
+  }
+}
+
+// ---------- Terminal hero ----------
+.terminal {
+  border-radius: 16px;
+  background: rgba(8, 14, 26, 0.82);
+  border: 1px solid rgba($cyan, 0.35);
+  box-shadow:
+    0 0 0 1px rgba($magenta, 0.1),
+    0 0 60px -20px rgba($cyan, 0.55);
+  overflow: hidden;
+}
+
+.termBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba($cyan, 0.15);
+
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ff5f57;
+
+    &:nth-child(2) {
+      background: #febc2e;
+    }
+
+    &:nth-child(3) {
+      background: #28c840;
+    }
+  }
+
+  em {
+    margin-left: 10px;
+    font-family: $font-mono;
+    font-style: normal;
+    font-size: 12.5px;
+    color: rgba($fg, 0.5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.termBody {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 30px;
+  padding: 30px;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 24px 16px;
+  }
+}
+
+.avatarWrap {
+  padding: 3px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, $cyan, $magenta);
+  box-shadow: 0 0 30px rgba($cyan, 0.45);
+}
+
+.termAvatar {
+  width: 140px;
+  height: 140px;
+  font-family: $font-mono;
+  font-size: 40px;
+  border-radius: 18px;
+  border: 3px solid $bg;
+}
+
+.prompt {
+  font-family: $font-mono;
+  font-size: 13px;
+  color: $lime;
+}
+
+.name {
+  margin-top: 6px;
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow:
+    0 0 18px rgba($cyan, 0.55),
+    0 0 2px rgba($cyan, 0.9);
+}
+
+.role {
+  margin-top: 6px;
+  font-family: $font-mono;
+  font-size: 16px;
+  color: $cyan;
+
+  span {
+    color: $magenta;
+  }
+}
+
+.company {
+  margin-top: 2px;
+  font-family: $font-mono;
+  font-size: 14px;
+  color: rgba($fg, 0.7);
+}
+
+.termSocial {
+  margin-top: 16px;
+
+  @include down($bp-md) {
+    justify-content: center;
+  }
+}
+
+.termContact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 26px;
+  border-left: 1px dashed rgba($cyan, 0.25);
+
+  @include down($bp-md) {
+    align-self: stretch;
+    padding: 18px 0 0;
+    border-left: 0;
+    border-top: 1px dashed rgba($cyan, 0.25);
+    text-align: left;
+  }
+}
+
+.contactValue {
+  font-family: $font-mono;
+  font-size: 13px;
+}
+
+.actions {
+  @include r.actions-row;
+}
+
+// ---------- Body ----------
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 22px;
+
+  @include down($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.sectionTitle > span:last-child::before {
+  content: '// ';
+  color: $magenta;
+}
+
+.section:hover {
+  border-color: rgba($cyan, 0.5);
+}
+
+.timelineDot {
+  border-radius: 3px;
+  background: $bg;
+  border: 2px solid $cyan;
+  box-shadow: 0 0 12px rgba($cyan, 0.8);
+}
+
+.timelineCompany {
+  font-family: $font-mono;
+  font-size: 13.5px;
+  color: $magenta;
+}
+
+.tag,
+.projectTechTag {
+  font-family: $font-mono;
+  font-weight: 500;
+  border-radius: 6px;
+
+  &:hover {
+    box-shadow: 0 0 14px rgba($cyan, 0.5);
+  }
+}
+
+.barLabel {
+  font-family: $font-mono;
+}
+
+.barFill {
+  box-shadow: 0 0 10px rgba($cyan, 0.7);
+}
+
+.projectOutcome {
+  font-family: $font-mono;
+  border-left-color: $lime;
+}
+
+.socialLink:hover {
+  color: $bg;
+  box-shadow: 0 0 16px rgba($cyan, 0.7);
+}
+
+.footer {
+  font-family: $font-mono;
+  text-align: center;
+}

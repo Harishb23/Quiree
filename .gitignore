@@ -1,0 +1,11 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+backend/src/ProLink.Api/wwwroot/uploads/
+# Node
+node_modules/
+dist/
+*.local
+.env.local

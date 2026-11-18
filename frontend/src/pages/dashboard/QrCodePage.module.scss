@@ -1,0 +1,124 @@
+@use '../../styles/tokens' as *;
+
+.qrCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.tile {
+  display: block;
+  width: min(100%, 180px);
+  height: auto;
+  margin: 4px 0 12px;
+  border-radius: 20px;
+  box-shadow: $shadow-glow;
+}
+
+.branded {
+  display: block;
+  width: min(100%, 340px);
+  height: auto;
+  border-radius: 22px;
+  box-shadow: $shadow-glow;
+}
+
+.qrFrame {
+  display: grid;
+  place-items: center;
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  padding: 18px;
+  border-radius: $radius-lg;
+  background: #fff;
+  box-shadow: $shadow-glow;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  p {
+    color: $text-on-light;
+  }
+}
+
+.url {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: #4ade80;
+  }
+}
+
+.steps {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  color: $text-muted-dark;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  margin: 0 0 16px;
+  font-size: 13.5px;
+
+  dt {
+    color: $text-muted-dark;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+@media print {
+  :global(body) {
+    background: #fff !important;
+  }
+
+  .qrCard {
+    box-shadow: none;
+    border: 0;
+    background: none;
+  }
+
+  .buttons {
+    display: none;
+  }
+}

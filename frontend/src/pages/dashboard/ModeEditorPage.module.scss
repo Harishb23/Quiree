@@ -1,0 +1,81 @@
+@use '../../styles/tokens' as *;
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $violet-300;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.layout {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-lg) {
+    grid-template-columns: 190px minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.sectionNav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+
+  a {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border-radius: $radius-sm;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-muted-dark;
+    white-space: nowrap;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  @include up($bp-lg) {
+    position: sticky;
+    top: 86px;
+    flex-direction: column;
+    overflow: visible;
+  }
+}
+
+.section {
+  scroll-margin-top: 86px;
+}
+
+.publishRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: $radius-md;
+  background: rgba($violet-500, 0.08);
+  border: 1px solid rgba($violet-300, 0.18);
+
+  strong {
+    display: block;
+    font-size: 14px;
+  }
+
+  span {
+    font-size: 13px;
+    color: $text-muted-dark;
+  }
+}

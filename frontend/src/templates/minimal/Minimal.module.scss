@@ -1,0 +1,219 @@
+@use '../../styles/tokens' as *;
+@use '../shared/resume' as r;
+
+$ink: #16141f;
+$muted: #5f5b70;
+$accent: #4f3bd6;
+
+@include r.resume-slots(
+  (
+    fg: $ink,
+    muted: $muted,
+    heading: $ink,
+    accent: $accent,
+    accent-2: $accent,
+    card-bg: transparent,
+    card-border: transparent,
+    card-shadow: none,
+    card-blur: 0px,
+    card-radius: 0,
+    card-padding: 0,
+    tag-bg: #f3f2f7,
+    tag-fg: $ink,
+    tag-border: #e6e4ee,
+    line: #e3e1ea,
+    title-size: 12.5px,
+    title-color: $accent,
+    title-transform: uppercase,
+    title-spacing: 0.16em,
+    icon-bg: #f1effa,
+    inner-bg: #fafafc,
+    inner-border: #ebe9f1,
+  )
+);
+
+.page {
+  min-height: 100vh;
+  padding: 40px 16px 56px;
+  font-family: $font-sans;
+  color: $ink;
+  background: #f4f4f7;
+
+  @include down($bp-sm) {
+    padding: 0;
+  }
+}
+
+.sheet {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 56px 60px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 30px 70px -40px rgba(20, 16, 40, 0.35);
+
+  @include down($bp-sm) {
+    padding: 28px 18px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 28px;
+  border-bottom: 2px solid $ink;
+
+  @include down($bp-sm) {
+    flex-direction: column-reverse;
+  }
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.name {
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.headline {
+  margin-top: -8px;
+  font-size: 17px;
+  color: $muted;
+}
+
+.headerAvatar {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  font-size: 34px;
+  border-radius: 12px;
+  filter: grayscale(0.15);
+}
+
+.contactList {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+
+.contactIcon {
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+.contactValue {
+  font-size: 13.5px;
+}
+
+.socialLink {
+  height: 32px;
+  border-radius: 6px;
+  font-size: 12.5px;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.actions {
+  @include r.actions-row;
+  padding: 18px 0;
+  border-bottom: 1px solid #e3e1ea;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid #ecebf1;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @include down($bp-sm) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 20px 0;
+  }
+}
+
+.sectionTitle {
+  align-self: start;
+  margin: 3px 0 0;
+}
+
+.timeline {
+  padding-left: 0;
+
+  &::before {
+    display: none;
+  }
+}
+
+.timelineDot {
+  display: none;
+}
+
+.timelineCompany {
+  color: $muted;
+}
+
+.tag {
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-weight: 500;
+}
+
+.projectCard,
+.serviceCard {
+  &:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.eduItem,
+.certItem,
+.achItem {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.footer {
+  padding-top: 24px;
+  text-align: right;
+}
+
+@media print {
+  .page {
+    padding: 0;
+    background: #fff;
+  }
+
+  .sheet {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .actions {
+    display: none;
+  }
+}

@@ -1,0 +1,112 @@
+@use '../../styles/tokens' as *;
+
+.modePicker {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(260px, 360px) 1fr;
+    align-items: end;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+}
+
+.card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.25s $ease,
+    border-color 0.25s $ease,
+    box-shadow 0.25s $ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba($violet-300, 0.4);
+  }
+}
+
+.selected {
+  border-color: $violet-400;
+  box-shadow:
+    0 0 0 2px rgba($violet-500, 0.55),
+    $shadow-glow;
+}
+
+.thumb {
+  position: relative;
+  height: 230px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.thumbPlaceholder {
+  height: 100%;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.03) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.selectedMark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  background: $gradient-brand;
+  box-shadow: $shadow-glow;
+
+  svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  padding: 16px;
+
+  p {
+    flex: 1;
+    font-size: 13px;
+    color: $text-muted-dark;
+  }
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  h3 {
+    font-size: 15px;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}

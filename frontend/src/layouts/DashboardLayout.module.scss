@@ -1,0 +1,220 @@
+@use '../styles/tokens' as *;
+
+$sidebar-width: 256px;
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  width: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  background: linear-gradient(180deg, rgba(23, 16, 55, 0.92), rgba(11, 8, 32, 0.96));
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  transform: translateX(-100%);
+  transition: transform 0.3s $ease;
+
+  @include up($bp-md) {
+    transform: none;
+  }
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(5, 3, 18, 0.6);
+
+  @include up($bp-md) {
+    display: none;
+  }
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 22px;
+
+  .iconButton {
+    @include up($bp-md) {
+      display: none;
+    }
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  background: transparent;
+  color: $text-muted-dark;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  transition:
+    background 0.2s $ease,
+    color 0.2s $ease,
+    border-color 0.2s $ease;
+
+  svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.active {
+  color: #fff;
+  background: linear-gradient(135deg, rgba($violet-500, 0.5), rgba($purple-500, 0.35));
+  border-color: rgba($violet-300, 0.35);
+  box-shadow: 0 10px 30px -14px rgba($violet-500, 0.8);
+}
+
+.sidebarFooter {
+  display: grid;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.publicLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: $radius-md;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $violet-200;
+  background: rgba($violet-500, 0.14);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: rgba($violet-500, 0.24);
+  }
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+
+  @include up($bp-md) {
+    margin-left: $sidebar-width;
+  }
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 66px;
+  padding: 0 24px;
+  background: rgba(11, 8, 32, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+
+  @include down($bp-sm) {
+    padding: 0 16px;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: $text-on-dark;
+
+  svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+.menuButton {
+  @include up($bp-md) {
+    display: none;
+  }
+}
+
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+
+  strong {
+    font-size: 14px;
+  }
+
+  span {
+    font-size: 12px;
+    color: $text-muted-dark;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
+  @include down($bp-sm) {
+    display: none;
+  }
+}
+
+.content {
+  padding: 28px 24px 60px;
+  max-width: 1280px;
+
+  @include down($bp-sm) {
+    padding: 20px 16px 48px;
+  }
+}

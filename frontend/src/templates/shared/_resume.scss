@@ -1,0 +1,531 @@
+@use 'sass:map';
+@use '../../styles/tokens' as *;
+
+// Shared resume slot styles. Each template includes `resume-slots($theme)` at the root of its
+// module with its own palette, then layers its distinctive layout / hero on top.
+
+$default-theme: (
+  fg: $text-on-light,
+  muted: $text-muted-light,
+  heading: $text-on-light,
+  accent: $violet-500,
+  accent-2: $purple-500,
+  card-bg: rgba(255, 255, 255, 0.6),
+  card-border: rgba(255, 255, 255, 0.75),
+  card-shadow: $shadow-card-light,
+  card-blur: 18px,
+  card-radius: $radius-lg,
+  card-padding: 24px,
+  tag-bg: rgba($violet-500, 0.1),
+  tag-fg: $violet-700,
+  tag-border: rgba($violet-500, 0.22),
+  line: rgba($violet-500, 0.25),
+  title-font: $font-sans,
+  title-size: 18px,
+  title-color: $text-on-light,
+  title-transform: none,
+  title-spacing: -0.01em,
+  icon-bg: rgba($violet-500, 0.12),
+  inner-bg: rgba(255, 255, 255, 0.55),
+  inner-border: rgba($violet-500, 0.14),
+);
+
+@function t($theme, $key) {
+  @return map.get(map.merge($default-theme, $theme), $key);
+}
+
+@mixin resume-slots($theme: ()) {
+  .section {
+    position: relative;
+    padding: t($theme, card-padding);
+    border-radius: t($theme, card-radius);
+    background: t($theme, card-bg);
+    border: 1px solid t($theme, card-border);
+    box-shadow: t($theme, card-shadow);
+    backdrop-filter: blur(t($theme, card-blur)) saturate(150%);
+    -webkit-backdrop-filter: blur(t($theme, card-blur)) saturate(150%);
+    color: t($theme, fg);
+    min-width: 0;
+    transition:
+      transform 0.35s $ease,
+      box-shadow 0.35s $ease;
+
+    @include down($bp-sm) {
+      padding: 18px;
+    }
+  }
+
+  .sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-family: t($theme, title-font);
+    font-size: t($theme, title-size);
+    color: t($theme, title-color);
+    text-transform: t($theme, title-transform);
+    letter-spacing: t($theme, title-spacing);
+  }
+
+  .sectionIcon {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: t($theme, icon-bg);
+    color: t($theme, accent);
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+  }
+
+  .summary,
+  .customText {
+    color: t($theme, muted);
+    white-space: pre-line;
+    line-height: 1.7;
+  }
+
+  .summary + .summary {
+    margin-top: 12px;
+  }
+
+  // ---------- Skills ----------
+  .tagGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tagGroupTitle {
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: t($theme, muted);
+  }
+
+  .tagList,
+  .projectTech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tag {
+    padding: 6px 13px;
+    border-radius: $radius-pill;
+    font-size: 13px;
+    font-weight: 600;
+    color: t($theme, tag-fg);
+    background: t($theme, tag-bg);
+    border: 1px solid t($theme, tag-border);
+    transition:
+      transform 0.25s $ease,
+      background 0.25s $ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .barList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .bar {
+    display: grid;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .barTrack {
+    display: block;
+    height: 6px;
+    border-radius: $radius-pill;
+    background: t($theme, tag-bg);
+    overflow: hidden;
+  }
+
+  .barFill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, t($theme, accent), t($theme, accent-2));
+  }
+
+  // ---------- Timeline ----------
+  .timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 26px;
+    list-style: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, t($theme, accent), t($theme, line));
+    }
+  }
+
+  .timelineItem {
+    position: relative;
+
+    & + & {
+      margin-top: 22px;
+    }
+  }
+
+  .timelineDot {
+    position: absolute;
+    left: -26px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: t($theme, accent);
+    box-shadow: 0 0 0 4px t($theme, icon-bg);
+  }
+
+  .timelineTitle {
+    font-size: 16px;
+    color: t($theme, heading);
+  }
+
+  .timelineCompany {
+    margin-top: 2px;
+    font-weight: 600;
+    color: t($theme, accent);
+  }
+
+  .timelineMeta,
+  .eduMeta,
+  .certMeta,
+  .achMeta {
+    margin-top: 2px;
+    font-size: 13px;
+    color: t($theme, muted);
+  }
+
+  .timelineText,
+  .eduText,
+  .achText,
+  .serviceText,
+  .projectText {
+    margin-top: 8px;
+    color: t($theme, muted);
+    white-space: pre-line;
+  }
+
+  .bullets {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: t($theme, muted);
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    li::marker {
+      color: t($theme, accent);
+    }
+  }
+
+  // ---------- Projects ----------
+  .projectGrid,
+  .serviceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .projectCard,
+  .serviceCard {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 18px;
+    border-radius: $radius-md;
+    background: t($theme, inner-bg);
+    border: 1px solid t($theme, inner-border);
+    transition:
+      transform 0.3s $ease,
+      box-shadow 0.3s $ease,
+      border-color 0.3s $ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: t($theme, accent);
+      box-shadow: 0 14px 30px -18px t($theme, accent);
+    }
+  }
+
+  .projectTitle,
+  .serviceName {
+    font-size: 15.5px;
+    color: t($theme, heading);
+  }
+
+  .projectRole {
+    font-size: 13px;
+    font-weight: 600;
+    color: t($theme, accent);
+  }
+
+  .projectOutcome {
+    margin-top: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: t($theme, fg);
+    background: t($theme, tag-bg);
+    border-left: 3px solid t($theme, accent);
+  }
+
+  .projectTech {
+    margin-top: 12px;
+    gap: 6px;
+  }
+
+  .projectTechTag {
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: t($theme, tag-fg);
+    background: t($theme, tag-bg);
+  }
+
+  .projectLink,
+  .certLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: t($theme, accent);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // ---------- Education / Certifications / Achievements ----------
+  .eduList,
+  .certList,
+  .achList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .eduItem,
+  .certItem,
+  .achItem {
+    padding-left: 14px;
+    border-left: 2px solid t($theme, line);
+  }
+
+  .eduDegree,
+  .certName,
+  .achTitle {
+    font-size: 15px;
+    color: t($theme, heading);
+  }
+
+  .eduInstitution {
+    margin-top: 2px;
+    font-weight: 600;
+    color: t($theme, accent);
+  }
+
+  // ---------- Details ----------
+  .detailList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 0 0 14px;
+  }
+
+  .detailItem {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: t($theme, inner-bg);
+    border: 1px solid t($theme, inner-border);
+  }
+
+  .detailLabel {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: t($theme, muted);
+  }
+
+  .detailValue {
+    margin: 2px 0 0;
+    font-weight: 600;
+    color: t($theme, heading);
+    word-break: break-word;
+
+    a {
+      color: t($theme, accent);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // ---------- Contact / Social ----------
+  .contactList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contactItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .contactIcon {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: t($theme, icon-bg);
+    color: t($theme, accent);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .contactValue {
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  a.contactValue:hover {
+    color: t($theme, accent);
+  }
+
+  .socialList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .socialLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 11px;
+    border-radius: 12px;
+    color: t($theme, accent);
+    background: t($theme, icon-bg);
+    border: 1px solid t($theme, inner-border);
+    font-size: 13px;
+    font-weight: 600;
+    transition:
+      transform 0.25s $ease,
+      background 0.25s $ease,
+      color 0.25s $ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      color: #fff;
+      background: t($theme, accent);
+    }
+  }
+
+  .avatar {
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .avatarFallback {
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg, t($theme, accent), t($theme, accent-2));
+  }
+
+  .profileUrl {
+    font-size: 12.5px;
+    color: t($theme, muted);
+    overflow-wrap: anywhere;
+
+    &:hover {
+      color: t($theme, accent);
+    }
+  }
+
+  // Thumbnail mode: keep it static and cheap to paint.
+  .compact,
+  .compact * {
+    animation: none !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+// Common actions container: viewer buttons wrap nicely on small screens.
+@mixin actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  &:empty {
+    display: none;
+  }
+}

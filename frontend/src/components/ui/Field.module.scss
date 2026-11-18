@@ -1,0 +1,114 @@
+@use '../../styles/tokens' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-muted-dark;
+}
+
+.required {
+  color: $violet-300;
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 14px;
+  display: inline-flex;
+  color: $text-muted-dark;
+  pointer-events: none;
+
+  svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: $radius-md;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: $text-on-dark;
+  font-size: 14px;
+  transition:
+    border-color 0.2s $ease,
+    background 0.2s $ease,
+    box-shadow 0.2s $ease;
+
+  &::placeholder {
+    color: rgba(228, 223, 255, 0.38);
+  }
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.24);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $violet-400;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba($violet-500, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.withIcon {
+  padding-left: 42px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+}
+
+.select {
+  appearance: none;
+  padding-right: 38px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, $violet-200 50%), linear-gradient(135deg, $violet-200 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) 52%,
+    calc(100% - 15px) 52%;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+
+  option {
+    color: $text-on-light;
+    background: #fff;
+  }
+}
+
+.hint {
+  font-size: 12px;
+  color: rgba(228, 223, 255, 0.5);
+}
+
+.error {
+  font-size: 12px;
+  color: #fca5a5;
+}
+
+.hasError .input {
+  border-color: rgba(248, 113, 113, 0.7);
+}
