@@ -1,0 +1,1008 @@
+@use '../../../styles/tokens' as *;
+
+// ===========================================================================
+// Form primitives
+// ===========================================================================
+
+.stack {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.stackTight {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.grid2 {
+  display: grid;
+  gap: 16px;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.span2 {
+  @include up($bp-sm) {
+    grid-column: 1 / -1;
+  }
+}
+
+.fieldset {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $purple-deep;
+}
+
+.required {
+  color: $gold-premium;
+}
+
+.error,
+.rowError {
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  color: $danger;
+}
+
+.rowError {
+  grid-column: 1 / -1;
+}
+
+.emptyHint {
+  padding: 14px;
+  border: 1px dashed $border-strong;
+  border-radius: $radius-md;
+  background: $bg-secondary;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  text-align: center;
+}
+
+.checkLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  font-size: $fs-sm;
+  color: $text-secondary;
+  cursor: pointer;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  > div:first-child {
+    flex: 1 1 220px;
+    min-width: 0;
+  }
+
+  h3 {
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-royal;
+  }
+
+  p {
+    margin-top: 2px;
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}
+
+.iconRemove {
+  @include icon-button(40px);
+  color: $text-secondary;
+
+  &:hover:not(:disabled) {
+    color: $danger;
+    background: $danger-bg;
+    border-color: $danger-border;
+  }
+}
+
+// ===========================================================================
+// Category selector
+// ===========================================================================
+
+.categoryGrid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+}
+
+.categoryCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  color: $text-primary;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  line-height: 1.3;
+  text-align: left;
+  transition:
+    border-color $dur-fast $ease,
+    background $dur-fast $ease,
+    box-shadow $dur-fast $ease;
+
+  &:hover {
+    border-color: $border-strong;
+    background: $bg-secondary;
+  }
+}
+
+.categoryIcon {
+  @include icon-chip(34px, 17px);
+}
+
+.categoryActive,
+.categoryActive:hover {
+  border-color: $purple-primary;
+  background: $purple-light;
+  box-shadow: 0 0 0 1px $purple-primary;
+  color: $purple-royal;
+  font-weight: $fw-semibold;
+
+  .categoryIcon {
+    color: $text-white;
+    background: $purple-primary;
+  }
+}
+
+.uploadRow {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+
+  @include up($bp-sm) {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+}
+
+// ===========================================================================
+// Address
+// ===========================================================================
+
+.coordBox {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-secondary;
+}
+
+// ===========================================================================
+// Working hours
+// ===========================================================================
+
+.hoursList,
+.specialList,
+.socialList,
+.sectionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.hoursRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+}
+
+.hoursDay {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  font-weight: $fw-semibold;
+  color: $text-primary;
+}
+
+.closedTag {
+  font-size: $fs-sm;
+  color: $text-muted;
+}
+
+.timeRange {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: $text-muted;
+}
+
+.timeInput {
+  min-height: 40px;
+  min-width: 0;
+  padding: 0 10px;
+  border: 1px solid $border;
+  border-radius: $radius-control;
+  background: $bg-primary;
+  color: $text-primary;
+  font-size: $fs-sm;
+
+  &:focus {
+    outline: none;
+    border-color: $purple-primary;
+    box-shadow: $shadow-focus;
+  }
+}
+
+.specialRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+
+  .rowError {
+    flex-basis: 100%;
+  }
+}
+
+.noteInput {
+  flex: 1 1 140px;
+}
+
+// ===========================================================================
+// Operations
+// ===========================================================================
+
+.toggleRows {
+  display: grid;
+  gap: 8px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+
+  strong {
+    display: block;
+    font-size: $fs-base;
+    font-weight: $fw-semibold;
+    color: $text-primary;
+  }
+
+  span {
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid $border;
+  border-radius: $radius-pill;
+  background: $bg-primary;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  transition:
+    border-color $dur-fast $ease,
+    background $dur-fast $ease,
+    color $dur-fast $ease;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover {
+    border-color: $border-strong;
+    color: $purple-royal;
+  }
+}
+
+.chipOn,
+.chipOn:hover {
+  border-color: $purple-primary;
+  background: $purple-light;
+  color: $purple-royal;
+  font-weight: $fw-semibold;
+}
+
+// ===========================================================================
+// Online presence
+// ===========================================================================
+
+.socialRow {
+  display: grid;
+  gap: 10px;
+  align-items: end;
+  padding: 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-secondary;
+
+  @include up($bp-md) {
+    grid-template-columns: 180px minmax(0, 1fr) auto;
+
+    &:has(> :nth-child(4)) {
+      grid-template-columns: 170px 150px minmax(0, 1fr) auto;
+    }
+  }
+}
+
+.socialUrl {
+  min-width: 0;
+}
+
+// ===========================================================================
+// Customise
+// ===========================================================================
+
+.themeGrid {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
+}
+
+.themeCard {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  text-align: left;
+  transition:
+    border-color $dur-fast $ease,
+    box-shadow $dur-fast $ease;
+
+  strong {
+    margin-top: 6px;
+    font-size: $fs-base;
+    color: $text-primary;
+  }
+
+  > span:last-child {
+    font-size: $fs-xs;
+    color: $text-secondary;
+  }
+
+  &:hover {
+    border-color: $border-strong;
+  }
+}
+
+.themeActive,
+.themeActive:hover {
+  border-color: $purple-primary;
+  box-shadow: 0 0 0 1px $purple-primary;
+}
+
+.themeSwatch {
+  display: grid;
+  grid-template-rows: 18px 1fr;
+  gap: 4px;
+  height: 64px;
+  padding: 6px;
+  border-radius: $radius-sm;
+  background: $bg-secondary;
+
+  i {
+    display: block;
+    border-radius: 4px;
+    background: $bg-primary;
+  }
+
+  i:first-child {
+    background: var(--brand);
+  }
+
+  i:nth-child(2) {
+    width: 60%;
+  }
+
+  i:last-child {
+    display: none;
+  }
+}
+
+.theme_elegant {
+  background: #faf6ef;
+
+  i:first-child {
+    height: 6px;
+    margin-top: 6px;
+    background: var(--brand);
+  }
+}
+
+.theme_bold {
+  grid-template-rows: 28px 1fr;
+  background: var(--brand);
+
+  i:first-child {
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.theme_minimal {
+  background: $bg-primary;
+  border: 1px solid $border;
+
+  i:first-child {
+    height: 4px;
+    width: 40%;
+  }
+}
+
+.colorRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+  margin-top: 10px;
+
+  > :nth-child(2) {
+    width: 140px;
+  }
+}
+
+.colorPicker {
+  width: 52px;
+  height: 42px;
+  padding: 3px;
+  border: 1px solid $border;
+  border-radius: $radius-control;
+  background: $bg-primary;
+  cursor: pointer;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 2px solid $bg-primary;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px $border;
+  transition: transform $dur-fast $ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+.swatchOn {
+  box-shadow: 0 0 0 2px $purple-deep;
+}
+
+.sectionList {
+  margin-top: 10px;
+}
+
+.sectionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+}
+
+.sectionOff {
+  background: $bg-secondary;
+
+  .sectionName {
+    color: $text-muted;
+  }
+}
+
+.sectionName {
+  flex: 1;
+  min-width: 0;
+  font-weight: $fw-medium;
+  color: $text-primary;
+}
+
+.sectionMove {
+  display: flex;
+  gap: 4px;
+}
+
+// ===========================================================================
+// Live preview
+// ===========================================================================
+
+.previewFrame {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid $border;
+  border-radius: 36px;
+  background: $bg-soft;
+  box-shadow: $shadow-md;
+}
+
+.previewScreen {
+  height: min(720px, 75vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 28px;
+  background: $bg-primary;
+}
+
+// ===========================================================================
+// Wizard page
+// ===========================================================================
+
+.wizard {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+  padding-bottom: 88px; // room for the sticky action bar on phones
+
+  @include up($bp-md) {
+    padding-bottom: 0;
+  }
+}
+
+.wizardWithPreview {
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+}
+
+.previewPanel {
+  display: none;
+
+  @include up($bp-lg) {
+    display: block;
+    position: sticky;
+    top: 88px;
+  }
+}
+
+.previewButton {
+  @include up($bp-lg) {
+    &.hideOnWide {
+      display: none;
+    }
+  }
+}
+
+.stepper {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.stepItem {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.stepButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  text-align: left;
+  transition:
+    border-color $dur-fast $ease,
+    background $dur-fast $ease;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: $border-strong;
+  }
+
+  span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @include down($bp-md) {
+    justify-content: center;
+
+    span:last-child {
+      display: none;
+    }
+  }
+}
+
+.stepNumber {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $bg-soft;
+  color: $text-secondary;
+  font-size: $fs-sm;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.stepDone .stepNumber {
+  background: $purple-light;
+  color: $purple-primary;
+}
+
+.stepCurrent {
+  border-color: $purple-primary;
+  background: $purple-light;
+  color: $purple-royal;
+
+  .stepNumber {
+    background: $purple-primary;
+    color: $text-white;
+  }
+}
+
+.stepCaption {
+  margin-bottom: 18px;
+
+  h2 {
+    font-size: $fs-xl;
+    color: $purple-deep;
+  }
+
+  p {
+    margin-top: 2px;
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid $border;
+
+  .spacer {
+    flex: 1;
+  }
+
+  // Sticky bottom bar on phones so the main action is always reachable.
+  @include down($bp-md) {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 30;
+    margin: 0;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border-top: 1px solid $border;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -8px 24px -16px rgba(69, 34, 105, 0.35);
+
+    .spacer {
+      display: none;
+    }
+
+    > * {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+// ===========================================================================
+// Business list
+// ===========================================================================
+
+.listGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.businessCard {
+  @include card-hover;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.businessTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+
+  h3 {
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  p {
+    font-size: $fs-sm;
+    color: $text-secondary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  > div {
+    min-width: 0;
+  }
+}
+
+.businessLogo {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid $border;
+  object-fit: cover;
+  background: $bg-primary;
+}
+
+.businessIcon {
+  @include icon-chip(52px, 22px);
+  border-radius: 14px;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid $border;
+}
+
+.intro {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.introCard {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  background: $bg-primary;
+
+  > span {
+    @include icon-chip(44px, 20px);
+  }
+
+  h3 {
+    font-size: $fs-md;
+    color: $purple-royal;
+  }
+
+  p {
+    margin-top: 4px;
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}
+
+.introGold > span {
+  color: $gold-dark;
+  background: $gold-light;
+}
+
+// ===========================================================================
+// Settings
+// ===========================================================================
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.linkPreview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid $border;
+  border-radius: $radius-control;
+  background: $bg-secondary;
+  font-family: $font-mono;
+  font-size: 12.5px;
+  color: $purple-royal;
+  word-break: break-all;
+}
+
+.slugForm {
+  display: grid;
+  gap: 10px;
+
+  @include up($bp-sm) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+}
+
+.memberList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid $border;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+.memberInfo {
+  flex: 1 1 200px;
+  min-width: 0;
+
+  strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: $fs-base;
+    color: $text-primary;
+  }
+
+  span {
+    display: block;
+    font-size: $fs-sm;
+    color: $text-secondary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.memberControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  select {
+    min-height: 38px;
+    padding: 0 10px;
+    border: 1px solid $border;
+    border-radius: $radius-control;
+    background: $bg-primary;
+    color: $text-primary;
+    font-size: $fs-sm;
+  }
+}
+
+.addMember {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid $border;
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(0, 1fr) 180px auto;
+    align-items: end;
+  }
+}
+
+.danger {
+  border-color: $danger-border;
+}
+
+.dangerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  p {
+    max-width: 520px;
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}

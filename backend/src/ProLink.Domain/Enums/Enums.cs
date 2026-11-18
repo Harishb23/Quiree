@@ -6,6 +6,13 @@ public enum UserRole
     Admin = 1
 }
 
+/// <summary>Chosen at registration. A login is either a personal identity or a business owner/team member.</summary>
+public enum AccountType
+{
+    Personal = 0,
+    Business = 1
+}
+
 public enum ModeType
 {
     General = 0,

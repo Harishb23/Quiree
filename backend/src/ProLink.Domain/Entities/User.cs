@@ -10,6 +10,8 @@ public class User : BaseEntity
     public string? PasswordHash { get; set; }
     public string? GoogleSubject { get; set; }
     public UserRole Role { get; set; } = UserRole.User;
+    /// <summary>Personal accounts use profile modes; business accounts manage business profiles. Never both.</summary>
+    public AccountType AccountType { get; set; } = AccountType.Personal;
 
     /// <summary>Permanent, immutable public identifier used in /p/{PublicSlug}.</summary>
     public string PublicSlug { get; set; } = string.Empty;

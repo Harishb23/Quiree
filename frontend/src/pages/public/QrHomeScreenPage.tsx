@@ -49,13 +49,13 @@ export default function QrHomeScreenPage() {
   if (state.status === 'loading') return <PageLoader label="Loading QR…" />
   if (state.status === 'error')
     return (
-      <div className={`${styles.page} app-dark-bg`}>
+      <div className={`${styles.page} app-bg`}>
         <ErrorState message={state.message} onRetry={() => setAttempt((n) => n + 1)} />
       </div>
     )
   if (state.status === 'notFound')
     return (
-      <div className={`${styles.page} app-dark-bg`}>
+      <div className={`${styles.page} app-bg`}>
         <div className={styles.missing}>
           <UserX />
           <h1>QR not available</h1>
@@ -106,7 +106,7 @@ function QrScreen({ slug, profile }: { slug: string; profile: PublicProfile }) {
   }
 
   return (
-    <div className={`${styles.page} app-dark-bg`}>
+    <div className={`${styles.page} app-bg`}>
       <main className={styles.card}>
         <BrandedQr url={profile.permanentUrl} brand={config.appName} className={styles.qr} />
         <h1>{profile.fullName}</h1>

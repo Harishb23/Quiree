@@ -38,7 +38,8 @@ public sealed record EntitlementsDto(
     int MaxModes,
     bool AllowsPremiumTemplates,
     bool IsPaid,
-    DateTime? ExpiresAt);
+    DateTime? ExpiresAt,
+    bool AllFeaturesUnlocked = false);
 
 public sealed record SubscriptionStatusDto(
     EntitlementsDto Entitlements,

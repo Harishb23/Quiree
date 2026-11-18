@@ -64,6 +64,12 @@ export default function SubscriptionPage() {
       </div>
 
       <div className={styles.stack}>
+        {e.allFeaturesUnlocked && (
+          <Alert tone="success">
+            Good news — every template and feature is free for everyone right now, so there’s nothing to buy. Your profile modes
+            and premium templates are already unlocked.
+          </Alert>
+        )}
         {message && <Alert tone={message.tone}>{message.text}</Alert>}
 
         <GlassCard className={local.current}>
@@ -121,12 +127,16 @@ export default function SubscriptionPage() {
                     <Check /> vCard save & home-screen install
                   </li>
                 </ul>
-                {isFree ? (
+                {e.allFeaturesUnlocked && !isFree ? (
+                  <Button variant="secondary" disabled fullWidth>
+                    Included free right now
+                  </Button>
+                ) : isFree ? (
                   <Button variant="secondary" disabled fullWidth>
                     {isCurrent ? 'Current plan' : 'Included'}
                   </Button>
                 ) : (
-                  <Button fullWidth loading={processing === p.id} disabled={processing !== null} onClick={() => buy(p)}>
+                  <Button variant={p.code === 'pro-yearly' ? 'premium' : 'primary'} fullWidth loading={processing === p.id} disabled={processing !== null} onClick={() => buy(p)}>
                     {e.isPaid ? 'Extend with this plan' : `Upgrade to ${p.name}`}
                   </Button>
                 )}

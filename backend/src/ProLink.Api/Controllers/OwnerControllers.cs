@@ -8,7 +8,7 @@ using ProLink.Application.Interfaces;
 namespace ProLink.Api.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = AccountPolicies.Personal)]
 [Route("api/profile")]
 public sealed class ProfileController(IProfileService profiles) : ControllerBase
 {
@@ -32,7 +32,7 @@ public sealed class ProfileController(IProfileService profiles) : ControllerBase
 }
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = AccountPolicies.Personal)]
 [Route("api/modes")]
 public sealed class ModesController(IProfileModeService modes, ITemplateService templates) : ControllerBase
 {
@@ -91,7 +91,7 @@ public sealed class TemplatesController(ITemplateService templates) : Controller
 }
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = AccountPolicies.Personal)]
 [Route("api/qr")]
 public sealed class QrController(IQrCodeService qr) : ControllerBase
 {
@@ -114,7 +114,7 @@ public sealed class QrController(IQrCodeService qr) : ControllerBase
 }
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = AccountPolicies.Personal)]
 [Route("api/dashboard")]
 public sealed class DashboardController(IDashboardService dashboard) : ControllerBase
 {
@@ -123,7 +123,7 @@ public sealed class DashboardController(IDashboardService dashboard) : Controlle
 }
 
 [ApiController]
-[Authorize]
+[Authorize(Policy = AccountPolicies.Personal)]
 [Route("api/account")]
 public sealed class AccountController(IAccountService account) : ControllerBase
 {

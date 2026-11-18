@@ -12,34 +12,41 @@
 }
 
 .unavailable {
-  @include glass-dark(0.05);
+  @include card;
   max-width: 420px;
+  width: 100%;
   padding: 36px 28px;
   border-radius: $radius-xl;
+  box-shadow: $shadow-md;
   text-align: center;
   display: grid;
   justify-items: center;
   gap: 12px;
 
   svg {
-    width: 44px;
-    height: 44px;
-    color: $violet-300;
+    @include icon-chip(64px, 30px);
+    padding: 16px;
+    box-sizing: border-box;
   }
 
   h1 {
     font-size: 22px;
+    color: $purple-deep;
   }
 
   p {
-    color: $text-muted-dark;
+    color: $text-secondary;
     margin-bottom: 8px;
+  }
+
+  @include down($bp-sm) {
+    padding: 28px 20px;
   }
 }
 
 .viewer {
   min-height: 100vh;
-  background: #f4f2fb;
+  background: $bg-secondary;
 }
 
 .bar {
@@ -51,11 +58,12 @@
   gap: 10px;
   padding: 10px 16px;
   padding-top: max(10px, env(safe-area-inset-top));
-  color: $text-on-dark;
-  background: rgba(14, 10, 38, 0.78);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  color: $purple-deep;
+  background: rgba($bg-primary, 0.92);
+  border-bottom: 1px solid $border;
+  box-shadow: $shadow-xs;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 
 .brand {
@@ -71,7 +79,7 @@
   gap: 8px;
   min-width: 0;
   font-size: 12.5px;
-  color: $text-muted-dark;
+  color: $text-secondary;
 
   > span {
     @include down($bp-sm) {
@@ -82,21 +90,31 @@
   select {
     appearance: none;
     max-width: 52vw;
+    min-height: 40px;
     padding: 8px 32px 8px 12px;
-    border-radius: $radius-pill;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border-radius: $radius-control;
+    border: 1px solid $border;
+    background: $bg-primary;
+    color: $purple-deep;
     font-size: 13.5px;
-    font-weight: 600;
+    font-weight: $fw-semibold;
     text-overflow: ellipsis;
+    transition:
+      border-color $dur-fast $ease,
+      box-shadow $dur-fast $ease;
 
     option {
-      color: $text-on-light;
+      color: $text-primary;
+    }
+
+    &:hover {
+      border-color: $border-strong;
     }
 
     &:focus-visible {
-      @include focus-ring;
+      outline: none;
+      border-color: $purple-primary;
+      box-shadow: $shadow-focus;
     }
   }
 
@@ -105,7 +123,7 @@
     right: 10px;
     width: 15px;
     height: 15px;
-    color: #fff;
+    color: $purple-primary;
     pointer-events: none;
   }
 }
@@ -115,30 +133,41 @@
   gap: 4px;
   min-width: 0;
   overflow-x: auto;
-  padding: 3px;
+  padding: 4px;
   border-radius: $radius-pill;
-  background: rgba(255, 255, 255, 0.08);
+  background: $bg-primary;
+  border: 1px solid $border;
   scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .tab {
   flex-shrink: 0;
-  padding: 6px 12px;
+  min-height: 36px;
+  padding: 6px 14px;
   border: 0;
   border-radius: $radius-pill;
   background: transparent;
-  color: $text-muted-dark;
-  font-size: 13px;
-  font-weight: 600;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  transition:
+    color $dur-fast $ease,
+    background $dur-fast $ease;
 
   &:hover {
-    color: #fff;
+    color: $purple-royal;
+    background: $purple-light;
   }
 }
 
-.tabActive {
-  color: #fff;
-  background: $gradient-brand;
+.tabActive,
+.tabActive:hover {
+  color: $text-white;
+  background: $purple-primary;
 }
 
 .choice {
@@ -146,13 +175,18 @@
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+  min-height: 40px;
   padding: 8px 12px;
-  border-radius: $radius-pill;
-  border: 1px solid rgba($violet-300, 0.4);
-  background: rgba($violet-500, 0.25);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: $radius-control;
+  border: 1px solid $purple-light-hover;
+  background: $purple-light;
+  color: $purple-royal;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+
+  &:hover {
+    background: $purple-light-hover;
+  }
 
   svg {
     width: 15px;
@@ -172,13 +206,19 @@
   flex-wrap: wrap;
   gap: 8px 20px;
   padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
-  font-size: 13px;
-  color: $text-muted-dark;
-  background: $ink-900;
+  font-size: $fs-sm;
+  color: $text-secondary;
+  background: $bg-primary;
+  border-top: 1px solid $border;
 
   a {
-    color: $violet-300;
-    font-weight: 600;
+    color: $purple-primary;
+    font-weight: $fw-semibold;
+
+    &:hover {
+      color: $purple-royal;
+      text-decoration: underline;
+    }
   }
 }
 
@@ -188,12 +228,13 @@
   display: grid;
   gap: 10px;
   font-size: 14.5px;
+  color: $text-primary;
 }
 
 .note {
   margin-top: 14px;
-  font-size: 13px;
-  color: $text-muted-dark;
+  font-size: $fs-sm;
+  color: $text-secondary;
 }
 
 .choiceList {
@@ -207,14 +248,20 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-height: 48px;
   padding: 12px 14px;
   border-radius: $radius-md;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border;
+  background: $bg-primary;
   cursor: pointer;
   transition:
-    border-color 0.2s,
-    background 0.2s;
+    border-color $dur-fast $ease,
+    background $dur-fast $ease;
+
+  &:hover {
+    background: $bg-secondary;
+    border-color: $border-strong;
+  }
 
   input {
     @include visually-hidden;
@@ -224,7 +271,7 @@
     flex-shrink: 0;
     width: 20px;
     height: 20px;
-    color: $violet-300;
+    color: $purple-primary;
   }
 
   span {
@@ -232,10 +279,11 @@
     flex-direction: column;
     flex: 1;
     min-width: 0;
+    color: $text-primary;
   }
 
   small {
-    color: $text-muted-dark;
+    color: $text-secondary;
   }
 
   &:focus-within {
@@ -243,15 +291,16 @@
   }
 }
 
-.choiceChecked {
-  border-color: $violet-400;
-  background: rgba($violet-500, 0.18);
+.choiceChecked,
+.choiceChecked:hover {
+  border-color: $purple-primary;
+  background: $purple-light;
 }
 
 .check {
   width: 18px;
   height: 18px;
-  color: #4ade80;
+  color: $purple-primary;
 }
 
 // ---------- Card stage (scan flow) ----------
@@ -263,9 +312,9 @@
   flex-direction: column;
   align-items: center;
   background:
-    radial-gradient(500px 360px at 0% 0%, rgba($violet-300, 0.45), transparent 70%),
-    radial-gradient(500px 360px at 100% 100%, rgba($purple-500, 0.22), transparent 70%),
-    #efecfa;
+    radial-gradient(520px 380px at 0% 0%, $purple-light, rgba($bg-secondary, 0) 70%),
+    radial-gradient(520px 380px at 100% 100%, $bg-soft, rgba($bg-secondary, 0) 70%),
+    $bg-secondary;
 
   @include up(500px) {
     padding: 28px 16px 0;
@@ -282,34 +331,52 @@
     margin: 0 auto;
     padding: 8px 10px;
     border-radius: 0;
-    background: rgba(255, 255, 255, 0.85);
+    border-width: 0 0 1px;
+    background: rgba($bg-primary, 0.94);
 
     @include up(500px) {
       margin-bottom: 12px;
+      border-width: 1px;
       border-radius: $radius-pill;
+      box-shadow: $shadow-sm;
     }
-  }
-
-  .tab {
-    color: $text-muted-light;
-  }
-
-  .tabActive {
-    color: #fff;
   }
 }
 
+// Dark variant follows the viewer's dark card theme.
 .stageDark {
   background:
-    radial-gradient(500px 360px at 0% 0%, rgba($violet-600, 0.35), transparent 70%),
-    $ink-950;
+    radial-gradient(520px 380px at 0% 0%, rgba($purple-primary, 0.4), transparent 70%),
+    $text-primary;
 
   .tabs {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba($bg-primary, 0.08);
+    border-color: rgba($bg-primary, 0.12);
   }
 
   .tab {
-    color: $text-muted-dark;
+    color: rgba($text-white, 0.72);
+
+    &:hover {
+      color: $text-white;
+      background: rgba($bg-primary, 0.1);
+    }
+  }
+
+  .tabActive,
+  .tabActive:hover {
+    color: $text-white;
+    background: $purple-primary;
+  }
+
+  .footer {
+    color: rgba($text-white, 0.7);
+    background: transparent;
+    border-top-color: rgba($bg-primary, 0.1);
+
+    a {
+      color: $gold-primary;
+    }
   }
 }
 
@@ -317,13 +384,22 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: $radius-pill;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid $border;
+  border-radius: $radius-control;
+  background: $bg-primary;
+  color: $purple-primary;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  transition:
+    background $dur-fast $ease,
+    border-color $dur-fast $ease;
+
+  &:hover {
+    background: $purple-light;
+    border-color: $purple-light-hover;
+  }
 
   svg {
     width: 16px;

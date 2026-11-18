@@ -54,3 +54,14 @@ public sealed class SmtpOptions
     public string FromEmail { get; set; } = "no-reply@prolink.id";
     public string FromName { get; set; } = "ProLink ID";
 }
+
+public sealed class SubscriptionOptions
+{
+    public const string SectionName = "Subscription";
+
+    /// <summary>
+    /// When true, every user gets the highest plan's entitlements (all templates, top mode limit) and new purchases
+    /// are paused. Existing subscriptions are untouched. Turn off to restore normal plan limits.
+    /// </summary>
+    public bool UnlockAllFeatures { get; set; }
+}

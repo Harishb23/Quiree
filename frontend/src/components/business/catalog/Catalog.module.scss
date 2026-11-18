@@ -1,0 +1,699 @@
+@use '../../../styles/tokens' as *;
+
+// ---------------------------------------------------------------------------
+// Toolbar (search / filters)
+// ---------------------------------------------------------------------------
+.toolbar {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  @include card;
+  border-radius: $radius-lg;
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(130px, 1fr));
+    align-items: end;
+  }
+}
+
+// Search is always visible; the other filters collapse behind a toggle on small screens.
+.toolbarSearch {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 0;
+
+  > :first-child {
+    flex: 1;
+  }
+}
+
+.filterToggle {
+  flex-shrink: 0;
+
+  @include up($bp-md) {
+    display: none !important;
+  }
+}
+
+.filterFields {
+  display: none;
+  gap: 12px;
+
+  @include up($bp-md) {
+    display: contents;
+  }
+}
+
+.filterFieldsOpen {
+  display: grid;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include up($bp-md) {
+    display: contents;
+  }
+}
+
+.toolbarRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.checkboxField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: $control-md;
+  font-size: $fs-sm;
+  color: $text-primary;
+}
+
+// ---------------------------------------------------------------------------
+// Grids
+// ---------------------------------------------------------------------------
+.productGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+}
+
+.cardGrid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+// ---------------------------------------------------------------------------
+// Product card
+// ---------------------------------------------------------------------------
+.productCard {
+  @include card;
+  @include card-hover;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: $radius-lg;
+}
+
+.productMedia {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+
+  // Phones: one card per row, so a shorter image keeps more products on screen.
+  @include down($bp-sm) {
+    aspect-ratio: 16 / 9;
+  }
+  background: $bg-soft;
+  color: $purple-muted;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  > svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.mediaBadges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.productBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  padding: 14px 16px;
+  min-width: 0;
+
+  h3 {
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.meta {
+  font-size: $fs-xs;
+  color: $text-secondary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+
+  strong {
+    font-size: $fs-lg;
+    font-weight: $fw-bold;
+    color: $purple-deep;
+  }
+
+  s {
+    font-size: $fs-sm;
+    color: $text-muted;
+  }
+}
+
+.off {
+  font-size: $fs-xs;
+  font-weight: $fw-bold;
+  color: $gold-dark;
+}
+
+.onRequest {
+  font-size: $fs-sm;
+  color: $text-secondary;
+  font-style: italic;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-top: 1px solid $border;
+  background: $bg-secondary;
+
+  > :first-child {
+    margin-right: auto;
+  }
+}
+
+.iconBtnActive {
+  color: $gold-dark !important;
+  background: $gold-light !important;
+  border-color: rgba($gold-primary, 0.5) !important;
+}
+
+// ---------------------------------------------------------------------------
+// Generic list card (services / offers)
+// ---------------------------------------------------------------------------
+.itemCard {
+  @include card;
+  @include card-hover;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: $radius-lg;
+}
+
+.featuredCard {
+  border-color: rgba($gold-primary, 0.6);
+  box-shadow: 0 14px 30px -20px rgba($gold-premium, 0.6);
+}
+
+.serviceHead {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.serviceThumb {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: $radius-md;
+  background: $bg-soft;
+  display: grid;
+  place-items: center;
+  color: $purple-muted;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.itemMain {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+
+  h3 {
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
+  }
+
+  p {
+    font-size: $fs-sm;
+    color: $text-secondary;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.offerBanner {
+  position: relative;
+  aspect-ratio: 3 / 1;
+  overflow: hidden;
+  background: linear-gradient(120deg, $purple-light 0%, $bg-soft 60%, $gold-light 100%);
+  display: grid;
+  place-items: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.offerHeadline {
+  font-size: 26px;
+  font-weight: $fw-bold;
+  color: $purple-royal;
+}
+
+.offerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  padding: 14px 16px;
+}
+
+.discount {
+  font-size: $fs-lg;
+  font-weight: $fw-bold;
+  color: $gold-dark;
+}
+
+.dates {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: $fs-xs;
+  color: $text-secondary;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Forms
+// ---------------------------------------------------------------------------
+.formSections {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+    align-items: start;
+  }
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-secondary;
+
+  strong {
+    display: block;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
+  }
+
+  span {
+    font-size: $fs-xs;
+    color: $text-secondary;
+  }
+}
+
+.priceHint {
+  font-size: $fs-xs;
+  font-weight: $fw-semibold;
+  color: $gold-dark;
+}
+
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+
+  @include down($bp-sm) {
+    > * {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+// Attribute fields
+.attrGrid {
+  display: grid;
+  gap: 16px;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.attrWide {
+  @include up($bp-sm) {
+    grid-column: 1 / -1;
+  }
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: 7px;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $purple-deep;
+}
+
+.requiredMark {
+  color: $gold-premium;
+}
+
+.chipToggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid $border;
+  border-radius: $radius-pill;
+  background: $bg-primary;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  transition:
+    background $dur-fast $ease,
+    color $dur-fast $ease,
+    border-color $dur-fast $ease;
+
+  &:hover {
+    border-color: $purple-light-hover;
+    color: $purple-royal;
+  }
+
+  &[aria-pressed='true'] {
+    color: $text-white;
+    background: $purple-primary;
+    border-color: $purple-primary;
+  }
+}
+
+.fieldError {
+  margin-top: 6px;
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  color: $danger;
+}
+
+.boolField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: $control-md;
+  padding: 0 14px;
+  border: 1px solid $border;
+  border-radius: $radius-control;
+  background: $bg-primary;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $purple-deep;
+}
+
+// Product images
+.imageGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 120px), 1fr));
+  margin-bottom: 14px;
+}
+
+.imageTile {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-soft;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.coverTag {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 1px 8px;
+  border-radius: $radius-pill;
+  font-size: 11px;
+  font-weight: $fw-bold;
+  color: $gold-dark;
+  background: $gold-light;
+}
+
+.tileActions {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 6px;
+  background: linear-gradient(0deg, rgba(48, 36, 61, 0.55), transparent);
+
+  button {
+    @include icon-button(32px);
+  }
+}
+
+// Category manager
+.categoryList {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+
+  > span {
+    flex: 1;
+    min-width: 0;
+    font-weight: $fw-medium;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  > div {
+    flex: 1;
+  }
+}
+
+.inlineAdd {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+
+  > :first-child {
+    flex: 1;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Gallery
+// ---------------------------------------------------------------------------
+.uploadPanel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 20px;
+
+  @include up($bp-md) {
+    grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.uploadMeta {
+  display: grid;
+  gap: 12px;
+}
+
+.galleryGrid {
+  columns: 2 160px;
+  column-gap: 14px;
+
+  @include up($bp-md) {
+    columns: 4 200px;
+  }
+}
+
+.galleryTile {
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-soft;
+  box-shadow: $shadow-xs;
+  transition: box-shadow $dur $ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+
+  > button:first-child {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.galleryInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: $bg-card;
+
+  > div {
+    flex: 1;
+    min-width: 0;
+  }
+
+  strong {
+    display: block;
+    font-size: $fs-xs;
+    font-weight: $fw-semibold;
+    color: $text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  span {
+    font-size: 11px;
+    color: $text-muted;
+  }
+}
+
+.lightbox {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+
+  img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: $radius-md;
+    object-fit: contain;
+  }
+}
+
+.lightboxNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+
+  p {
+    flex: 1;
+    text-align: center;
+    font-size: $fs-sm;
+    color: $text-secondary;
+  }
+}
+
+// Skeletons
+.skeletonCard {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 16px;
+  @include card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  > :not(:first-child) {
+    margin: 0 16px;
+  }
+}

@@ -18,46 +18,34 @@
 }
 
 .card {
+  @include card-hover;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition:
-    transform 0.25s $ease,
-    border-color 0.25s $ease,
-    box-shadow 0.25s $ease;
-
-  &:hover {
-    transform: translateY(-3px);
-    border-color: rgba($violet-300, 0.4);
-  }
 }
 
 .selected {
-  border-color: $violet-400;
+  border-color: $purple-primary;
   box-shadow:
-    0 0 0 2px rgba($violet-500, 0.55),
-    $shadow-glow;
+    0 0 0 2px rgba($purple-primary, 0.35),
+    $shadow-md;
+
+  &:hover {
+    border-color: $purple-primary;
+  }
 }
 
 .thumb {
   position: relative;
   height: 230px;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid $border;
+  background: $bg-soft;
 }
 
 .thumbPlaceholder {
   height: 100%;
-  background: linear-gradient(110deg, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.03) 70%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s linear infinite;
-}
-
-@keyframes shimmer {
-  to {
-    background-position: -200% 0;
-  }
+  @include skeleton;
 }
 
 .selectedMark {
@@ -70,8 +58,9 @@
   height: 30px;
   border-radius: 50%;
   color: #fff;
-  background: $gradient-brand;
-  box-shadow: $shadow-glow;
+  background: $purple-primary;
+  border: 2px solid #fff;
+  box-shadow: $shadow-md;
 
   svg {
     width: 17px;
@@ -88,8 +77,8 @@
 
   p {
     flex: 1;
-    font-size: 13px;
-    color: $text-muted-dark;
+    font-size: $fs-sm;
+    color: $text-secondary;
   }
 }
 
@@ -100,7 +89,9 @@
   gap: 8px;
 
   h3 {
-    font-size: 15px;
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
   }
 }
 

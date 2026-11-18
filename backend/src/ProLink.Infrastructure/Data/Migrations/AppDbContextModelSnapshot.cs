@@ -58,6 +58,2274 @@ namespace ProLink.Infrastructure.Data.Migrations
                     b.ToTable("Achievements", (string)null);
                 });
 
+            modelBuilder.Entity("ProLink.Domain.Entities.Business", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AddressLine1")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("AddressLine2")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("BrandColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Country")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CoverUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("DeliveryAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("FeaturedSections")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Layout")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MapsUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PaymentMethods")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("PickupAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("PublishedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("QrCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<bool>("QrEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("QrGeneratedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubcategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Theme")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("TimeZone")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Website")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("WhatsApp")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("YearEstablished")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("QrCode")
+                        .IsUnique();
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("SubcategoryId");
+
+                    b.HasIndex("Status", "IsActive");
+
+                    b.ToTable("Businesses", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessAnalyticsEvent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("OccurredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VisitorHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "OccurredAt");
+
+                    b.HasIndex("BusinessId", "CampaignId", "OccurredAt");
+
+                    b.HasIndex("BusinessId", "VisitorHash", "Type", "OccurredAt");
+
+                    b.ToTable("BusinessAnalyticsEvents", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("BusinessCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Icon = "footprints",
+                            IsActive = true,
+                            Key = "footwear",
+                            Name = "Footwear and Shoe Shops",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Icon = "flower-2",
+                            IsActive = true,
+                            Key = "flowers",
+                            Name = "Flower Shops",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Icon = "shirt",
+                            IsActive = true,
+                            Key = "clothing",
+                            Name = "Clothing and Fashion",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Icon = "utensils",
+                            IsActive = true,
+                            Key = "restaurants",
+                            Name = "Restaurants and Cafes",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Icon = "cake-slice",
+                            IsActive = true,
+                            Key = "bakeries",
+                            Name = "Bakeries",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Icon = "gem",
+                            IsActive = true,
+                            Key = "jewellery",
+                            Name = "Jewellery Stores",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Icon = "scissors",
+                            IsActive = true,
+                            Key = "beauty",
+                            Name = "Beauty and Salons",
+                            SortOrder = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Icon = "smartphone",
+                            IsActive = true,
+                            Key = "electronics",
+                            Name = "Electronics and Mobile Shops",
+                            SortOrder = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Icon = "shopping-basket",
+                            IsActive = true,
+                            Key = "grocery",
+                            Name = "Grocery and Supermarkets",
+                            SortOrder = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Icon = "sofa",
+                            IsActive = true,
+                            Key = "home-furniture",
+                            Name = "Home and Furniture",
+                            SortOrder = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Icon = "stethoscope",
+                            IsActive = true,
+                            Key = "healthcare",
+                            Name = "Medical and Healthcare",
+                            SortOrder = 11
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Icon = "graduation-cap",
+                            IsActive = true,
+                            Key = "education",
+                            Name = "Education and Training",
+                            SortOrder = 12
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Icon = "briefcase",
+                            IsActive = true,
+                            Key = "professional-services",
+                            Name = "Professional Services",
+                            SortOrder = 13
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Icon = "store",
+                            IsActive = true,
+                            Key = "other",
+                            Name = "Other Businesses",
+                            SortOrder = 14
+                        });
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessCategoryAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InputType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Options")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId", "Key")
+                        .IsUnique();
+
+                    b.ToTable("BusinessCategoryAttributes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 101,
+                            CategoryId = 1,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 102,
+                            CategoryId = 1,
+                            InputType = 3,
+                            IsRequired = false,
+                            Key = "shoe_size",
+                            Label = "Shoe Size",
+                            Options = "UK 3|UK 4|UK 5|UK 6|UK 7|UK 8|UK 9|UK 10|UK 11|UK 12",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 103,
+                            CategoryId = 1,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "gender",
+                            Label = "Gender",
+                            Options = "Men|Women|Unisex|Boys|Girls",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 104,
+                            CategoryId = 1,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "shoe_type",
+                            Label = "Shoe Type",
+                            Options = "Sneakers|Running|Formal|Casual|Boots|Sandals|Slippers|Loafers|Heels|Flats",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 105,
+                            CategoryId = 1,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "material",
+                            Label = "Material",
+                            Options = "Leather|Synthetic|Canvas|Mesh|Suede|Rubber",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 106,
+                            CategoryId = 1,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "color",
+                            Label = "Color",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 201,
+                            CategoryId = 2,
+                            InputType = 3,
+                            IsRequired = false,
+                            Key = "flower_type",
+                            Label = "Flower Type",
+                            Options = "Roses|Lilies|Orchids|Carnations|Tulips|Sunflowers|Gerberas|Mixed",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 202,
+                            CategoryId = 2,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "bouquet_type",
+                            Label = "Bouquet Type",
+                            Options = "Hand-tied|Basket|Box|Vase Arrangement|Garland|Single Stem",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 203,
+                            CategoryId = 2,
+                            InputType = 3,
+                            IsRequired = false,
+                            Key = "occasion",
+                            Label = "Occasion",
+                            Options = "Birthday|Anniversary|Wedding|Love & Romance|Sympathy|Congratulations|Festival",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 204,
+                            CategoryId = 2,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "arrangement",
+                            Label = "Arrangement",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 205,
+                            CategoryId = 2,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "delivery_available",
+                            Label = "Delivery Available",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 301,
+                            CategoryId = 3,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "clothing_type",
+                            Label = "Clothing Type",
+                            Options = "Shirt|T-Shirt|Trousers|Jeans|Dress|Saree|Kurta|Lehenga|Jacket|Suit|Ethnic Set",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 302,
+                            CategoryId = 3,
+                            InputType = 3,
+                            IsRequired = false,
+                            Key = "size",
+                            Label = "Size",
+                            Options = "XS|S|M|L|XL|XXL|3XL|Free Size",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 303,
+                            CategoryId = 3,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "color",
+                            Label = "Color",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 304,
+                            CategoryId = 3,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "fabric",
+                            Label = "Fabric",
+                            Options = "Cotton|Linen|Silk|Polyester|Rayon|Denim|Wool|Chiffon|Georgette",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 305,
+                            CategoryId = 3,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 306,
+                            CategoryId = 3,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "collection",
+                            Label = "Collection",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 401,
+                            CategoryId = 4,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "food_category",
+                            Label = "Food Category",
+                            Options = "Starters|Main Course|Breads|Rice & Biryani|Desserts|Beverages|Combos|Snacks",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 402,
+                            CategoryId = 4,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "food_type",
+                            Label = "Cuisine",
+                            Options = "South Indian|North Indian|Chinese|Continental|Italian|Arabian|Street Food|Bakery",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 403,
+                            CategoryId = 4,
+                            InputType = 2,
+                            IsRequired = true,
+                            Key = "veg_type",
+                            Label = "Veg / Non-Veg",
+                            Options = "Veg|Non-Veg|Egg|Vegan",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 404,
+                            CategoryId = 4,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "spice_level",
+                            Label = "Spice Level",
+                            Options = "Mild|Medium|Hot",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 405,
+                            CategoryId = 4,
+                            InputType = 1,
+                            IsRequired = false,
+                            Key = "serves",
+                            Label = "Serves",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 501,
+                            CategoryId = 5,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "item_type",
+                            Label = "Item Type",
+                            Options = "Cake|Pastry|Bread|Cookies|Cupcakes|Savouries|Desserts",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 502,
+                            CategoryId = 5,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "flavour",
+                            Label = "Flavour",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 503,
+                            CategoryId = 5,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "weight",
+                            Label = "Weight / Size",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 504,
+                            CategoryId = 5,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "eggless",
+                            Label = "Eggless",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 505,
+                            CategoryId = 5,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "custom_orders",
+                            Label = "Custom Orders Accepted",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 601,
+                            CategoryId = 6,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "metal",
+                            Label = "Metal",
+                            Options = "Gold|Silver|Platinum|Rose Gold|White Gold|Imitation",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 602,
+                            CategoryId = 6,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "purity",
+                            Label = "Purity",
+                            Options = "24K|22K|18K|14K|925 Sterling|N/A",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 603,
+                            CategoryId = 6,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "jewellery_type",
+                            Label = "Jewellery Type",
+                            Options = "Ring|Necklace|Chain|Earrings|Bangles|Bracelet|Pendant|Anklet|Nose Pin",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 604,
+                            CategoryId = 6,
+                            InputType = 1,
+                            IsRequired = false,
+                            Key = "weight_grams",
+                            Label = "Weight (grams)",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 605,
+                            CategoryId = 6,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "stone",
+                            Label = "Stone",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 606,
+                            CategoryId = 6,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "certified",
+                            Label = "Hallmark / Certified",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 701,
+                            CategoryId = 7,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "product_type",
+                            Label = "Product Type",
+                            Options = "Hair Care|Skin Care|Makeup|Fragrance|Nail Care|Tools",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 702,
+                            CategoryId = 7,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 703,
+                            CategoryId = 7,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "suitable_for",
+                            Label = "Suitable For",
+                            Options = "Men|Women|Unisex",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 704,
+                            CategoryId = 7,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "volume",
+                            Label = "Volume / Size",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 801,
+                            CategoryId = 8,
+                            InputType = 0,
+                            IsRequired = true,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 802,
+                            CategoryId = 8,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "model",
+                            Label = "Model",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 803,
+                            CategoryId = 8,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "storage",
+                            Label = "Storage",
+                            Options = "32 GB|64 GB|128 GB|256 GB|512 GB|1 TB|N/A",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 804,
+                            CategoryId = 8,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "ram",
+                            Label = "RAM",
+                            Options = "2 GB|4 GB|6 GB|8 GB|12 GB|16 GB|32 GB|N/A",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 805,
+                            CategoryId = 8,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "color",
+                            Label = "Color",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 806,
+                            CategoryId = 8,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "warranty",
+                            Label = "Warranty",
+                            Options = "No Warranty|6 Months|1 Year|2 Years|3 Years",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 807,
+                            CategoryId = 8,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "condition",
+                            Label = "Condition",
+                            Options = "New|Refurbished|Used",
+                            SortOrder = 7
+                        },
+                        new
+                        {
+                            Id = 901,
+                            CategoryId = 9,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 902,
+                            CategoryId = 9,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "pack_size",
+                            Label = "Pack Size",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 903,
+                            CategoryId = 9,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "unit",
+                            Label = "Unit",
+                            Options = "Piece|Kg|Gram|Litre|ml|Dozen|Pack",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 904,
+                            CategoryId = 9,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "organic",
+                            Label = "Organic",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 905,
+                            CategoryId = 9,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "veg_type",
+                            Label = "Veg / Non-Veg",
+                            Options = "Veg|Non-Veg",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1001,
+                            CategoryId = 10,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "material",
+                            Label = "Material",
+                            Options = "Wood|Engineered Wood|Metal|Glass|Plastic|Fabric|Leather|Cane",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1002,
+                            CategoryId = 10,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "dimensions",
+                            Label = "Dimensions",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1003,
+                            CategoryId = 10,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "color",
+                            Label = "Color / Finish",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1004,
+                            CategoryId = 10,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "room",
+                            Label = "Room",
+                            Options = "Living Room|Bedroom|Dining|Kitchen|Office|Outdoor",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1005,
+                            CategoryId = 10,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "assembly_required",
+                            Label = "Assembly Required",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1101,
+                            CategoryId = 11,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "product_type",
+                            Label = "Product Type",
+                            Options = "Medicine|Wellness|Medical Device|Personal Care|Optical",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1102,
+                            CategoryId = 11,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1103,
+                            CategoryId = 11,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "prescription_required",
+                            Label = "Prescription Required",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1104,
+                            CategoryId = 11,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "pack_size",
+                            Label = "Pack Size",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1201,
+                            CategoryId = 12,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "course_level",
+                            Label = "Level",
+                            Options = "Beginner|Intermediate|Advanced|All Levels",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1202,
+                            CategoryId = 12,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "mode",
+                            Label = "Mode",
+                            Options = "In-person|Online|Hybrid",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1203,
+                            CategoryId = 12,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "duration",
+                            Label = "Course Duration",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1204,
+                            CategoryId = 12,
+                            InputType = 4,
+                            IsRequired = false,
+                            Key = "certificate",
+                            Label = "Certificate Provided",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1301,
+                            CategoryId = 13,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "service_area",
+                            Label = "Service Area",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1302,
+                            CategoryId = 13,
+                            InputType = 2,
+                            IsRequired = false,
+                            Key = "delivery_mode",
+                            Label = "Delivery Mode",
+                            Options = "On-site|Remote|At our office",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1303,
+                            CategoryId = 13,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "turnaround",
+                            Label = "Turnaround Time",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1401,
+                            CategoryId = 14,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "brand",
+                            Label = "Brand",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1402,
+                            CategoryId = 14,
+                            InputType = 0,
+                            IsRequired = false,
+                            Key = "specification",
+                            Label = "Specification",
+                            SortOrder = 2
+                        });
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessEnquiry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RelatedItemName")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid?>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Status", "CreatedAt");
+
+                    b.ToTable("BusinessEnquiries", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessEnquiryActivity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ByName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid?>("ByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EnquiryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnquiryId");
+
+                    b.ToTable("BusinessEnquiryActivities", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessGalleryImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Category");
+
+                    b.ToTable("BusinessGalleryImages", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessMember", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("BusinessId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("BusinessMembers", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessOffer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BannerUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<long?>("DiscountAmountInPaise")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("DiscountPercent")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly?>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "IsActive", "EndDate");
+
+                    b.ToTable("BusinessOffers", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AttributesJson")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<long?>("DiscountPriceInPaise")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long?>("PriceInPaise")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("ProductCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Sku")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("BusinessId", "Sku")
+                        .IsUnique()
+                        .HasFilter("[Sku] IS NOT NULL");
+
+                    b.HasIndex("BusinessId", "IsAvailable", "IsFeatured");
+
+                    b.ToTable("BusinessProducts", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProductCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("BusinessProductCategories", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProductImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("BusinessProductImages", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessQrCampaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BackgroundColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Destination")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ForegroundColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<string>("FrameText")
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<bool>("ShowLogo")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("TargetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("BusinessId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("BusinessQrCampaigns", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.Property<string>("OwnerReply")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Status");
+
+                    b.ToTable("BusinessReviews", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_BusinessReviews_Rating", "[Rating] BETWEEN 1 AND 5");
+                        });
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessService", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int?>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long?>("PriceInPaise")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PriceNote")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "IsAvailable");
+
+                    b.ToTable("BusinessServices", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSocialLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Label")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Platform")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
+
+                    b.ToTable("BusinessSocialLinks", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSpecialHour", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeOnly?>("Closes")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<TimeOnly?>("Opens")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Date")
+                        .IsUnique();
+
+                    b.ToTable("BusinessSpecialHours", (string)null);
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSubcategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("BusinessSubcategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 101,
+                            CategoryId = 1,
+                            Name = "Men's Footwear",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 102,
+                            CategoryId = 1,
+                            Name = "Women's Footwear",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 103,
+                            CategoryId = 1,
+                            Name = "Kids' Footwear",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 104,
+                            CategoryId = 1,
+                            Name = "Sports Shoes",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 105,
+                            CategoryId = 1,
+                            Name = "Formal Shoes",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 106,
+                            CategoryId = 1,
+                            Name = "Sandals & Slippers",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 201,
+                            CategoryId = 2,
+                            Name = "Florist",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 202,
+                            CategoryId = 2,
+                            Name = "Wedding Florist",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 203,
+                            CategoryId = 2,
+                            Name = "Event Decorator",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 204,
+                            CategoryId = 2,
+                            Name = "Plant Nursery",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 301,
+                            CategoryId = 3,
+                            Name = "Men's Wear",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 302,
+                            CategoryId = 3,
+                            Name = "Women's Wear",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 303,
+                            CategoryId = 3,
+                            Name = "Kids' Wear",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 304,
+                            CategoryId = 3,
+                            Name = "Ethnic Wear",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 305,
+                            CategoryId = 3,
+                            Name = "Boutique",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 306,
+                            CategoryId = 3,
+                            Name = "Tailoring",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 401,
+                            CategoryId = 4,
+                            Name = "Restaurant",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 402,
+                            CategoryId = 4,
+                            Name = "Cafe",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 403,
+                            CategoryId = 4,
+                            Name = "Fast Food",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 404,
+                            CategoryId = 4,
+                            Name = "Fine Dining",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 405,
+                            CategoryId = 4,
+                            Name = "Cloud Kitchen",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 406,
+                            CategoryId = 4,
+                            Name = "Juice & Dessert Bar",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 501,
+                            CategoryId = 5,
+                            Name = "Bakery",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 502,
+                            CategoryId = 5,
+                            Name = "Cake Shop",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 503,
+                            CategoryId = 5,
+                            Name = "Patisserie",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 504,
+                            CategoryId = 5,
+                            Name = "Home Baker",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 601,
+                            CategoryId = 6,
+                            Name = "Gold Jewellery",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 602,
+                            CategoryId = 6,
+                            Name = "Silver Jewellery",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 603,
+                            CategoryId = 6,
+                            Name = "Diamond Jewellery",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 604,
+                            CategoryId = 6,
+                            Name = "Fashion Jewellery",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 701,
+                            CategoryId = 7,
+                            Name = "Unisex Salon",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 702,
+                            CategoryId = 7,
+                            Name = "Beauty Parlour",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 703,
+                            CategoryId = 7,
+                            Name = "Spa",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 704,
+                            CategoryId = 7,
+                            Name = "Barber Shop",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 705,
+                            CategoryId = 7,
+                            Name = "Bridal Studio",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 706,
+                            CategoryId = 7,
+                            Name = "Nail Studio",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 801,
+                            CategoryId = 8,
+                            Name = "Mobile Phones",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 802,
+                            CategoryId = 8,
+                            Name = "Mobile Accessories",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 803,
+                            CategoryId = 8,
+                            Name = "Computers & Laptops",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 804,
+                            CategoryId = 8,
+                            Name = "Home Appliances",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 805,
+                            CategoryId = 8,
+                            Name = "Repair Centre",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 901,
+                            CategoryId = 9,
+                            Name = "Supermarket",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 902,
+                            CategoryId = 9,
+                            Name = "Kirana Store",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 903,
+                            CategoryId = 9,
+                            Name = "Organic Store",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 904,
+                            CategoryId = 9,
+                            Name = "Fruits & Vegetables",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 905,
+                            CategoryId = 9,
+                            Name = "Dairy",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1001,
+                            CategoryId = 10,
+                            Name = "Furniture",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1002,
+                            CategoryId = 10,
+                            Name = "Home Decor",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1003,
+                            CategoryId = 10,
+                            Name = "Kitchenware",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1004,
+                            CategoryId = 10,
+                            Name = "Furnishings",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1005,
+                            CategoryId = 10,
+                            Name = "Lighting",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1101,
+                            CategoryId = 11,
+                            Name = "Clinic",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1102,
+                            CategoryId = 11,
+                            Name = "Pharmacy",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1103,
+                            CategoryId = 11,
+                            Name = "Diagnostic Centre",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1104,
+                            CategoryId = 11,
+                            Name = "Dental Clinic",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1105,
+                            CategoryId = 11,
+                            Name = "Physiotherapy",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1106,
+                            CategoryId = 11,
+                            Name = "Optical Store",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 1201,
+                            CategoryId = 12,
+                            Name = "Tuition Centre",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1202,
+                            CategoryId = 12,
+                            Name = "Coaching Institute",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1203,
+                            CategoryId = 12,
+                            Name = "Skill Training",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1204,
+                            CategoryId = 12,
+                            Name = "Music & Arts",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1205,
+                            CategoryId = 12,
+                            Name = "Language Classes",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1301,
+                            CategoryId = 13,
+                            Name = "Consulting",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1302,
+                            CategoryId = 13,
+                            Name = "Legal",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1303,
+                            CategoryId = 13,
+                            Name = "Accounting & Tax",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1304,
+                            CategoryId = 13,
+                            Name = "IT Services",
+                            SortOrder = 4
+                        },
+                        new
+                        {
+                            Id = 1305,
+                            CategoryId = 13,
+                            Name = "Repair & Maintenance",
+                            SortOrder = 5
+                        },
+                        new
+                        {
+                            Id = 1306,
+                            CategoryId = 13,
+                            Name = "Home Services",
+                            SortOrder = 6
+                        },
+                        new
+                        {
+                            Id = 1307,
+                            CategoryId = 13,
+                            Name = "Photography",
+                            SortOrder = 7
+                        },
+                        new
+                        {
+                            Id = 1401,
+                            CategoryId = 14,
+                            Name = "Retail Store",
+                            SortOrder = 1
+                        },
+                        new
+                        {
+                            Id = 1402,
+                            CategoryId = 14,
+                            Name = "Wholesale",
+                            SortOrder = 2
+                        },
+                        new
+                        {
+                            Id = 1403,
+                            CategoryId = 14,
+                            Name = "Manufacturing",
+                            SortOrder = 3
+                        },
+                        new
+                        {
+                            Id = 1404,
+                            CategoryId = 14,
+                            Name = "Other",
+                            SortOrder = 4
+                        });
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessWorkingHour", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeOnly?>("Closes")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeOnly?>("Opens")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BusinessId", "Day")
+                        .IsUnique();
+
+                    b.ToTable("BusinessWorkingHours", (string)null);
+                });
+
             modelBuilder.Entity("ProLink.Domain.Entities.Certification", b =>
                 {
                     b.Property<Guid>("Id")
@@ -900,6 +3168,11 @@ namespace ProLink.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AccountType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1072,6 +3345,234 @@ namespace ProLink.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ProfileMode");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.Business", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.BusinessCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProLink.Domain.Entities.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProLink.Domain.Entities.BusinessSubcategory", "Subcategory")
+                        .WithMany()
+                        .HasForeignKey("SubcategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Subcategory");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessAnalyticsEvent", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessCategoryAttribute", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.BusinessCategory", "Category")
+                        .WithMany("Attributes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessEnquiry", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Enquiries")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessEnquiryActivity", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.BusinessEnquiry", "Enquiry")
+                        .WithMany("Activities")
+                        .HasForeignKey("EnquiryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Enquiry");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessGalleryImage", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Gallery")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessMember", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Members")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProLink.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessOffer", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Offers")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProduct", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Products")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProLink.Domain.Entities.BusinessProductCategory", "ProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Business");
+
+                    b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProductCategory", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProductImage", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.BusinessProduct", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessQrCampaign", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("QrCampaigns")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessReview", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessService", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("Services")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSocialLink", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("SocialLinks")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSpecialHour", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("SpecialHours")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessSubcategory", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.BusinessCategory", "Category")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessWorkingHour", b =>
+                {
+                    b.HasOne("ProLink.Domain.Entities.Business", "Business")
+                        .WithMany("WorkingHours")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Business");
                 });
 
             modelBuilder.Entity("ProLink.Domain.Entities.Certification", b =>
@@ -1263,6 +3764,50 @@ namespace ProLink.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("ProfileMode");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.Business", b =>
+                {
+                    b.Navigation("Enquiries");
+
+                    b.Navigation("Gallery");
+
+                    b.Navigation("Members");
+
+                    b.Navigation("Offers");
+
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("QrCampaigns");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("Services");
+
+                    b.Navigation("SocialLinks");
+
+                    b.Navigation("SpecialHours");
+
+                    b.Navigation("WorkingHours");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessCategory", b =>
+                {
+                    b.Navigation("Attributes");
+
+                    b.Navigation("Subcategories");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessEnquiry", b =>
+                {
+                    b.Navigation("Activities");
+                });
+
+            modelBuilder.Entity("ProLink.Domain.Entities.BusinessProduct", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("ProLink.Domain.Entities.ProfileMode", b =>

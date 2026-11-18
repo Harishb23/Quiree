@@ -70,7 +70,7 @@ export default function ModesPage() {
           <p>Each mode is an independent professional identity — all shared through your one permanent QR code.</p>
         </div>
         {atLimit ? (
-          <Button to="/dashboard/subscription" variant="secondary">
+          <Button to="/dashboard/subscription" variant="premium">
             Upgrade to add modes
           </Button>
         ) : (

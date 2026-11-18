@@ -42,7 +42,7 @@ export function GoogleSignInButton({
           callback: (response) => callbackRef.current(response.credential),
         })
         window.google.accounts.id.renderButton(containerRef.current, {
-          theme: 'filled_black',
+          theme: 'outline',
           size: 'large',
           shape: 'pill',
           text,

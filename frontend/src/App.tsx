@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './components/ui/Toast'
 import { PageLoader } from './components/ui/Feedback'
-import { GuestRoute, ProtectedRoute } from './components/routing/RouteGuards'
+import { AccountArea, GuestRoute, ProtectedRoute } from './components/routing/RouteGuards'
 
 const PublicLayout = lazy(() => import('./layouts/PublicLayout'))
 const HomePage = lazy(() => import('./pages/marketing/HomePage'))
@@ -12,7 +12,7 @@ const FeaturesPage = lazy(() => import('./pages/marketing/FeaturesPage'))
 const PricingPage = lazy(() => import('./pages/marketing/PricingPage'))
 const ContactPage = lazy(() => import('./pages/marketing/ContactPage'))
 const NotFoundPage = lazy(() => import('./pages/marketing/NotFoundPage'))
-
+const LegalPage = lazy(() => import('./pages/marketing/LegalPage'))
 const AuthLayout = lazy(() => import('./layouts/AuthLayout'))
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'))
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'))
@@ -29,7 +29,26 @@ const QrCodePage = lazy(() => import('./pages/dashboard/QrCodePage'))
 const SubscriptionPage = lazy(() => import('./pages/dashboard/SubscriptionPage'))
 const SettingsPage = lazy(() => import('./pages/dashboard/SettingsPage'))
 
+// Business profiles
+const BusinessListPage = lazy(() => import('./pages/business/BusinessListPage'))
+const BusinessWizardPage = lazy(() => import('./pages/business/BusinessWizardPage'))
+const BusinessShell = lazy(() => import('./pages/business/BusinessShell'))
+const BusinessDashboardPage = lazy(() => import('./pages/business/BusinessDashboardPage'))
+const BusinessAnalyticsPage = lazy(() => import('./pages/business/BusinessAnalyticsPage'))
+const ProductsPage = lazy(() => import('./pages/business/ProductsPage'))
+const ProductEditorPage = lazy(() => import('./pages/business/ProductEditorPage'))
+const ServicesPage = lazy(() => import('./pages/business/ServicesPage'))
+const OffersPage = lazy(() => import('./pages/business/OffersPage'))
+const GalleryPage = lazy(() => import('./pages/business/GalleryPage'))
+const BusinessQrPage = lazy(() => import('./pages/business/BusinessQrPage'))
+const QrCampaignsPage = lazy(() => import('./pages/business/QrCampaignsPage'))
+const EnquiriesPage = lazy(() => import('./pages/business/EnquiriesPage'))
+const ReviewsPage = lazy(() => import('./pages/business/ReviewsPage'))
+const BusinessSettingsPage = lazy(() => import('./pages/business/BusinessSettingsPage'))
+
 const PublicProfilePage = lazy(() => import('./pages/public/PublicProfilePage'))
+const PublicBusinessPage = lazy(() => import('./pages/public/PublicBusinessPage'))
+const BusinessQrResolvePage = lazy(() => import('./pages/public/BusinessQrResolvePage'))
 const QrHomeScreenPage = lazy(() => import('./pages/public/QrHomeScreenPage'))
 
 export default function App() {
@@ -45,7 +64,8 @@ export default function App() {
                 <Route path="features" element={<FeaturesPage />} />
                 <Route path="pricing" element={<PricingPage />} />
                 <Route path="contact" element={<ContactPage />} />
-              </Route>
+                <Route path="privacy" element={<LegalPage kind="privacy" />} />
+                <Route path="terms" element={<LegalPage kind="terms" />} />              </Route>
 
               <Route
                 element={
@@ -71,6 +91,8 @@ export default function App() {
                   </ProtectedRoute>
                 }
               >
+                {/* Personal accounts only */}
+                <Route element={<AccountArea type="Personal" />}>
                 <Route index element={<OverviewPage />} />
                 <Route path="profile" element={<MyProfilePage />} />
                 <Route path="modes" element={<ModesPage />} />
@@ -80,10 +102,35 @@ export default function App() {
                 <Route path="qr" element={<QrCodePage />} />
                 <Route path="subscription" element={<SubscriptionPage />} />
                 <Route path="settings" element={<SettingsPage />} />
+                </Route>
+
+                {/* Business accounts only */}
+                <Route element={<AccountArea type="Business" />}>
+                <Route path="business" element={<BusinessListPage />} />
+                <Route path="business/new" element={<BusinessWizardPage />} />
+                <Route path="business/:businessId" element={<BusinessShell />}>
+                  <Route index element={<BusinessDashboardPage />} />
+                  <Route path="profile" element={<BusinessWizardPage />} />
+                  <Route path="products" element={<ProductsPage />} />
+                  <Route path="products/new" element={<ProductEditorPage />} />
+                  <Route path="products/:productId" element={<ProductEditorPage />} />
+                  <Route path="services" element={<ServicesPage />} />
+                  <Route path="offers" element={<OffersPage />} />
+                  <Route path="gallery" element={<GalleryPage />} />
+                  <Route path="qr" element={<BusinessQrPage />} />
+                  <Route path="qr/campaigns" element={<QrCampaignsPage />} />
+                  <Route path="analytics" element={<BusinessAnalyticsPage />} />
+                  <Route path="enquiries" element={<EnquiriesPage />} />
+                  <Route path="reviews" element={<ReviewsPage />} />
+                  <Route path="settings" element={<BusinessSettingsPage />} />
+                </Route>
+                </Route>
               </Route>
 
               <Route path="p/:slug" element={<PublicProfilePage />} />
               <Route path="q/:slug" element={<QrHomeScreenPage />} />
+              <Route path="business/:slug" element={<PublicBusinessPage />} />
+              <Route path="bq/:code" element={<BusinessQrResolvePage />} />
 
               <Route element={<PublicLayout />}>
                 <Route path="*" element={<NotFoundPage />} />

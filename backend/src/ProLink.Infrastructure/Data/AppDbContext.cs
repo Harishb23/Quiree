@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProLink.Domain.Common;
 using ProLink.Domain.Entities;
 
@@ -26,6 +27,24 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Enquiry> Enquiries => Set<Enquiry>();
 
+    // Business profiles
+    public DbSet<BusinessCategory> BusinessCategories => Set<BusinessCategory>();
+    public DbSet<BusinessSubcategory> BusinessSubcategories => Set<BusinessSubcategory>();
+    public DbSet<BusinessCategoryAttribute> BusinessCategoryAttributes => Set<BusinessCategoryAttribute>();
+    public DbSet<Business> Businesses => Set<Business>();
+    public DbSet<BusinessMember> BusinessMembers => Set<BusinessMember>();
+    public DbSet<BusinessProductCategory> BusinessProductCategories => Set<BusinessProductCategory>();
+    public DbSet<BusinessProduct> BusinessProducts => Set<BusinessProduct>();
+    public DbSet<BusinessProductImage> BusinessProductImages => Set<BusinessProductImage>();
+    public DbSet<BusinessService> BusinessServices => Set<BusinessService>();
+    public DbSet<BusinessOffer> BusinessOffers => Set<BusinessOffer>();
+    public DbSet<BusinessGalleryImage> BusinessGalleryImages => Set<BusinessGalleryImage>();
+    public DbSet<BusinessReview> BusinessReviews => Set<BusinessReview>();
+    public DbSet<BusinessEnquiry> BusinessEnquiries => Set<BusinessEnquiry>();
+    public DbSet<BusinessEnquiryActivity> BusinessEnquiryActivities => Set<BusinessEnquiryActivity>();
+    public DbSet<BusinessAnalyticsEvent> BusinessAnalyticsEvents => Set<BusinessAnalyticsEvent>();
+    public DbSet<BusinessQrCampaign> BusinessQrCampaigns => Set<BusinessQrCampaign>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
@@ -36,6 +55,17 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
                      .Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType)))
         {
             modelBuilder.Entity(entityType.ClrType).Property(nameof(BaseEntity.Id)).ValueGeneratedNever();
+        }
+
+        // All timestamps are written as UTC, but SQL Server's datetime2 doesn't store the kind, so values come back
+        // as Unspecified and serialise without a "Z" — browsers then read them as local time (e.g. 5h30 off in India).
+        // Mark every DateTime read from the database as UTC. Schema is unchanged.
+        var utc = new ValueConverter<DateTime, DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+        var utcNullable = new ValueConverter<DateTime?, DateTime?>(v => v, v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+        foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()))
+        {
+            if (property.ClrType == typeof(DateTime)) property.SetValueConverter(utc);
+            else if (property.ClrType == typeof(DateTime?)) property.SetValueConverter(utcNullable);
         }
 
         SeedData.Apply(modelBuilder);

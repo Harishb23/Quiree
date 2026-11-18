@@ -64,37 +64,47 @@ export default function OverviewPage() {
           <p>Manage your professional identities and share them effortlessly.</p>
         </div>
         <div className={styles.headerActions}>
-          <Button href={o.publicUrl} target="_blank" variant="secondary" iconRight={<ExternalLink />}>
+          <Button href={o.publicUrl} target="_blank" variant="outline" iconRight={<ExternalLink />}>
             View Public Profile
           </Button>
         </div>
       </div>
 
       <div className={styles.stats}>
-        <div className={[styles.stat, styles.statViolet].join(' ')}>
-          <Layers />
+        <div className={styles.stat}>
+          <span className={styles.statIcon}>
+            <Layers />
+          </span>
           <strong>{o.totalModes}</strong>
           <span>Profile Modes · {o.publishedModes} published</span>
         </div>
-        <div className={[styles.stat, styles.statGreen].join(' ')}>
-          <Zap />
+        <div className={styles.stat}>
+          <span className={styles.statIcon}>
+            <Zap />
+          </span>
           <strong>{o.activeModeName ?? '—'}</strong>
           <span>Active (default) Mode</span>
         </div>
-        <div className={[styles.stat, styles.statPink].join(' ')}>
-          <Palette />
+        <div className={styles.stat}>
+          <span className={styles.statIcon}>
+            <Palette />
+          </span>
           <strong>{o.selectedTemplateName ?? '—'}</strong>
           <span>Selected Template</span>
         </div>
-        <div className={[styles.stat, styles.statCyan].join(' ')}>
-          <QrCode />
+        <div className={styles.stat}>
+          <span className={styles.statIcon}>
+            <QrCode />
+          </span>
           <strong>{o.qrStatus}</strong>
           <span>QR Code Status</span>
         </div>
-        <div className={[styles.stat, styles.statAmber].join(' ')}>
-          <Crown />
+        <div className={[styles.stat, styles.statGold].join(' ')}>
+          <span className={styles.statIcon}>
+            <Crown />
+          </span>
           <strong>{o.subscription.planName}</strong>
-          <span>{o.subscription.isPaid ? 'Active subscription' : 'Current plan'}</span>
+          <span>{o.subscription.allFeaturesUnlocked ? 'All features unlocked' : o.subscription.isPaid ? 'Active subscription' : 'Current plan'}</span>
         </div>
       </div>
 
@@ -114,7 +124,7 @@ export default function OverviewPage() {
               {qr.src ? (
                 <img src={qr.src} alt="Your permanent profile QR code" width={150} height={150} />
               ) : qr.error ? (
-                <span style={{ color: '#1b1340', fontSize: 13 }}>QR unavailable</span>
+                <span className={styles.muted}>QR unavailable</span>
               ) : (
                 <Spinner />
               )}
@@ -205,7 +215,7 @@ export default function OverviewPage() {
         <CardHeader
           title="Profile completion"
           subtitle="Complete profiles get saved and shared more often."
-          action={<strong>{o.profileCompletion}%</strong>}
+          action={<strong className={styles.progressValue}>{o.profileCompletion}%</strong>}
         />
         <div className={styles.progressTrack}>
           <div className={styles.progressBar} style={{ width: `${o.profileCompletion}%` }} />

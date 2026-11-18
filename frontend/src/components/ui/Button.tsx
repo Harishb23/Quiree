@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Button.module.scss'
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'light'
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'premium' | 'danger' | 'light'
 type Size = 'sm' | 'md' | 'lg'
 
 interface CommonProps {

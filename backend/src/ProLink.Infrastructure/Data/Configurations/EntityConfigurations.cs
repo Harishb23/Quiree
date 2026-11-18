@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProLink.Domain.Entities;
+using ProLink.Domain.Enums;
 
 namespace ProLink.Infrastructure.Data.Configurations;
 
@@ -15,6 +16,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         b.Property(x => x.GoogleSubject).HasMaxLength(100);
         b.Property(x => x.PublicSlug).HasMaxLength(30).IsRequired();
         b.Property(x => x.PasswordResetTokenHash).HasMaxLength(128);
+        b.Property(x => x.AccountType).HasDefaultValue(AccountType.Personal);
 
         b.HasIndex(x => x.NormalizedEmail).IsUnique();
         b.HasIndex(x => x.PublicSlug).IsUnique();

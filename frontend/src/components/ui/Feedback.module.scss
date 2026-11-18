@@ -3,8 +3,8 @@
 .spinner {
   display: inline-block;
   border-radius: 50%;
-  border: 3px solid rgba($violet-300, 0.25);
-  border-top-color: $violet-400;
+  border: 3px solid $purple-light;
+  border-top-color: $purple-primary;
   animation: spin 0.8s linear infinite;
 }
 
@@ -21,8 +21,8 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  color: $text-muted-dark;
-  font-size: 14px;
+  color: $text-secondary;
+  font-size: $fs-base;
 }
 
 .state {
@@ -31,36 +31,27 @@
   align-items: center;
   text-align: center;
   gap: 8px;
-  padding: 48px 24px;
+  padding: 44px 24px;
   border-radius: $radius-lg;
-  border: 1px dashed rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed $border-strong;
+  background: $bg-secondary;
 
   h3 {
-    font-size: 17px;
+    font-size: $fs-lg;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
   }
 
   p {
     max-width: 420px;
-    color: $text-muted-dark;
-    font-size: 14px;
+    color: $text-secondary;
+    font-size: $fs-base;
   }
 }
 
 .stateIcon {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
+  @include icon-chip(56px, 26px);
   margin-bottom: 6px;
-  border-radius: 16px;
-  background: rgba($violet-500, 0.16);
-  color: $violet-300;
-
-  svg {
-    width: 26px;
-    height: 26px;
-  }
 }
 
 .stateAction {
@@ -68,33 +59,37 @@
 }
 
 .error .stateIcon {
-  background: rgba($red-500, 0.14);
-  color: #fca5a5;
+  color: $danger;
+  background: $danger-bg;
 }
 
 .alert {
-  padding: 11px 14px;
+  padding: 12px 14px;
   border-radius: $radius-md;
   font-size: 13.5px;
   border: 1px solid;
+  border-left-width: 4px;
 }
 
 .alert.error {
-  color: #fecaca;
-  background: rgba($red-500, 0.12);
-  border-color: rgba($red-500, 0.35);
+  color: $danger-hover;
+  background: $danger-bg;
+  border-color: $danger-border;
+  border-left-color: $danger;
 }
 
 .alert.success {
-  color: #bbf7d0;
-  background: rgba($green-500, 0.12);
-  border-color: rgba($green-500, 0.35);
+  color: $success;
+  background: $success-bg;
+  border-color: $success-border;
+  border-left-color: $success;
 }
 
 .alert.info {
-  color: $violet-100;
-  background: rgba($violet-500, 0.14);
-  border-color: rgba($violet-500, 0.35);
+  color: $purple-royal;
+  background: $info-bg;
+  border-color: $info-border;
+  border-left-color: $purple-primary;
 }
 
 .badge {
@@ -103,8 +98,9 @@
   gap: 4px;
   padding: 2px 9px;
   border-radius: $radius-pill;
+  border: 1px solid transparent;
   font-size: 11.5px;
-  font-weight: 600;
+  font-weight: $fw-semibold;
   line-height: 1.6;
   white-space: nowrap;
 
@@ -115,26 +111,39 @@
 }
 
 .badge_violet {
-  color: $violet-200;
-  background: rgba($violet-500, 0.2);
+  color: $purple-royal;
+  background: $purple-light;
+}
+
+.badge_gold {
+  color: $gold-dark;
+  background: $gold-light;
+  border-color: rgba($gold-primary, 0.4);
 }
 
 .badge_green {
-  color: #86efac;
-  background: rgba($green-500, 0.16);
+  color: $success;
+  background: $success-bg;
 }
 
 .badge_amber {
-  color: #fcd34d;
-  background: rgba($amber-400, 0.16);
+  color: $warning;
+  background: $warning-bg;
 }
 
 .badge_gray {
-  color: rgba(228, 223, 255, 0.7);
-  background: rgba(255, 255, 255, 0.08);
+  color: $text-secondary;
+  background: $bg-soft;
 }
 
 .badge_red {
-  color: #fca5a5;
-  background: rgba($red-500, 0.16);
+  color: $danger;
+  background: $danger-bg;
+}
+
+// Lavender loading placeholder block
+.skeleton {
+  display: block;
+  border-radius: $radius-sm;
+  @include skeleton;
 }

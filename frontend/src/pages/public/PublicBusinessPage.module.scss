@@ -1,0 +1,86 @@
+@use '../../styles/tokens' as *;
+
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  // Clears the fixed quick-action bar on phones.
+  padding: 0 16px calc(96px + env(safe-area-inset-bottom));
+  margin-top: -40px;
+
+  @include up($bp-md) {
+    padding-bottom: 32px;
+    margin-top: -16px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-size: $fs-xs;
+    font-weight: $fw-semibold;
+    color: $text-muted;
+
+    &:hover {
+      color: $purple-primary;
+    }
+  }
+}
+
+.center {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: $bg-secondary;
+}
+
+.missing {
+  @include card;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  max-width: 420px;
+  padding: 36px 28px;
+  border-radius: $radius-xl;
+  text-align: center;
+
+  > svg {
+    @include icon-chip(64px, 30px);
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+    color: $purple-deep;
+  }
+
+  p {
+    margin-bottom: 6px;
+    color: $text-secondary;
+  }
+}
+
+.loading {
+  display: grid;
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
+  background: $bg-secondary;
+}
+
+.loadingCard {
+  display: grid;
+  gap: 12px;
+  margin: 0 12px;
+  padding: 18px;
+  border-radius: $radius-lg;
+  background: $bg-card;
+  border: 1px solid $border;
+}

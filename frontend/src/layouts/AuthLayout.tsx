@@ -5,7 +5,7 @@ import styles from './AuthLayout.module.scss'
 
 export default function AuthLayout() {
   return (
-    <div className={`${styles.page} app-dark-bg`}>
+    <div className={`${styles.page} app-bg`}>
       <aside className={styles.brandPanel}>
         <Logo />
         <div className={styles.pitch}>

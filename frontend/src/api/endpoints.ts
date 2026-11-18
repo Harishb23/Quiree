@@ -1,5 +1,6 @@
 import { api } from './client'
 import type {
+  AccountType,
   AuthResponse,
   CreateOrderResponse,
   CurrentUser,
@@ -27,7 +28,8 @@ const data = <T>(p: Promise<{ data: T }>) => p.then((r) => r.data)
 export const authApi = {
   register: (body: RegisterRequest) => data(api.post<AuthResponse>('/auth/register', body)),
   login: (email: string, password: string) => data(api.post<AuthResponse>('/auth/login', { email, password })),
-  google: (idToken: string) => data(api.post<AuthResponse>('/auth/google', { idToken })),
+  /** accountType is only used if this Google sign-in creates a new account. */
+  google: (idToken: string, accountType?: AccountType) => data(api.post<AuthResponse>('/auth/google', { idToken, accountType })),
   forgotPassword: (email: string) => data(api.post<{ message: string }>('/auth/forgot-password', { email })),
   resetPassword: (email: string, token: string, newPassword: string) =>
     data(api.post<{ message: string }>('/auth/reset-password', { email, token, newPassword })),

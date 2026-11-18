@@ -6,6 +6,8 @@ import { Button } from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
 import { config } from '../config'
 import { company, footerLinks } from '../content/siteContent'
+import { socialLinks } from '../content/landingContent'
+import { BrandIcon, platformLabels } from '../components/ui/BrandIcon'
 import styles from './PublicLayout.module.scss'
 
 const navItems = [
@@ -67,7 +69,7 @@ export default function PublicLayout() {
   )
 
   return (
-    <div className={`app-dark-bg ${styles.shell}`}>
+    <div className={`app-bg ${styles.shell}`}>
       <header className={[styles.header, scrolled && styles.scrolled].filter(Boolean).join(' ')}>
         <div className={styles.headerInner}>
           <Logo />
@@ -123,45 +125,67 @@ export default function PublicLayout() {
         <div className={styles.footerInner}>
           <div className={styles.footerBrand}>
             <Logo />
-            <p>One identity. Many roles. Share every professional side of you with a single, permanent QR code.</p>
+            <p>Your identity. Your business. One QR code. Personal and business digital profiles that never need reprinting.</p>
+            <div className={styles.footerContact}>
+              <a href={`mailto:${company.email}`}>
+                <Mail size={15} /> {company.email}
+              </a>
+              <a href={`tel:${company.phone.replace(/[^\d+]/g, '')}`}>
+                <Phone size={15} /> {company.phone}
+              </a>
+              <span>
+                <MapPin size={15} /> {company.address}
+              </span>
+            </div>
+            <ul className={styles.socials} aria-label="Social media">
+              {socialLinks.map(({ platform, href }) => {
+                const label = platformLabels[platform]
+                return (
+                  <li key={platform}>
+                    {href ? (
+                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                        <BrandIcon platform={platform} size={16} />
+                      </a>
+                    ) : (
+                      <span className={styles.socialSoon} title={`${label} — coming soon`}>
+                        <BrandIcon platform={platform} size={16} />
+                        <span className="sr-only">{label} (coming soon)</span>
+                      </span>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
             <Button to={authenticated ? '/dashboard' : '/register'} size="sm" iconRight={<ArrowRight />}>
               {authenticated ? 'Go to Dashboard' : 'Create your profile'}
             </Button>
           </div>
-          <div className={styles.footerCol}>
-            <h4>Product</h4>
-            {footerLinks.product.map((l) => (
-              <Link key={l.label} to={l.to}>
-                {l.label}
-              </Link>
-            ))}
-          </div>
-          <div className={styles.footerCol}>
-            <h4>Company</h4>
-            {footerLinks.company.map((l) => (
-              <Link key={l.label} to={l.to}>
-                {l.label}
-              </Link>
-            ))}
-          </div>
-          <div className={styles.footerCol}>
-            <h4>Contact</h4>
-            <a href={`mailto:${company.email}`}>
-              <Mail size={15} /> {company.email}
-            </a>
-            <a href={`tel:${company.phone.replace(/[^\d+]/g, '')}`}>
-              <Phone size={15} /> {company.phone}
-            </a>
-            <span>
-              <MapPin size={15} /> {company.address}
-            </span>
-          </div>
+          {(
+            [
+              ['Product', footerLinks.product],
+              ['Personal', footerLinks.personal],
+              ['Business', footerLinks.business],
+              ['Support', footerLinks.support],
+            ] as const
+          ).map(([heading, links]) => (
+            <nav key={heading} className={styles.footerCol} aria-label={`${heading} links`}>
+              <h4>{heading}</h4>
+              {links.map((l) => (
+                <Link key={l.label} to={l.to}>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          ))}
         </div>
         <div className={styles.footerBottom}>
           <span>
             © {new Date().getFullYear()} {config.appName}. All rights reserved.
           </span>
-          <span>Made for professionals who wear many hats.</span>
+          <span className={styles.footerLegal}>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+          </span>
         </div>
       </footer>
     </div>

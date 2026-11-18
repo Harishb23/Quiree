@@ -24,6 +24,7 @@ import {
   ServicesEditor,
   SkillsEditor,
 } from './modeEditor/SectionEditors'
+import { LivePreviewPanel } from './modeEditor/LivePreviewPanel'
 import { ProfilePreview } from './ModePreviewModal'
 import styles from './Dashboard.module.scss'
 import local from './ModeEditorPage.module.scss'
@@ -128,6 +129,13 @@ export default function ModeEditorPage() {
     form.modeType === 'HR' ? 'HR achievements' : form.modeType === 'Marketing' ? 'Marketing achievements' : form.modeType === 'Entrepreneur' ? 'Business achievements' : 'Achievements'
   const servicesLabel = isEntrepreneur ? 'Products & services' : 'Services'
 
+  const previewProfile = {
+    fullName: profile?.fullName ?? user?.fullName ?? '',
+    photoUrl: profile?.photoUrl ?? user?.photoUrl ?? null,
+    permanentUrl: user?.publicUrl ?? '',
+  }
+  const previewMode = previewModeFromForm(toPayload(form), profile, templateKey)
+
   return (
     <form onSubmit={onSubmit} noValidate>
       <div className={styles.pageHeader}>
@@ -139,7 +147,7 @@ export default function ModeEditorPage() {
           <p>Each mode has its own independent resume. Only published modes are visible to viewers.</p>
         </div>
         <div className={styles.headerActions}>
-          <Button variant="secondary" icon={<Eye />} onClick={() => setPreviewOpen(true)}>
+          <Button variant="secondary" icon={<Eye />} className={local.previewButton} onClick={() => setPreviewOpen(true)}>
             Live preview
           </Button>
           <Button type="submit" loading={saving} icon={<Save />}>
@@ -287,17 +295,19 @@ export default function ModeEditorPage() {
             )}
           </div>
         </div>
+
+        <div className={local.previewColumn}>
+          <LivePreviewPanel
+            profile={previewProfile}
+            mode={previewMode}
+            templateKey={templateKey}
+            onExpand={() => setPreviewOpen(true)}
+          />
+        </div>
       </div>
 
       <Modal open={previewOpen} title="Live preview (unsaved changes)" size="xl" onClose={() => setPreviewOpen(false)}>
-        <ProfilePreview
-          profile={{
-            fullName: profile?.fullName ?? user?.fullName ?? '',
-            photoUrl: profile?.photoUrl ?? user?.photoUrl ?? null,
-            permanentUrl: user?.publicUrl ?? '',
-          }}
-          mode={previewModeFromForm(toPayload(form), profile, templateKey)}
-        />
+        <ProfilePreview profile={previewProfile} mode={previewMode} />
       </Modal>
     </form>
   )

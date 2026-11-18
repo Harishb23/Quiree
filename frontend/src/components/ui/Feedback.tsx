@@ -70,8 +70,13 @@ export function Badge({
   tone = 'violet',
   children,
 }: {
-  tone?: 'violet' | 'green' | 'amber' | 'gray' | 'red'
+  tone?: 'violet' | 'gold' | 'green' | 'amber' | 'gray' | 'red'
   children: ReactNode
 }) {
   return <span className={[styles.badge, styles[`badge_${tone}`]].join(' ')}>{children}</span>
+}
+
+/** Lavender shimmer placeholder for loading content. */
+export function Skeleton({ width = '100%', height = 16, radius }: { width?: number | string; height?: number | string; radius?: number }) {
+  return <span className={styles.skeleton} style={{ width, height, borderRadius: radius }} aria-hidden />
 }

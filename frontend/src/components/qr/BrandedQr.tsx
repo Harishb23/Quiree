@@ -46,7 +46,7 @@ export const BrandedQr = forwardRef<SVGSVGElement, BrandedQrProps>(function Bran
       {/* Header: logo + brand name */}
       <g transform={`translate(${WIDTH / 2}, ${MARGIN + HEADER / 2 - 10})`}>
         <BrandMark x={-160 - headerLogo / 2} y={-headerLogo / 2} size={headerLogo} gradient={ids.logo} brand={brand} />
-        <text x={-160 + headerLogo / 2 + 22} y="26" fontFamily={FONT} fontSize="78" fontWeight="800" fill="#14112b">
+        <text x={-160 + headerLogo / 2 + 22} y="26" fontFamily={FONT} fontSize="78" fontWeight="800" fill="#452269">
           {brand}
         </text>
       </g>
@@ -69,7 +69,7 @@ export const BrandedQr = forwardRef<SVGSVGElement, BrandedQrProps>(function Bran
         <text x="40" y="-10" textAnchor="middle" fontFamily={FONT} fontSize="50" fontWeight="800">
           Scan to Open
         </text>
-        <text x="40" y="50" textAnchor="middle" fontFamily={FONT} fontSize="56" fontWeight="800">
+        <text x="40" y="50" textAnchor="middle" fontFamily={FONT} fontSize="56" fontWeight="800" fill="#d4a94f">
           {brand}
         </text>
       </g>
@@ -98,7 +98,7 @@ export const BrandedQrTile = forwardRef<SVGSVGElement, BrandedQrProps>(function 
       <Gradients ids={ids} />
       <rect width={TILE_W} height={TILE_H} rx="90" fill="#ffffff" />
       <QrMatrix url={url} brand={brand} x={TILE_PAD} y={TILE_PAD} size={TILE_QR} ids={ids} />
-      <text x={TILE_W / 2} y={TILE_W + 20} textAnchor="middle" fontFamily={FONT} fontSize="64" fontWeight="800" fill="#14112b">
+      <text x={TILE_W / 2} y={TILE_W + 20} textAnchor="middle" fontFamily={FONT} fontSize="64" fontWeight="800" fill="#452269">
         Scan to open {brand}
       </text>
     </svg>
@@ -117,20 +117,20 @@ function Gradients({ ids }: { ids: GradientIds }) {
     <defs>
       <linearGradient id={ids.bg} x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stopColor="#ffffff" />
-        <stop offset="1" stopColor="#ece6ff" />
+        <stop offset="1" stopColor="#f1ecfa" />
       </linearGradient>
       <linearGradient id={ids.frame} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="#5b5bf5" />
-        <stop offset="0.55" stopColor="#a43cf0" />
-        <stop offset="1" stopColor="#f2557a" />
+        <stop offset="0" stopColor="#7c4db1" />
+        <stop offset="0.5" stopColor="#6b3fa0" />
+        <stop offset="1" stopColor="#452269" />
       </linearGradient>
       <linearGradient id={ids.eye} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="#7a3cf0" />
-        <stop offset="1" stopColor="#4b22c8" />
+        <stop offset="0" stopColor="#6b3fa0" />
+        <stop offset="1" stopColor="#452269" />
       </linearGradient>
       <linearGradient id={ids.logo} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stopColor="#4f6bff" />
-        <stop offset="1" stopColor="#8b2ff0" />
+        <stop offset="0" stopColor="#6b3fa0" />
+        <stop offset="1" stopColor="#452269" />
       </linearGradient>
     </defs>
   )
@@ -168,7 +168,7 @@ function QrMatrix({ url, brand, x, y, size, ids }: { url: string; brand: string;
 
   return (
     <g>
-      <g fill="#1c1240">
+      <g fill="#30243d">
         {modules.map(([r, c]) => (
           <rect key={`${r}-${c}`} x={x + c * m} y={y + r * m} width={m} height={m} rx={m * 0.32} />
         ))}

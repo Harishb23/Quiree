@@ -46,13 +46,13 @@ public sealed class AuthService(
             slug = await GenerateUniqueSlugAsync(request.FullName, ct);
         }
 
-        var user = CreateUser(email, normalized, slug, request.FullName.Trim());
+        var user = CreateUser(email, normalized, slug, request.FullName.Trim(), request.AccountType);
         user.PasswordHash = passwordHasher.HashPassword(user, request.Password);
         user.LastLoginAt = clock.GetUtcNow().UtcDateTime;
         users.Add(user);
         await uow.SaveChangesAsync(ct);
 
-        logger.LogInformation("Registered user {UserId} with slug {Slug}", user.Id, slug);
+        logger.LogInformation("Registered {AccountType} user {UserId} with slug {Slug}", user.AccountType, user.Id, slug);
         return BuildAuthResponse(user);
     }
 
@@ -96,7 +96,7 @@ public sealed class AuthService(
             {
                 var name = string.IsNullOrWhiteSpace(google.Name) ? google.Email.Split('@')[0] : google.Name!;
                 var slug = await GenerateUniqueSlugAsync(name, ct);
-                user = CreateUser(google.Email, normalized, slug, name);
+                user = CreateUser(google.Email, normalized, slug, name, request.AccountType);
                 user.GoogleSubject = google.Subject;
                 if (UrlRules.IsSafeHttpUrl(google.Picture ?? string.Empty))
                     user.Profile!.PhotoUrl = google.Picture;
@@ -185,7 +185,7 @@ public sealed class AuthService(
             : new(slug, true, null);
     }
 
-    private User CreateUser(string email, string normalizedEmail, string slug, string fullName)
+    private User CreateUser(string email, string normalizedEmail, string slug, string fullName, AccountType accountType)
     {
         var isAdmin = _app.AdminEmails.Any(a => Normalize(a) == normalizedEmail);
         var user = new User
@@ -193,7 +193,8 @@ public sealed class AuthService(
             Email = email,
             NormalizedEmail = normalizedEmail,
             PublicSlug = slug,
-            Role = isAdmin ? UserRole.Admin : UserRole.User
+            Role = isAdmin ? UserRole.Admin : UserRole.User,
+            AccountType = accountType
         };
         user.Profile = new UserProfile { UserId = user.Id, FullName = fullName };
         // The permanent URL is fixed at registration and never regenerated (the QR code encodes it).
@@ -202,7 +203,9 @@ public sealed class AuthService(
             UserId = user.Id,
             PermanentUrl = BuildPermanentUrl(slug),
             QrReference = Convert.ToHexString(RandomNumberGenerator.GetBytes(8)).ToLowerInvariant(),
-            QrGeneratedAt = clock.GetUtcNow().UtcDateTime
+            QrGeneratedAt = clock.GetUtcNow().UtcDateTime,
+            // Business accounts present themselves through business storefronts, not a personal /p/ page.
+            IsPublic = accountType == AccountType.Personal
         };
         return user;
     }
@@ -238,7 +241,8 @@ public sealed class AuthService(
         user.PublicSlug,
         user.PublicSettings?.PermanentUrl ?? BuildPermanentUrl(user.PublicSlug),
         user.PasswordHash is not null,
-        user.GoogleSubject is not null);
+        user.GoogleSubject is not null,
+        user.AccountType);
 
     private static string Normalize(string email) => email.Trim().ToUpperInvariant();
 

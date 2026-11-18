@@ -1,3 +1,4 @@
+using ProLink.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using ProLink.Application.Common;
 
@@ -15,6 +16,10 @@ public sealed class RegisterRequest
     [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d).+$", ErrorMessage = "Password must contain at least one letter and one number.")]
     [NoSanitize]
     public string Password { get; set; } = string.Empty;
+
+    /// <summary>Personal (profile modes) or Business (business profiles). Fixed after registration.</summary>
+    [EnumDataType(typeof(AccountType))]
+    public AccountType AccountType { get; set; } = AccountType.Personal;
 
     /// <summary>Optional permanent username for the public URL. Generated when omitted.</summary>
     [StringLength(SlugRules.MaxLength)]
@@ -35,6 +40,10 @@ public sealed class GoogleLoginRequest
     /// <summary>The ID token (credential) returned by Google Identity Services.</summary>
     [Required, NoSanitize]
     public string IdToken { get; set; } = string.Empty;
+
+    /// <summary>Only used when this Google sign-in creates a new account.</summary>
+    [EnumDataType(typeof(AccountType))]
+    public AccountType AccountType { get; set; } = AccountType.Personal;
 }
 
 public sealed class ForgotPasswordRequest
@@ -77,7 +86,8 @@ public sealed record CurrentUserDto(
     string PublicSlug,
     string PublicUrl,
     bool HasPassword,
-    bool HasGoogle);
+    bool HasGoogle,
+    AccountType AccountType);
 
 public sealed record AuthResponse(string AccessToken, DateTime ExpiresAt, CurrentUserDto User);
 

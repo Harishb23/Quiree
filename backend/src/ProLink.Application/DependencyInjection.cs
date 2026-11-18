@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using ProLink.Application.Interfaces;
 using ProLink.Application.Services;
+using ProLink.Application.Services.Businesses;
 using ProLink.Domain.Entities;
 
 namespace ProLink.Application;
@@ -23,6 +24,20 @@ public static class DependencyInjection
         services.AddScoped<IEnquiryService, EnquiryService>();
         services.AddScoped<IDashboardService, DashboardService>();
         services.AddScoped<IAccountService, AccountService>();
+
+        // Business profiles
+        services.AddScoped<BusinessAccessGuard>();
+        services.AddScoped<StorefrontBuilder>();
+        services.AddScoped<VisitorHasher>();
+        services.AddScoped<EventRecorder>();
+        services.AddScoped<BusinessQrCampaignService>();
+        services.AddScoped<IBusinessCategoryService, BusinessCategoryService>();
+        services.AddScoped<IBusinessProfileService, BusinessProfileService>();
+        services.AddScoped<IBusinessCatalogService, BusinessCatalogService>();
+        services.AddScoped<IBusinessEngagementService, BusinessEngagementService>();
+        services.AddScoped<IBusinessQrService, BusinessQrService>();
+        services.AddScoped<IBusinessAnalyticsService, BusinessAnalyticsService>();
+        services.AddScoped<IPublicBusinessService, PublicBusinessService>();
         return services;
     }
 }

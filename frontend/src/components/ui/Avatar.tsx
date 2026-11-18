@@ -11,7 +11,7 @@ export function Avatar({ name, photoUrl, size = 40 }: { name: string; photoUrl?:
     borderRadius: '50%',
     flexShrink: 0,
     objectFit: 'cover' as const,
-    border: '2px solid rgba(255,255,255,0.25)',
+    border: '2px solid var(--q-purple-light)',
   }
   if (src && !failed) {
     return <img src={src} alt={name} style={style} onError={() => setFailed(true)} referrerPolicy="no-referrer" />
@@ -26,7 +26,7 @@ export function Avatar({ name, photoUrl, size = 40 }: { name: string; photoUrl?:
         fontWeight: 700,
         fontSize: size * 0.38,
         color: '#fff',
-        background: 'linear-gradient(135deg,#7c5cff,#a855f7)',
+        background: 'var(--q-purple-primary)',
       }}
     >
       {initials(name) || '?'}

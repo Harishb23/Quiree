@@ -16,6 +16,7 @@ public sealed class SubscriptionService(
     IRazorpayClient razorpay,
     IUnitOfWork uow,
     IOptions<RazorpayOptions> razorpayOptions,
+    IOptions<SubscriptionOptions> subscriptionOptions,
     TimeProvider clock,
     ILogger<SubscriptionService> logger) : ISubscriptionService
 {
@@ -25,6 +26,18 @@ public sealed class SubscriptionService(
         (await subscriptions.ListPlansAsync(ct)).Select(ToDto).ToList();
 
     public async Task<EntitlementsDto> GetEntitlementsAsync(Guid userId, CancellationToken ct = default)
+    {
+        var entitlements = await PlanEntitlementsAsync(userId, ct);
+        if (!subscriptionOptions.Value.UnlockAllFeatures) return entitlements;
+
+        // Promotional unlock: everyone gets the best limits of any active plan. The plan name / paid status stay
+        // truthful so existing subscribers still see their real subscription.
+        var plans = await subscriptions.ListPlansAsync(ct);
+        var maxModes = plans.Count > 0 ? Math.Max(entitlements.MaxModes, plans.Max(p => p.MaxModes)) : entitlements.MaxModes;
+        return entitlements with { MaxModes = maxModes, AllowsPremiumTemplates = true, AllFeaturesUnlocked = true };
+    }
+
+    private async Task<EntitlementsDto> PlanEntitlementsAsync(Guid userId, CancellationToken ct)
     {
         var current = await subscriptions.GetCurrentAsync(userId, Now, ct);
         if (current?.Plan is { } plan)
@@ -48,6 +61,10 @@ public sealed class SubscriptionService(
     public async Task<CreateOrderResponse> CreateOrderAsync(Guid userId, CreateOrderRequest request,
         CancellationToken ct = default)
     {
+        // Nobody should pay for features that are currently free for everyone.
+        if (subscriptionOptions.Value.UnlockAllFeatures)
+            throw new BusinessValidationException("All features are currently free for everyone, so there's nothing to buy right now.");
+
         var plan = await subscriptions.GetPlanAsync(request.PlanId, ct);
         if (plan is null || !plan.IsActive) throw new NotFoundException("Plan not found.");
         if (plan.PriceInPaise <= 0) throw new BusinessValidationException("The free plan does not require payment.");

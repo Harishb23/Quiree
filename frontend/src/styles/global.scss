@@ -1,5 +1,26 @@
 @use 'tokens' as *;
 
+// Runtime design tokens (mirrors _tokens.scss) for inline styles and third-party widgets.
+:root {
+  --q-bg-primary: #{$bg-primary};
+  --q-bg-secondary: #{$bg-secondary};
+  --q-bg-soft: #{$bg-soft};
+  --q-purple-primary: #{$purple-primary};
+  --q-purple-royal: #{$purple-royal};
+  --q-purple-deep: #{$purple-deep};
+  --q-purple-light: #{$purple-light};
+  --q-gold-primary: #{$gold-primary};
+  --q-gold-light: #{$gold-light};
+  --q-gold-dark: #{$gold-dark};
+  --q-text-primary: #{$text-primary};
+  --q-text-secondary: #{$text-secondary};
+  --q-text-muted: #{$text-muted};
+  --q-border: #{$border};
+  --q-danger: #{$danger};
+  --q-success: #{$success};
+  color-scheme: light;
+}
+
 *,
 *::before,
 *::after {
@@ -14,13 +35,14 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: $font-sans;
-  font-size: 15px;
+  font-family: $font-app;
+  font-size: $fs-base;
   line-height: 1.55;
-  color: $text-on-dark;
-  background: $ink-900;
+  color: $text-primary;
+  background: $bg-secondary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 #root {
@@ -34,9 +56,9 @@ h4,
 h5,
 h6 {
   margin: 0;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  line-height: 1.25;
+  font-weight: $fw-bold;
+  letter-spacing: -0.015em;
 }
 
 p {
@@ -65,12 +87,55 @@ button {
   cursor: pointer;
 }
 
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: $purple-primary;
+  width: 16px;
+  height: 16px;
+}
+
 :focus-visible {
   @include focus-ring;
 }
 
 ::selection {
-  background: rgba($violet-500, 0.35);
+  background: $purple-light-hover;
+  color: $purple-deep;
+}
+
+// Slim lavender scrollbars
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $border-strong transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $border-strong;
+  border-radius: $radius-pill;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes q-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes q-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -88,8 +153,7 @@ button {
   @include visually-hidden;
 }
 
-// Shared page background for dark (marketing / dashboard / auth) screens
-.app-dark-bg {
-  background: $gradient-aurora, $ink-900;
-  background-attachment: fixed;
+// Shared page background for application screens (marketing / dashboard / auth / viewer chrome).
+.app-bg {
+  background: $bg-secondary;
 }

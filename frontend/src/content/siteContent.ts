@@ -1,11 +1,13 @@
 // Marketing copy for the public website. Edit here rather than inside page components.
 
 export const hero = {
-  pill: 'One Identity. Many Roles.',
-  titleStart: 'Your Professional',
-  titleEnd: 'Identity, Reimagined',
+  pill: 'Personal & Business Digital Profiles',
+  titleStart: 'Your Identity. Your Business.',
+  titleEnd: 'One QR Code.',
   subtitle:
-    'Create multiple professional profiles, share them with a single QR code, and let people view the right you, every time.',
+    'Build a polished personal profile for every professional role, or a digital storefront for your business — then share it all through one permanent QR code that never needs reprinting.',
+  personalPoint: 'Personal — resume-quality profiles, social links and a one-tap contact card.',
+  businessPoint: 'Business — products, services, offers, location and customer enquiries on one page.',
 }
 
 export const aboutTeaser = {
@@ -35,22 +37,22 @@ export const features: FeatureItem[] = [
   {
     icon: 'layers',
     title: 'Multiple Profiles',
-    description: 'Create independent professional identities — HR, Developer, Entrepreneur and more — under one account.',
+    description: 'Run separate identities — developer, consultant, founder or your shop — from one account, each with its own content and look.',
   },
   {
     icon: 'qr',
     title: 'Single QR Code',
-    description: 'One permanent QR code for all your profiles. Update anything; the code never changes.',
+    description: 'One permanent code links to everything you publish. Edit freely — the printed QR keeps working.',
   },
   {
     icon: 'contact',
     title: 'Save Contact (vCard)',
-    description: 'Viewers save your details instantly with a prefilled contact card, including your profile link.',
+    description: 'Visitors save your name, number, email and profile link to their phone in a single tap.',
   },
   {
     icon: 'smartphone',
     title: 'Add to Home Screen',
-    description: 'Viewers can keep your profile like an app on their phone, where the browser supports it.',
+    description: 'Visitors can pin your profile to their phone like an app, so you’re always one tap away.',
   },
   {
     icon: 'palette',
@@ -176,6 +178,25 @@ export const footerLinks = {
     { label: 'Pricing', to: '/pricing' },
     { label: 'Templates', to: '/#templates' },
     { label: 'How It Works', to: '/#how-it-works' },
+    { label: 'FAQ', to: '/#faq' },
+  ],
+  personal: [
+    { label: 'Personal Profiles', to: '/#solutions' },
+    { label: 'Resume Templates', to: '/#templates' },
+    { label: 'Live QR Demo', to: '/#live-demo' },
+    { label: 'Create Personal Profile', to: '/register' },
+  ],
+  business: [
+    { label: 'Business Profiles', to: '/#solutions' },
+    { label: 'Business Categories', to: '/#categories' },
+    { label: 'Analytics', to: '/#analytics' },
+    { label: 'Create Business Profile', to: '/register' },
+  ],
+  support: [
+    { label: 'Contact Support', to: '/contact' },
+    { label: 'About Us', to: '/about' },
+    { label: 'Privacy Policy', to: '/privacy' },
+    { label: 'Terms of Service', to: '/terms' },
   ],
   company: [
     { label: 'About Us', to: '/about' },

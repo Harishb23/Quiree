@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { homeFor } from '../../lib/accounts'
+import type { AccountType } from '../../types/api'
 import { useAuth } from '../../context/AuthContext'
 import { PageLoader } from '../ui/Feedback'
 
@@ -18,8 +20,18 @@ export function ProtectedRoute({ children, role }: { children: ReactNode; role?:
 
 /** Login / register pages: signed-in users go straight to the dashboard. */
 export function GuestRoute({ children }: { children: ReactNode }) {
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   if (status === 'loading') return <PageLoader />
-  if (status === 'authenticated') return <Navigate to="/dashboard" replace />
+  if (status === 'authenticated') return <Navigate to={homeFor(user?.accountType)} replace />
   return <>{children}</>
+}
+
+/**
+ * Keeps each account type in its own part of the dashboard: a business account opening a personal page
+ * (or the other way round) is sent to its own home. The API enforces the same rule.
+ */
+export function AccountArea({ type }: { type: AccountType }) {
+  const { user } = useAuth()
+  if (user && user.accountType !== type) return <Navigate to={homeFor(user.accountType)} replace />
+  return <Outlet />
 }

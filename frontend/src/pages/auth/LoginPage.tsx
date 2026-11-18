@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Mail, LogIn } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { redirectAfterLogin } from '../../lib/accounts'
 import { getErrorMessage } from '../../api/client'
 import { Button } from '../../components/ui/Button'
 import { TextField } from '../../components/ui/Field'
@@ -15,7 +16,6 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const from = (location.state as { from?: string } | null)?.from
-  const redirectTo = from?.startsWith('/dashboard') ? from : '/dashboard'
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,9 +34,9 @@ export default function LoginPage() {
     setSubmitting(true)
     setError(null)
     try {
-      await login(email.trim(), password)
-      // Only navigate once the API has accepted the credentials.
-      navigate(redirectTo, { replace: true })
+      const user = await login(email.trim(), password)
+      // Only navigate once the API has accepted the credentials; each account type has its own dashboard.
+      navigate(redirectAfterLogin(user, from), { replace: true })
     } catch (err) {
       setError(getErrorMessage(err, 'Unable to sign in.'))
     } finally {
@@ -47,8 +47,8 @@ export default function LoginPage() {
   async function onGoogle(idToken: string) {
     setError(null)
     try {
-      await loginWithGoogle(idToken)
-      navigate(redirectTo, { replace: true })
+      const user = await loginWithGoogle(idToken)
+      navigate(redirectAfterLogin(user, from), { replace: true })
     } catch (err) {
       setError(getErrorMessage(err, 'Google sign-in failed.'))
     }

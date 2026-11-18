@@ -17,6 +17,19 @@ export function normalizeUrlInput(value: string): string {
   return `https://${v}`
 }
 
+const DOMAIN = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i
+
+/**
+ * True when a typed link (bare domain allowed) is a real-looking web address: http(s), a proper
+ * domain name and no "user@" part — so handles like "my&shop" or emails don't slip through.
+ */
+export function isValidWebLink(value: string | null | undefined): boolean {
+  const normalized = normalizeUrlInput(value ?? '')
+  if (!normalized || !safeUrl(normalized)) return false
+  const url = new URL(normalized)
+  return !url.username && !url.password && (url.hostname === 'localhost' || DOMAIN.test(url.hostname))
+}
+
 /** Converts a phone number or wa.me link into a WhatsApp URL. */
 export function normalizeWhatsApp(value: string): string {
   const v = value.trim()

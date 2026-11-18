@@ -1,0 +1,125 @@
+// Copy for the home (landing) page sections. Edit here rather than inside page components.
+// Keep every claim aligned with what the product actually does — no invented numbers or reviews.
+
+export const offerings = {
+  personal: {
+    title: 'Personal Profile',
+    tagline: 'For professionals, freelancers and creators',
+    description: 'A complete digital identity that replaces paper cards and scattered links.',
+    points: [
+      'Multiple professional identities under one account',
+      'Social links, website and contact details',
+      'Resume with experience, skills, education and certifications',
+      'Portfolio of projects and achievements',
+      'Digital contact card (vCard) with one-tap save',
+    ],
+  },
+  business: {
+    title: 'Business Profile',
+    tagline: 'For shops, studios, restaurants and service providers',
+    description: 'A mobile storefront customers open the moment they scan your QR code.',
+    points: [
+      'Business details, opening hours and payment methods',
+      'Product catalog with photos, prices and stock status',
+      'Services and current offers',
+      'Location with one-tap directions, call and WhatsApp',
+      'Customer enquiries collected in your dashboard',
+    ],
+  },
+}
+
+/** Keys mirror the business categories seeded by the backend (BusinessSeedData). */
+export const businessCategories = [
+  { key: 'footwear', name: 'Shoe Shops', blurb: 'Sizes, styles and new arrivals' },
+  { key: 'flowers', name: 'Flower Shops', blurb: 'Bouquets, occasions and delivery' },
+  { key: 'clothing', name: 'Clothing Stores', blurb: 'Collections, sizes and offers' },
+  { key: 'restaurants', name: 'Restaurants & Cafés', blurb: 'Menus, timings and enquiries' },
+  { key: 'jewellery', name: 'Jewellery Shops', blurb: 'Collections and custom orders' },
+  { key: 'beauty', name: 'Salons & Beauty', blurb: 'Services, pricing and bookings' },
+  { key: 'electronics', name: 'Electronics Stores', blurb: 'Products, brands and warranties' },
+  { key: 'bakeries', name: 'Bakeries', blurb: 'Daily bakes and custom cakes' },
+  { key: 'grocery', name: 'Grocery Stores', blurb: 'Essentials, offers and delivery' },
+  { key: 'other', name: 'Other Businesses', blurb: 'Healthcare, education, services and more' },
+] as const
+
+export type BusinessCategoryKey = (typeof businessCategories)[number]['key']
+
+export const landingSteps = [
+  {
+    title: 'Create your profile',
+    description: 'Sign up and build a personal profile, a business profile, or both — no design skills needed.',
+  },
+  {
+    title: 'Get one permanent QR code',
+    description: 'Your QR code is generated for you. Download it for cards, counters, packaging and banners.',
+  },
+  {
+    title: 'Share and get discovered',
+    description: 'People scan with any phone camera and land on your profile instantly — no app to install.',
+  },
+]
+
+export const analyticsPoints = [
+  { title: 'QR scans', description: 'See how often your printed QR code is scanned.' },
+  { title: 'Profile visits', description: 'Follow visits to your public profile over time.' },
+  {
+    title: 'Engagement',
+    description: 'Know when visitors call, message on WhatsApp, ask for directions or send an enquiry.',
+  },
+]
+
+/**
+ * TODO(client): replace with genuine, consented customer reviews. Until then these render as clearly
+ * labelled placeholders — never present them as real testimonials or attach ratings to them.
+ */
+export const testimonialPlaceholders = [
+  { audience: 'Personal profile', role: 'Professional or freelancer' },
+  { audience: 'Business profile', role: 'Shop or restaurant owner' },
+  { audience: 'Business profile', role: 'Service provider' },
+]
+
+export const homeFaq = [
+  {
+    q: 'How do I get my QR code?',
+    a: 'Your QR code is created for you when you sign up. Open the QR Code page in your dashboard to download it as PNG or SVG for print or digital use.',
+  },
+  {
+    q: 'Will my QR code ever change?',
+    a: 'No. Your QR code points to your permanent profile link. Editing content, switching templates or changing plans never changes the code, so anything you have printed keeps working.',
+  },
+  {
+    q: 'What is a personal profile?',
+    a: 'Your digital identity: contact details, social links and one or more professional modes — each a complete resume with experience, skills and projects, in the template you choose.',
+  },
+  {
+    q: 'What is a business profile?',
+    a: 'A mobile storefront for your shop or service: business details, opening hours, products, services, offers, location and an enquiry form customers can use right after scanning.',
+  },
+  {
+    q: 'Do people need an app to scan my QR code?',
+    a: 'No. Any modern phone camera can scan it and your profile opens in the browser. Visitors can save your contact or add your profile to their home screen.',
+  },
+  {
+    q: 'How do subscriptions work?',
+    a: 'Start on the Free plan. Paid plans unlock more profile modes and premium templates and are processed securely by Razorpay — a plan activates only after our server verifies the payment.',
+  },
+  {
+    q: 'What happens if my plan expires?',
+    a: 'Your published profiles stay online and your QR code keeps working. Creating extra modes or selecting premium templates requires an active plan.',
+  },
+  {
+    q: 'How do I manage my account?',
+    a: 'From Settings in your dashboard you can update your account, change your password and control public visibility — including making your whole profile private.',
+  },
+]
+
+export type SocialPlatformKey = 'Instagram' | 'LinkedIn' | 'Facebook' | 'YouTube' | 'Twitter'
+
+/** TODO(client): add the real social profile URLs. Entries without an href render as "coming soon". */
+export const socialLinks: { platform: SocialPlatformKey; href: string }[] = [
+  { platform: 'Instagram', href: '' },
+  { platform: 'LinkedIn', href: '' },
+  { platform: 'Facebook', href: '' },
+  { platform: 'YouTube', href: '' },
+  { platform: 'Twitter', href: '' },
+]

@@ -8,6 +8,8 @@ internal static class SeedData
 {
     public static void Apply(ModelBuilder modelBuilder)
     {
+        BusinessSeedData.Apply(modelBuilder);
+
         modelBuilder.Entity<ProfileTemplate>().HasData(
             // Ids/keys are stable; names and display order follow the template design sheet.
             T(10, 1, "personal-branding", "Classic Professional", "Square portrait with a clean blue name card and contact tiles.", true),

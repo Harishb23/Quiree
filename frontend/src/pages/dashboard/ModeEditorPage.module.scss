@@ -1,5 +1,8 @@
 @use '../../styles/tokens' as *;
 
+// The side-by-side live preview needs room: form + preview from $bp-lg, plus the section nav column from $bp-wide.
+$bp-wide: 1600px;
+
 .back {
   display: inline-flex;
   align-items: center;
@@ -7,7 +10,11 @@
   margin-bottom: 8px;
   font-size: 13px;
   font-weight: 600;
-  color: $violet-300;
+  color: $purple-primary;
+
+  &:hover {
+    color: $purple-royal;
+  }
 
   svg {
     width: 15px;
@@ -18,10 +25,41 @@
 .layout {
   display: grid;
   gap: 20px;
+  align-items: start;
+
+  // Form | preview, with the section nav as a horizontal strip across the top.
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1fr) 380px;
+
+    > .sectionNav {
+      grid-column: 1 / -1;
+    }
+  }
+
+  // Nav | form | preview
+  @include up($bp-wide) {
+    grid-template-columns: 170px minmax(0, 1fr) 420px;
+
+    > .sectionNav {
+      grid-column: auto;
+    }
+  }
+}
+
+// Below $bp-lg the panel is hidden; the header button opens the preview modal instead.
+.previewColumn {
+  display: none;
 
   @include up($bp-lg) {
-    grid-template-columns: 190px minmax(0, 1fr);
-    align-items: start;
+    display: block;
+    position: sticky;
+    top: 86px;
+  }
+}
+
+.previewButton {
+  @include up($bp-lg) {
+    display: none !important;
   }
 }
 
@@ -38,16 +76,27 @@
     border-radius: $radius-sm;
     font-size: 13px;
     font-weight: 600;
-    color: $text-muted-dark;
+    color: $text-secondary;
     white-space: nowrap;
+    background: $bg-primary;
+    border: 1px solid $border;
+    transition:
+      color $dur-fast $ease,
+      background $dur-fast $ease;
 
     &:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.06);
+      color: $purple-royal;
+      background: $purple-light;
+      border-color: $purple-light-hover;
+    }
+
+    @include up($bp-wide) {
+      background: transparent;
+      border-color: transparent;
     }
   }
 
-  @include up($bp-lg) {
+  @include up($bp-wide) {
     position: sticky;
     top: 86px;
     flex-direction: column;
@@ -66,16 +115,17 @@
   gap: 16px;
   padding: 14px 16px;
   border-radius: $radius-md;
-  background: rgba($violet-500, 0.08);
-  border: 1px solid rgba($violet-300, 0.18);
+  background: $bg-secondary;
+  border: 1px solid $border;
 
   strong {
     display: block;
-    font-size: 14px;
+    font-size: $fs-base;
+    color: $purple-deep;
   }
 
   span {
     font-size: 13px;
-    color: $text-muted-dark;
+    color: $text-secondary;
   }
 }

@@ -10,6 +10,7 @@
   }
 }
 
+// Left brand panel — soft lavender, not a heavy purple block
 .brandPanel {
   position: relative;
   display: none;
@@ -17,8 +18,11 @@
   justify-content: space-between;
   padding: 40px 48px;
   overflow: hidden;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(160deg, rgba($violet-600, 0.25), rgba($ink-900, 0.2));
+  border-right: 1px solid $border;
+  background:
+    radial-gradient(520px 420px at 100% 0%, rgba($purple-light-hover, 0.85), transparent 70%),
+    radial-gradient(420px 360px at 0% 100%, rgba($gold-light, 0.9), transparent 70%),
+    $bg-soft;
 
   @include up($bp-md) {
     display: flex;
@@ -32,9 +36,10 @@
   margin: auto 0;
 
   h2 {
-    margin: 18px 0 26px;
+    margin: 18px 0 28px;
     font-size: 34px;
-    line-height: 1.15;
+    line-height: 1.18;
+    color: $purple-deep;
   }
 
   ul {
@@ -42,23 +47,26 @@
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 16px;
+    gap: 14px;
   }
 
   li {
     display: flex;
     align-items: center;
     gap: 12px;
-    color: $text-muted-dark;
+    color: $text-primary;
+    font-weight: $fw-medium;
 
     svg {
       flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      padding: 8px;
-      border-radius: 12px;
-      color: $violet-200;
-      background: rgba($violet-500, 0.2);
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      border-radius: 50%;
+      color: $purple-primary;
+      background: $bg-primary;
+      border: 1px solid $border;
+      box-shadow: $shadow-sm;
     }
   }
 }
@@ -67,35 +75,16 @@
   display: inline-block;
   padding: 6px 14px;
   border-radius: $radius-pill;
-  font-size: 13px;
-  font-weight: 600;
-  color: $violet-100;
-  background: rgba($violet-500, 0.22);
-  border: 1px solid rgba($violet-300, 0.3);
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $gold-dark;
+  background: $gold-light;
+  border: 1px solid rgba($gold-primary, 0.45);
 }
 
 .glowA,
 .glowB {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(70px);
-  pointer-events: none;
-}
-
-.glowA {
-  width: 320px;
-  height: 320px;
-  right: -80px;
-  top: 10%;
-  background: rgba($purple-500, 0.35);
-}
-
-.glowB {
-  width: 260px;
-  height: 260px;
-  left: -60px;
-  bottom: -40px;
-  background: rgba($blue-500, 0.3);
+  display: none;
 }
 
 .formPanel {
@@ -105,6 +94,7 @@
   justify-content: center;
   gap: 24px;
   padding: 32px 16px;
+  background: $bg-secondary;
 }
 
 .mobileLogo {
@@ -114,11 +104,13 @@
 }
 
 .card {
-  @include glass-dark(0.05);
+  @include card;
   width: 100%;
   max-width: 460px;
-  padding: 34px 30px;
+  padding: 36px 32px;
   border-radius: $radius-xl;
+  box-shadow: $shadow-md;
+  animation: q-fade-up 0.35s $ease;
 
   @include down($bp-sm) {
     padding: 26px 18px;

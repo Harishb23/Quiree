@@ -17,6 +17,9 @@ export type PaymentStatus = 'Created' | 'Captured' | 'Failed'
 
 // ---------- Auth ----------
 
+/** Chosen at registration: Personal (profile modes) or Business (business profiles). */
+export type AccountType = 'Personal' | 'Business'
+
 export interface CurrentUser {
   id: string
   email: string
@@ -27,6 +30,7 @@ export interface CurrentUser {
   publicUrl: string
   hasPassword: boolean
   hasGoogle: boolean
+  accountType: AccountType
 }
 
 export interface AuthResponse {
@@ -40,6 +44,7 @@ export interface RegisterRequest {
   email: string
   password: string
   username?: string
+  accountType: AccountType
 }
 
 export interface UsernameAvailability {
@@ -262,6 +267,8 @@ export interface Entitlements {
   allowsPremiumTemplates: boolean
   isPaid: boolean
   expiresAt: string | null
+  /** Promotional switch on the server: every feature and template is free and purchases are paused. */
+  allFeaturesUnlocked?: boolean
 }
 
 export interface SubscriptionStatusInfo {

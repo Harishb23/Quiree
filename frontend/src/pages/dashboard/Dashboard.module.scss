@@ -10,8 +10,15 @@
   gap: 16px;
   margin-bottom: 24px;
 
+  > div:first-child {
+    min-width: 0;
+    flex: 1 1 320px;
+  }
+
   h1 {
-    font-size: 26px;
+    font-size: $fs-2xl;
+    font-weight: $fw-bold;
+    color: $purple-deep;
 
     @include down($bp-sm) {
       font-size: 22px;
@@ -19,21 +26,28 @@
   }
 
   p {
-    margin-top: 4px;
-    color: $text-muted-dark;
-    font-size: 14px;
+    margin-top: 6px;
+    max-width: 680px;
+    color: $text-secondary;
+    font-size: $fs-base;
+  }
+
+  @include down($bp-sm) {
+    align-items: stretch;
   }
 }
 
 .headerActions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
 }
 
 .stack {
   display: grid;
   gap: 20px;
+  min-width: 0;
 }
 
 .grid2 {
@@ -60,85 +74,133 @@
   }
 }
 
+// ---------------------------------------------------------------------------
+// Statistic cards
+// ---------------------------------------------------------------------------
 .stats {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  margin-bottom: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  margin-bottom: 24px;
+
+  @include down($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
 }
 
 .stat {
-  @include glass-dark(0.05);
+  @include card;
+  @include card-hover;
   position: relative;
-  overflow: hidden;
-  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 148px;
+  padding: 20px;
   border-radius: $radius-lg;
-  transition:
-    transform 0.25s $ease,
-    border-color 0.25s $ease;
 
-  &:hover {
-    transform: translateY(-2px);
-    border-color: rgba($violet-300, 0.35);
+  @include down($bp-sm) {
+    min-height: 0;
+    padding: 14px;
+
+    strong {
+      font-size: $fs-md;
+    }
+
+    > span:last-child {
+      font-size: $fs-xs;
+    }
+
+    .statIcon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 12px;
+    }
   }
 
-  svg {
-    width: 26px;
-    height: 26px;
-    margin-bottom: 14px;
+  // Odd card out spans the full row on phones
+  @include down($bp-sm) {
+    &:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
   }
 
   strong {
     display: block;
-    font-size: 19px;
+    margin-top: auto;
+    font-size: 21px;
+    font-weight: $fw-bold;
+    line-height: 1.3;
+    color: $purple-deep;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  span {
-    font-size: 13px;
-    color: $text-muted-dark;
+  > span:last-child {
+    margin-top: 2px;
+    font-size: $fs-sm;
+    color: $text-secondary;
   }
 }
 
-.statViolet svg {
-  color: $violet-300;
+.statIcon {
+  @include icon-chip(44px, 20px);
+  margin-bottom: 16px;
 }
 
-.statGreen svg {
-  color: #4ade80;
+// Gold is reserved for the premium metric (subscription)
+.statGold {
+  border-color: rgba($gold-primary, 0.45);
+  background: linear-gradient(160deg, $gold-light 0%, $bg-card 55%);
+
+  .statIcon {
+    color: $gold-dark;
+    background: rgba($gold-primary, 0.2);
+  }
+
+  strong {
+    color: $gold-dark;
+  }
 }
 
-.statPink svg {
-  color: #f0abfc;
-}
-
-.statAmber svg {
-  color: $amber-400;
-}
-
-.statCyan svg {
-  color: $cyan-400;
-}
-
+// ---------------------------------------------------------------------------
+// Text helpers
+// ---------------------------------------------------------------------------
 .muted {
-  color: $text-muted-dark;
+  color: $text-secondary;
   font-size: 13.5px;
 }
 
 .mono {
   font-family: $font-mono;
   font-size: 12.5px;
+  color: $purple-royal;
   word-break: break-all;
 }
 
+.gold {
+  color: $text-gold;
+  font-weight: $fw-semibold;
+}
+
+// ---------------------------------------------------------------------------
+// Lists / activity rows
+// ---------------------------------------------------------------------------
 .listRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 12px 8px;
+  margin: 0 -8px;
+  border-radius: $radius-sm;
+  border-bottom: 1px solid $border;
+  transition: background $dur-fast $ease;
+
+  &:hover {
+    background: $bg-secondary;
+  }
 
   &:last-child {
     border-bottom: 0;
@@ -154,13 +216,19 @@
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
-    font-size: 14px;
+    font-size: $fs-base;
+    font-weight: $fw-semibold;
+    color: $text-primary;
+
+    a:hover {
+      color: $purple-primary;
+    }
   }
 
   span {
     display: block;
     font-size: 12.5px;
-    color: $text-muted-dark;
+    color: $text-secondary;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -168,19 +236,7 @@
 }
 
 .modeIcon {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  color: $violet-200;
-  background: rgba($violet-500, 0.18);
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
+  @include icon-chip(40px, 18px);
 }
 
 .qrBox {
@@ -189,7 +245,9 @@
   flex-shrink: 0;
   padding: 12px;
   border-radius: $radius-md;
+  border: 1px solid $border;
   background: #fff;
+  box-shadow: $shadow-sm;
 
   img {
     display: block;
@@ -197,86 +255,88 @@
 }
 
 .progressTrack {
-  height: 8px;
+  height: 10px;
   border-radius: $radius-pill;
-  background: rgba(255, 255, 255, 0.08);
+  background: $purple-light;
   overflow: hidden;
 }
 
 .progressBar {
   height: 100%;
   border-radius: inherit;
-  background: $gradient-brand;
+  background: linear-gradient(90deg, $purple-primary, $purple-hover);
   transition: width 0.6s $ease;
+}
+
+.progressValue {
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
+  color: $purple-deep;
+}
+
+// ---------------------------------------------------------------------------
+// Tables
+// ---------------------------------------------------------------------------
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;
+  background: $bg-card;
 
   th,
   td {
-    padding: 11px 10px;
+    padding: 12px 14px;
     text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid $border;
     white-space: nowrap;
   }
 
   th {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: $fs-xs;
+    font-weight: $fw-semibold;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: $text-muted-dark;
+    letter-spacing: 0.05em;
+    color: $purple-deep;
+    background: $bg-secondary;
+  }
+
+  tbody tr {
+    transition: background $dur-fast $ease;
+
+    &:hover {
+      background: $bg-secondary;
+    }
+
+    &:last-child td {
+      border-bottom: 0;
+    }
   }
 }
 
-.tableWrap {
-  overflow-x: auto;
-}
-
+// ---------------------------------------------------------------------------
+// Buttons & frames
+// ---------------------------------------------------------------------------
 .iconBtn {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
-  color: $text-muted-dark;
-  transition:
-    color 0.2s,
-    background 0.2s,
-    border-color 0.2s;
-
-  &:hover:not(:disabled) {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  &:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
+  @include icon-button($control-sm);
 }
 
 .iconBtnDanger:hover:not(:disabled) {
-  color: #fca5a5;
-  border-color: rgba($red-500, 0.4);
+  color: $danger;
+  background: $danger-bg;
+  border-color: $danger-border;
 }
 
 .previewFrame {
   border-radius: $radius-md;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid $border;
   background: #fff;
 }
 
@@ -284,6 +344,6 @@
   padding: 20px 0;
   border-radius: $radius-md;
   background:
-    radial-gradient(400px 300px at 0% 0%, rgba($violet-300, 0.4), transparent 70%),
-    #efecfa;
+    radial-gradient(400px 300px at 0% 0%, rgba($purple-light-hover, 0.9), transparent 70%),
+    $bg-soft;
 }

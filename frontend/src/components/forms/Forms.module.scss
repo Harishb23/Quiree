@@ -17,9 +17,9 @@
   flex-shrink: 0;
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  color: $violet-200;
-  background: rgba($violet-500, 0.16);
+  border-radius: $radius-control;
+  color: $purple-primary;
+  background: $purple-light;
 }
 
 .grow {
@@ -27,24 +27,13 @@
 }
 
 .removeBtn {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  color: $text-muted-dark;
+  @include icon-button($control-md);
+  color: $text-secondary;
 
-  &:hover {
-    color: #fca5a5;
-    border-color: rgba($red-500, 0.4);
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
+  &:hover:not(:disabled) {
+    color: $danger;
+    background: $danger-bg;
+    border-color: $danger-border;
   }
 }
 
@@ -64,8 +53,8 @@
   position: relative;
   padding: 16px;
   border-radius: $radius-md;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border;
+  background: $bg-secondary;
 }
 
 .itemHeader {
@@ -76,8 +65,9 @@
   margin-bottom: 12px;
 
   strong {
-    font-size: 13px;
-    color: $text-muted-dark;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    color: $purple-royal;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -90,24 +80,8 @@
 }
 
 .itemBtn {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 9px;
-  background: transparent;
-  color: $text-muted-dark;
-
-  &:hover:not(:disabled) {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
+  @include icon-button(32px);
+  color: $text-secondary;
 
   svg {
     width: 15px;
@@ -116,14 +90,17 @@
 }
 
 .itemBtnDanger:hover:not(:disabled) {
-  color: #fca5a5;
+  color: $danger;
+  background: $danger-bg;
+  border-color: $danger-border;
 }
 
 .emptyHint {
   padding: 16px;
   border-radius: $radius-md;
-  border: 1px dashed rgba(255, 255, 255, 0.14);
-  color: $text-muted-dark;
+  border: 1px dashed $border-strong;
+  background: $bg-secondary;
+  color: $text-secondary;
   font-size: 13.5px;
   text-align: center;
 }
@@ -141,9 +118,11 @@
   gap: 6px;
   padding: 5px 6px 5px 12px;
   border-radius: $radius-pill;
-  font-size: 13px;
-  background: rgba($violet-500, 0.2);
-  border: 1px solid rgba($violet-300, 0.3);
+  font-size: $fs-sm;
+  font-weight: $fw-medium;
+  color: $purple-royal;
+  background: $purple-light;
+  border: 1px solid $purple-light-hover;
 
   button {
     display: grid;
@@ -153,11 +132,13 @@
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba($purple-primary, 0.12);
     color: inherit;
+    transition: background $dur-fast $ease;
 
     &:hover {
-      background: rgba($red-500, 0.5);
+      color: #fff;
+      background: $danger;
     }
 
     svg {
@@ -172,12 +153,13 @@
   gap: 10px;
   padding: 14px;
   border-radius: $radius-md;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border;
+  background: $bg-secondary;
 
   h4 {
-    font-size: 13px;
-    color: $violet-200;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    color: $purple-royal;
   }
 }
 

@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { onUnauthorized } from '../api/client'
 import { authApi } from '../api/endpoints'
 import { tokenStorage } from '../lib/tokenStorage'
-import type { AuthResponse, CurrentUser, RegisterRequest } from '../types/api'
+import type { AccountType, AuthResponse, CurrentUser, RegisterRequest } from '../types/api'
 
 type Status = 'loading' | 'authenticated' | 'anonymous'
 
@@ -11,7 +11,7 @@ interface AuthContextValue {
   user: CurrentUser | null
   login: (email: string, password: string) => Promise<CurrentUser>
   register: (request: RegisterRequest) => Promise<CurrentUser>
-  loginWithGoogle: (idToken: string) => Promise<CurrentUser>
+  loginWithGoogle: (idToken: string, accountType?: AccountType) => Promise<CurrentUser>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
   updateUser: (patch: Partial<CurrentUser>) => void
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       login: async (email, password) => accept(await authApi.login(email, password)),
       register: async (request) => accept(await authApi.register(request)),
-      loginWithGoogle: async (idToken) => accept(await authApi.google(idToken)),
+      loginWithGoogle: async (idToken, accountType) => accept(await authApi.google(idToken, accountType)),
       logout: async () => {
         try {
           await authApi.logout()

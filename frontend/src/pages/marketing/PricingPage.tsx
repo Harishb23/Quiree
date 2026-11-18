@@ -1,6 +1,7 @@
-import { ChevronDown, ShieldCheck } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import { pricingFaq } from '../../content/siteContent'
 import { CtaBanner, PlanGrid, SectionHeading } from './shared'
+import { FaqList } from './FaqList'
 import styles from './Marketing.module.scss'
 
 export default function PricingPage() {
@@ -15,7 +16,7 @@ export default function PricingPage() {
       </header>
 
       <section className={styles.section} aria-label="Plans">
-        <PlanGrid />
+        <PlanGrid comparison />
         <p className={styles.centered} style={{ gap: 8, alignItems: 'center', fontSize: 14 }}>
           <ShieldCheck size={16} aria-hidden /> Secure payments by Razorpay · Plans activate after server-side
           verification
@@ -24,17 +25,7 @@ export default function PricingPage() {
 
       <section className={`${styles.section} ${styles.narrow}`} aria-labelledby="faq-title">
         <SectionHeading id="faq-title" eyebrow="FAQ" title="Frequently asked questions" />
-        <div className={styles.faq}>
-          {pricingFaq.map((item) => (
-            <details key={item.q}>
-              <summary>
-                {item.q}
-                <ChevronDown size={18} aria-hidden />
-              </summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
-        </div>
+        <FaqList items={pricingFaq} />
       </section>
 
       <CtaBanner title="Start free today" subtitle="No credit card required for the Free plan." />

@@ -139,7 +139,7 @@ export default function TemplatesPage() {
                 <div className={local.titleRow}>
                   <h3>{t.name}</h3>
                   {t.isPremium && (
-                    <Badge tone="amber">
+                    <Badge tone="gold">
                       <Crown /> Premium
                     </Badge>
                   )}
@@ -150,7 +150,7 @@ export default function TemplatesPage() {
                     Live preview
                   </Button>
                   {t.isLocked ? (
-                    <Button size="sm" variant="secondary" to="/dashboard/subscription" icon={<Lock />}>
+                    <Button size="sm" variant="premium" to="/dashboard/subscription" icon={<Lock />}>
                       Upgrade
                     </Button>
                   ) : (
@@ -177,7 +177,7 @@ function Header() {
     <div className={styles.pageHeader}>
       <div>
         <h1>Choose Your Template ✨</h1>
-        <p>Ten professional glassmorphism resume designs. Switching templates never changes your QR code.</p>
+        <p>Ten professional resume designs. Switching templates never changes your QR code.</p>
       </div>
     </div>
   )

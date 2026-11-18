@@ -22,6 +22,7 @@ namespace ProLink.Infrastructure.Services;
 public sealed class JwtTokenService(IOptions<JwtOptions> options, TimeProvider clock) : ITokenService
 {
     public const string SlugClaim = "slug";
+    public const string AccountTypeClaim = "acct";
 
     public (string Token, DateTime ExpiresAt) CreateAccessToken(User user)
     {
@@ -34,7 +35,8 @@ public sealed class JwtTokenService(IOptions<JwtOptions> options, TimeProvider c
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
             new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim(SlugClaim, user.PublicSlug)
+            new Claim(SlugClaim, user.PublicSlug),
+            new Claim(AccountTypeClaim, user.AccountType.ToString())
         };
         var credentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(o.SigningKey)), SecurityAlgorithms.HmacSha256);
@@ -187,6 +189,16 @@ public sealed class QrCodeGeneratorService : IQrCodeGenerator
         using var data = generator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);
         return new PngByteQRCode(data).GetGraphic(pixelsPerModule, Dark, Light);
     }
+
+    public byte[] GeneratePng(string content, int pixelsPerModule, string darkHex, string lightHex)
+    {
+        using var generator = new QRCodeGenerator();
+        using var data = generator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);
+        return new PngByteQRCode(data).GetGraphic(pixelsPerModule, Rgba(darkHex), Rgba(lightHex));
+    }
+
+    private static byte[] Rgba(string hex) =>
+        [Convert.ToByte(hex.Substring(1, 2), 16), Convert.ToByte(hex.Substring(3, 2), 16), Convert.ToByte(hex.Substring(5, 2), 16), 0xFF];
 
     public string GenerateSvg(string content)
     {

@@ -5,26 +5,18 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 18px;
+  border-color: rgba($gold-primary, 0.45);
+  background: linear-gradient(120deg, $gold-light 0%, $bg-card 45%);
 
   h2 {
     font-size: 22px;
     margin: 2px 0;
+    color: $purple-deep;
   }
 }
 
 .currentIcon {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  color: $amber-400;
-  background: rgba($amber-400, 0.14);
-
-  svg {
-    width: 28px;
-    height: 28px;
-  }
+  @include icon-chip-gold(56px, 26px);
 }
 
 .currentMeta {
@@ -32,8 +24,12 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  font-size: 13px;
-  color: $text-muted-dark;
+  font-size: $fs-sm;
+  color: $text-secondary;
+
+  strong {
+    color: $text-primary;
+  }
 }
 
 .plans {
@@ -43,6 +39,7 @@
 }
 
 .plan {
+  @include card-hover;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -51,6 +48,8 @@
 
   h3 {
     font-size: 18px;
+    font-weight: $fw-semibold;
+    color: $purple-royal;
   }
 
   ul {
@@ -58,9 +57,11 @@
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 8px;
+    align-content: start;
+    gap: 9px;
     flex: 1;
     font-size: 13.5px;
+    color: $text-primary;
   }
 
   li {
@@ -71,15 +72,24 @@
 
   li svg {
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    color: #4ade80;
+    width: 18px;
+    height: 18px;
+    padding: 3px;
+    border-radius: 50%;
+    color: $purple-primary;
+    background: $purple-light;
   }
 }
 
+// Recommended plan — gold accent
 .featured {
-  border-color: rgba($violet-300, 0.5);
-  background: linear-gradient(160deg, rgba($violet-500, 0.22), rgba(255, 255, 255, 0.03));
+  border: 1.5px solid $gold-primary;
+  box-shadow: 0 18px 40px -22px rgba($gold-premium, 0.55);
+
+  li svg {
+    color: $gold-dark;
+    background: $gold-light;
+  }
 }
 
 .ribbon {
@@ -88,23 +98,33 @@
   right: -34px;
   padding: 4px 40px;
   font-size: 11px;
-  font-weight: 700;
-  color: #fff;
-  background: $gradient-brand;
+  font-weight: $fw-bold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $text-primary;
+  background: $gold-primary;
   transform: rotate(35deg);
 }
 
 .price {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 6px;
+  padding: 4px 0 2px;
 
   strong {
     font-size: 30px;
+    font-weight: $fw-bold;
+    color: $purple-deep;
   }
 
   span {
-    color: $text-muted-dark;
-    font-size: 13px;
+    color: $text-secondary;
+    font-size: $fs-sm;
   }
+}
+
+.featured .price strong {
+  color: $gold-dark;
 }

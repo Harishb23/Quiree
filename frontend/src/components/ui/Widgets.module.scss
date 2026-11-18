@@ -1,0 +1,322 @@
+@use '../../styles/tokens' as *;
+
+.confirmBody {
+  display: grid;
+  gap: 10px;
+  color: $text-secondary;
+  font-size: $fs-base;
+
+  strong {
+    color: $text-primary;
+  }
+}
+
+// ---------- Pagination ----------
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pageInfo {
+  font-size: $fs-sm;
+  color: $text-secondary;
+}
+
+.pageButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  @include icon-button(38px);
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $text-secondary;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.pageActive,
+.pageActive:hover:not(:disabled) {
+  color: $text-white;
+  background: $purple-primary;
+  border-color: $purple-primary;
+}
+
+.pageGap {
+  padding: 0 4px;
+  color: $text-muted;
+}
+
+// ---------- Image uploader ----------
+
+.uploader {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.uploaderLabel {
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $purple-deep;
+}
+
+.drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  overflow: hidden;
+  border: 1.5px dashed $border-strong;
+  border-radius: $radius-md;
+  background: $bg-secondary;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color $dur-fast $ease,
+    background $dur-fast $ease;
+
+  > svg {
+    width: 28px;
+    height: 28px;
+    color: $purple-primary;
+  }
+
+  strong {
+    color: $purple-royal;
+  }
+
+  &:hover,
+  &:focus-within {
+    border-color: $purple-primary;
+    background: $purple-light;
+  }
+}
+
+.square {
+  aspect-ratio: 1;
+  max-width: 180px;
+}
+
+.wide {
+  aspect-ratio: 16 / 9;
+}
+
+.banner {
+  aspect-ratio: 3 / 1;
+  min-height: 120px;
+}
+
+.dragging {
+  border-color: $purple-primary;
+  background: $purple-light;
+}
+
+.hasImage {
+  padding: 0;
+  border-style: solid;
+  border-color: $border;
+}
+
+.dropDisabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+
+  &:hover {
+    border-color: $border-strong;
+    background: $bg-secondary;
+  }
+}
+
+.dropImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progress {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: block;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.92);
+
+  > span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: $purple-light-hover;
+    transition: width 0.2s linear;
+  }
+
+  em {
+    position: relative;
+    font-style: normal;
+    font-size: $fs-xs;
+    font-weight: $fw-semibold;
+    line-height: 26px;
+    color: $purple-royal;
+  }
+}
+
+.uploaderFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.uploaderHint {
+  font-size: $fs-xs;
+  color: $text-muted;
+}
+
+.removeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: $danger;
+  font-size: $fs-xs;
+  font-weight: $fw-semibold;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    background: $danger-bg;
+  }
+}
+
+.uploaderError {
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  color: $danger;
+}
+
+// ---------- Filter tabs ----------
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $text-secondary;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  white-space: nowrap;
+  transition:
+    background $dur-fast $ease,
+    color $dur-fast $ease;
+
+  &:hover {
+    color: $purple-royal;
+    background: $bg-secondary;
+  }
+}
+
+.tabActive,
+.tabActive:hover {
+  color: $purple-royal;
+  background: $purple-light;
+}
+
+.tabCount {
+  min-width: 20px;
+  padding: 0 6px;
+  border-radius: $radius-pill;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  color: $purple-royal;
+  background: $bg-primary;
+}
+
+// Photos held until the first save (pending mode)
+.pendingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pendingTile {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  background: $bg-soft;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: $text-white;
+    background: rgba(48, 36, 61, 0.7);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      background: $danger;
+    }
+  }
+}

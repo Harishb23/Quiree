@@ -1,25 +1,35 @@
 @use '../styles/tokens' as *;
 
-$sidebar-width: 256px;
+$sidebar-width: 260px;
+$sidebar-collapsed: 80px;
 
 .shell {
   min-height: 100vh;
   display: flex;
 }
 
+// ---------------------------------------------------------------------------
+// Sidebar
+// ---------------------------------------------------------------------------
 .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
   z-index: 60;
   width: $sidebar-width;
+  max-width: 86vw;
   display: flex;
   flex-direction: column;
   padding: 20px 14px;
-  background: linear-gradient(180deg, rgba(23, 16, 55, 0.92), rgba(11, 8, 32, 0.96));
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $bg-sidebar;
+  border-right: 1px solid $border;
   transform: translateX(-100%);
-  transition: transform 0.3s $ease;
+  transition:
+    transform 0.3s $ease,
+    width 0.3s $ease,
+    box-shadow 0.3s $ease;
 
   @include up($bp-md) {
     transform: none;
@@ -28,13 +38,16 @@ $sidebar-width: 256px;
 
 .sidebarOpen {
   transform: translateX(0);
+  box-shadow: $shadow-lg;
 }
 
 .scrim {
   position: fixed;
   inset: 0;
   z-index: 55;
-  background: rgba(5, 3, 18, 0.6);
+  background: rgba(48, 36, 61, 0.38);
+  backdrop-filter: blur(2px);
+  animation: fade 0.2s ease;
 
   @include up($bp-md) {
     display: none;
@@ -45,11 +58,87 @@ $sidebar-width: 256px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 8px 22px;
+  min-height: 44px;
+  padding: 0 8px 20px;
+}
 
-  .iconButton {
-    @include up($bp-md) {
-      display: none;
+.logoCompact {
+  display: none;
+}
+
+.closeButton {
+  @include up($bp-md) {
+    display: none !important;
+  }
+}
+
+// Personal ↔ Business workspace switch
+.contextSwitch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 14px;
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  background: $bg-primary;
+}
+
+.contextTab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  border-radius: $radius-sm;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $text-secondary;
+  white-space: nowrap;
+  transition:
+    background $dur-fast $ease,
+    color $dur-fast $ease;
+
+  svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: $purple-royal;
+    background: $bg-secondary;
+  }
+}
+
+.contextActive,
+.contextActive:hover {
+  color: $text-white;
+  background: $purple-primary;
+}
+
+.businessSwitcher {
+  margin-bottom: 12px;
+
+  select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 34px 0 12px;
+    border: 1px solid $border;
+    border-radius: $radius-control;
+    background: $bg-primary
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b3fa0' stroke-width='3'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+      no-repeat right 12px center;
+    appearance: none;
+    color: $purple-deep;
+    font-weight: $fw-semibold;
+    font-size: $fs-sm;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: $purple-primary;
+      box-shadow: $shadow-focus;
     }
   }
 }
@@ -62,73 +151,174 @@ $sidebar-width: 256px;
 }
 
 .navLink {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 11px 14px;
-  border: 1px solid transparent;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
   border-radius: $radius-md;
   background: transparent;
-  color: $text-muted-dark;
-  font-size: 14px;
-  font-weight: 600;
+  color: $text-secondary;
+  font-size: $fs-base;
+  font-weight: $fw-medium;
   text-align: left;
+  white-space: nowrap;
   transition:
-    background 0.2s $ease,
-    color 0.2s $ease,
-    border-color 0.2s $ease;
+    background $dur-fast $ease,
+    color $dur-fast $ease;
 
   svg {
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
+    width: 19px;
+    height: 19px;
+    color: $purple-muted;
+    transition: color $dur-fast $ease;
   }
 
   &:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+    color: $purple-royal;
+    background: $bg-soft;
+
+    svg {
+      color: $purple-royal;
+    }
+  }
+
+  // Active indicator bar
+  &::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: 4px;
+    height: 0;
+    border-radius: 0 4px 4px 0;
+    background: $purple-primary;
+    transform: translateY(-50%);
+    transition: height $dur $ease;
   }
 }
 
 .active {
-  color: #fff;
-  background: linear-gradient(135deg, rgba($violet-500, 0.5), rgba($purple-500, 0.35));
-  border-color: rgba($violet-300, 0.35);
-  box-shadow: 0 10px 30px -14px rgba($violet-500, 0.8);
+  color: $purple-royal;
+  font-weight: $fw-semibold;
+  background: $purple-light;
+
+  svg {
+    color: $purple-royal;
+  }
+
+  &::before {
+    height: 24px;
+  }
+
+  &:hover {
+    background: $purple-light;
+  }
+}
+
+.navLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidebarFooter {
   display: grid;
-  gap: 6px;
+  gap: 4px;
+  margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid $border;
 }
 
 .publicLink {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 11px 14px;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 14px;
+  margin-bottom: 4px;
   border-radius: $radius-md;
+  border: 1px solid rgba($gold-primary, 0.45);
   font-size: 13.5px;
-  font-weight: 600;
-  color: $violet-200;
-  background: rgba($violet-500, 0.14);
+  font-weight: $fw-semibold;
+  white-space: nowrap;
+  color: $gold-dark;
+  background: $gold-light;
+  transition: background $dur-fast $ease;
 
   svg {
-    width: 16px;
-    height: 16px;
+    flex-shrink: 0;
+    width: 17px;
+    height: 17px;
   }
 
   &:hover {
-    background: rgba($violet-500, 0.24);
+    background: #f3e4c0;
   }
 }
 
+.collapseToggle {
+  display: none;
+
+  @include up($bp-md) {
+    display: flex;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Collapsed (desktop only)
+// ---------------------------------------------------------------------------
+@include up($bp-md) {
+  .collapsed {
+    .sidebar {
+      width: $sidebar-collapsed;
+    }
+
+    .sidebarHeader {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .logoFull,
+    .businessSwitcher {
+      display: none;
+    }
+
+    .contextSwitch {
+      grid-template-columns: 1fr;
+    }
+
+    .logoCompact {
+      display: inline-flex;
+    }
+
+    .navLabel {
+      display: none;
+    }
+
+    .navLink,
+    .publicLink {
+      justify-content: center;
+      padding: 0;
+    }
+
+    .main {
+      margin-left: $sidebar-collapsed;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Main column
+// ---------------------------------------------------------------------------
 .main {
   flex: 1;
   min-width: 0;
+  transition: margin-left 0.3s $ease;
 
   @include up($bp-md) {
     margin-left: $sidebar-width;
@@ -142,14 +332,48 @@ $sidebar-width: 256px;
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 66px;
-  padding: 0 24px;
-  background: rgba(11, 8, 32, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
+  height: 68px;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid $border;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   @include down($bp-sm) {
+    height: 60px;
     padding: 0 16px;
+  }
+}
+
+.topbarTitles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.topbarEyebrow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $fs-xs;
+  font-weight: $fw-semibold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $text-gold;
+}
+
+.topbarTitle {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $fs-lg;
+  font-weight: $fw-bold;
+  color: $purple-deep;
+
+  @include down($bp-sm) {
+    font-size: $fs-md;
   }
 }
 
@@ -158,14 +382,7 @@ $sidebar-width: 256px;
 }
 
 .iconButton {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  color: $text-on-dark;
+  @include icon-button(40px);
 
   svg {
     width: 19px;
@@ -184,6 +401,14 @@ $sidebar-width: 256px;
   align-items: center;
   gap: 10px;
   min-width: 0;
+  padding: 4px 12px 4px 4px;
+  border-radius: $radius-pill;
+  border: 1px solid $border;
+  background: $bg-primary;
+
+  @include down($bp-sm) {
+    padding: 2px;
+  }
 }
 
 .userText {
@@ -193,12 +418,14 @@ $sidebar-width: 256px;
   line-height: 1.25;
 
   strong {
-    font-size: 14px;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    color: $text-primary;
   }
 
   span {
-    font-size: 12px;
-    color: $text-muted-dark;
+    font-size: $fs-xs;
+    color: $text-muted;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -211,10 +438,17 @@ $sidebar-width: 256px;
 }
 
 .content {
-  padding: 28px 24px 60px;
-  max-width: 1280px;
+  padding: 28px 28px 64px;
+  max-width: 1320px;
+  animation: q-fade-up 0.35s $ease;
 
   @include down($bp-sm) {
     padding: 20px 16px 48px;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
   }
 }

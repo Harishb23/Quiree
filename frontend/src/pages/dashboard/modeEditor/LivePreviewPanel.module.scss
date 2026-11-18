@@ -1,0 +1,145 @@
+@use '../../../styles/tokens' as *;
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: $radius-xl;
+  background: $bg-card;
+  border: 1px solid $border;
+  box-shadow: $shadow-md;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.title {
+  font-size: $fs-xs;
+  font-weight: $fw-semibold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-secondary;
+}
+
+.segment {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: $radius-pill;
+  background: $bg-secondary;
+  border: 1px solid $border;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 30px;
+    padding: 5px 11px;
+    border: 0;
+    border-radius: $radius-pill;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: $fw-semibold;
+    color: $text-secondary;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      color $dur-fast $ease,
+      background $dur-fast $ease;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      color: $purple-primary;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  .active,
+  .active:hover {
+    color: $text-white;
+    background: $purple-primary;
+    box-shadow: $shadow-xs;
+  }
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  height: clamp(420px, calc(100vh - 290px), 680px);
+  border-radius: $radius-lg;
+  border: 1px solid $border;
+  background:
+    radial-gradient(320px 240px at 0% 0%, rgba($purple-light-hover, 0.7), transparent 70%),
+    $bg-secondary;
+  overflow: hidden;
+}
+
+.device {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px $border-strong,
+    $shadow-lg;
+  transition:
+    width $dur $ease,
+    height $dur $ease;
+}
+
+.mobile {
+  border-radius: 22px;
+}
+
+.tablet {
+  border-radius: 14px;
+}
+
+.desktop {
+  border-radius: 8px;
+}
+
+.scaler {
+  transform-origin: 0 0;
+}
+
+// Background behind the scan card, matching the public profile stage.
+.cardScreen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  background:
+    radial-gradient(520px 380px at 0% 0%, $purple-light, rgba($bg-secondary, 0) 70%),
+    radial-gradient(520px 380px at 100% 100%, $bg-soft, rgba($bg-secondary, 0) 70%),
+    $bg-secondary;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.expand {
+  @include icon-button;
+}
+
+.note {
+  margin: -4px 0 0;
+  font-size: $fs-xs;
+  color: $text-muted;
+}

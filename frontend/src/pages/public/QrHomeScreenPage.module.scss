@@ -9,7 +9,10 @@
   justify-content: center;
   gap: 24px;
   padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
-  color: $text-on-dark;
+  color: $text-primary;
+  background:
+    radial-gradient(520px 380px at 50% 0%, $purple-light, rgba($bg-secondary, 0) 70%),
+    $bg-secondary;
 }
 
 .card {
@@ -20,6 +23,7 @@
     margin-top: 18px;
     font-size: 22px;
     font-weight: 800;
+    color: $purple-deep;
   }
 }
 
@@ -28,13 +32,14 @@
   width: 100%;
   height: auto;
   border-radius: 28px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  border: 1px solid $border;
+  box-shadow: $shadow-lg;
 }
 
 .role {
   margin-top: 4px;
-  color: $text-muted-dark;
-  font-weight: 600;
+  color: $text-gold;
+  font-weight: $fw-semibold;
 }
 
 .actions {
@@ -42,21 +47,35 @@
   gap: 10px;
   justify-items: center;
   width: min(100%, 380px);
+
+  > * {
+    width: 100%;
+  }
 }
 
 .missing {
+  @include card;
   display: grid;
   justify-items: center;
   gap: 10px;
+  max-width: 420px;
+  width: 100%;
+  padding: 32px 24px;
+  border-radius: $radius-xl;
   text-align: center;
 
   svg {
-    width: 44px;
-    height: 44px;
-    color: $violet-300;
+    @include icon-chip(64px, 30px);
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  h1,
+  h2 {
+    color: $purple-deep;
   }
 
   p {
-    color: $text-muted-dark;
+    color: $text-secondary;
   }
 }

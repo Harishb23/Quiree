@@ -58,6 +58,7 @@ public sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logge
         403 => "Forbidden",
         404 => "Not found",
         409 => "Conflict",
+        410 => "No longer available",
         _ => "Error"
     };
 }
@@ -132,5 +133,41 @@ public sealed class SubscriptionExpiryWorker(IServiceScopeFactory scopes, ILogge
                 logger.LogError(ex, "Subscription expiry run failed");
             }
         } while (await timer.WaitForNextTickAsync(stoppingToken));
+    }
+}
+
+/// <summary>Policies that keep personal and business accounts in their own areas of the API.</summary>
+public static class AccountPolicies
+{
+    public const string Personal = "PersonalAccount";
+    public const string Business = "BusinessAccount";
+}
+
+public sealed class AccountTypeRequirement(ProLink.Domain.Enums.AccountType type) : Microsoft.AspNetCore.Authorization.IAuthorizationRequirement
+{
+    public ProLink.Domain.Enums.AccountType Type { get; } = type;
+}
+
+/// <summary>
+/// Reads the account type from the token. Tokens issued before account types existed have no claim,
+/// so those fall back to the database instead of locking people out until they sign in again.
+/// </summary>
+public sealed class AccountTypeHandler(IServiceScopeFactory scopes)
+    : Microsoft.AspNetCore.Authorization.AuthorizationHandler<AccountTypeRequirement>
+{
+    protected override async Task HandleRequirementAsync(
+        Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext context, AccountTypeRequirement requirement)
+    {
+        var userId = context.User.TryGetUserId();
+        if (userId is null) return;
+
+        ProLink.Domain.Enums.AccountType? type = null;
+        if (Enum.TryParse<ProLink.Domain.Enums.AccountType>(context.User.FindFirstValue("acct"), out var fromClaim)) type = fromClaim;
+        else
+        {
+            using var scope = scopes.CreateScope();
+            type = (await scope.ServiceProvider.GetRequiredService<IUserRepository>().GetByIdAsync(userId.Value))?.AccountType;
+        }
+        if (type == requirement.Type) context.Succeed(requirement);
     }
 }

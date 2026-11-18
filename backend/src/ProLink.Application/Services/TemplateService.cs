@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using ProLink.Application.Common;
 using ProLink.Application.DTOs;
 using ProLink.Application.Interfaces;
@@ -10,12 +11,15 @@ public sealed class TemplateService(
     ITemplateRepository templates,
     IProfileModeRepository modes,
     ISubscriptionService subscriptions,
+    IOptions<SubscriptionOptions> subscriptionOptions,
     IUnitOfWork uow,
     TimeProvider clock) : ITemplateService
 {
     public async Task<IReadOnlyList<TemplateDto>> ListAsync(Guid? userId, CancellationToken ct = default)
     {
-        var allowsPremium = userId is { } id && (await subscriptions.GetEntitlementsAsync(id, ct)).AllowsPremiumTemplates;
+        // Signed-out visitors (template gallery on the website) also see everything unlocked during a promotion.
+        var allowsPremium = subscriptionOptions.Value.UnlockAllFeatures
+                            || userId is { } id && (await subscriptions.GetEntitlementsAsync(id, ct)).AllowsPremiumTemplates;
         return (await templates.ListActiveAsync(ct))
             .Select(t => new TemplateDto(t.Id, t.Key, t.Name, t.Description, t.IsPremium,
                 IsLocked: t.IsPremium && !allowsPremium))

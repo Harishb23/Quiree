@@ -138,7 +138,14 @@ builder.Services
             };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddSingleton<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, AccountTypeHandler>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AccountPolicies.Personal, p => p.RequireAuthenticatedUser()
+        .AddRequirements(new AccountTypeRequirement(ProLink.Domain.Enums.AccountType.Personal)));
+    options.AddPolicy(AccountPolicies.Business, p => p.RequireAuthenticatedUser()
+        .AddRequirements(new AccountTypeRequirement(ProLink.Domain.Enums.AccountType.Business)));
+});
 
 // =====================================================
 // 9. RATE LIMITING

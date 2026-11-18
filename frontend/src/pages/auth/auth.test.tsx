@@ -35,6 +35,7 @@ const authResponse: AuthResponse = {
     publicUrl: 'https://prolink.example/p/harish',
     hasPassword: true,
     hasGoogle: false,
+    accountType: 'Personal',
   },
 }
 
@@ -120,7 +121,7 @@ describe('Authentication', () => {
     await userEvent.type(screen.getByLabelText(/^email/i), 'harish@example.com')
     await userEvent.type(screen.getByLabelText(/^password/i), 'Passw0rd!')
     await userEvent.type(screen.getByLabelText(/confirm password/i), 'Passw0rd!')
-    await userEvent.click(screen.getByRole('button', { name: /create account/i }))
+    await userEvent.click(screen.getByRole('button', { name: /create .*account/i }))
 
     expect(await screen.findByText('Owner Dashboard')).toBeInTheDocument()
     expect(authApi.register).toHaveBeenCalledWith({
@@ -128,6 +129,7 @@ describe('Authentication', () => {
       email: 'harish@example.com',
       password: 'Passw0rd!',
       username: undefined,
+      accountType: 'Personal',
     })
   })
 
@@ -137,7 +139,7 @@ describe('Authentication', () => {
     await userEvent.type(screen.getByLabelText(/^email/i), 'harish@example.com')
     await userEvent.type(screen.getByLabelText(/^password/i), 'short')
     await userEvent.type(screen.getByLabelText(/confirm password/i), 'different')
-    await userEvent.click(screen.getByRole('button', { name: /create account/i }))
+    await userEvent.click(screen.getByRole('button', { name: /create .*account/i }))
 
     expect(screen.getByText('Password must be at least 8 characters.')).toBeInTheDocument()
     expect(screen.getByText('Passwords do not match.')).toBeInTheDocument()

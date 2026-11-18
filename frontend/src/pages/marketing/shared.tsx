@@ -6,6 +6,7 @@ import {
   Crown,
   Layers,
   Lock,
+  Minus,
   Palette,
   QrCode,
   ShieldCheck,
@@ -96,15 +97,71 @@ function PlanCard({ plan, highlighted }: { plan: Plan; highlighted: boolean }) {
           </li>
         ))}
       </ul>
-      <Button to={target} variant={highlighted ? 'primary' : 'secondary'} fullWidth>
+      <Button to={target} variant={highlighted ? 'primary' : 'outline'} fullWidth>
         {isFree ? 'Start for free' : `Choose ${plan.name}`}
       </Button>
     </article>
   )
 }
 
+/** Feature comparison built only from configured plan data — nothing here is hard-coded per plan. */
+function PlanComparison({ plans }: { plans: Plan[] }) {
+  const yes = (
+    <span className={styles.compareYes}>
+      <Check size={16} aria-hidden />
+      <span className="sr-only">Included</span>
+    </span>
+  )
+  const no = (
+    <span className={styles.compareNo}>
+      <Minus size={16} aria-hidden />
+      <span className="sr-only">Not included</span>
+    </span>
+  )
+  const rows: { label: string; value: (p: Plan) => ReactNode }[] = [
+    {
+      label: 'Price',
+      value: (p) =>
+        p.priceInPaise <= 0 ? 'Free' : `${formatMoney(p.priceInPaise, p.currency)} / ${durationLabel(p.durationDays)}`,
+    },
+    { label: 'Profile modes', value: (p) => `Up to ${p.maxModes}` },
+    { label: 'Premium templates', value: (p) => (p.allowsPremiumTemplates ? yes : no) },
+    { label: 'One permanent QR code', value: () => yes },
+    { label: 'Save Contact (vCard)', value: () => yes },
+    { label: 'Add to Home Screen', value: () => yes },
+    { label: 'Privacy controls', value: () => yes },
+  ]
+  return (
+    <div className={styles.compareWrap} tabIndex={0} role="region" aria-label="Plan comparison">
+      <table className={styles.compare}>
+        <caption className="sr-only">Feature comparison across plans</caption>
+        <thead>
+          <tr>
+            <th scope="col">Feature</th>
+            {plans.map((p) => (
+              <th key={p.id} scope="col">
+                {p.name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr key={row.label}>
+              <th scope="row">{row.label}</th>
+              {plans.map((p) => (
+                <td key={p.id}>{row.value(p)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 /** Plan cards loaded from the API (shared by the home page preview and the pricing page). */
-export function PlanGrid() {
+export function PlanGrid({ comparison = false }: { comparison?: boolean }) {
   const { data: plans, loading, error, reload } = useAsync(() => subscriptionApi.plans(), [])
 
   if (loading)
@@ -120,11 +177,14 @@ export function PlanGrid() {
   const highlightId = paid.length ? paid.reduce((a, b) => (a.priceInPaise <= b.priceInPaise ? a : b)).id : -1
 
   return (
-    <div className={styles.planGrid}>
-      {plans.map((plan) => (
-        <PlanCard key={plan.id} plan={plan} highlighted={plan.id === highlightId} />
-      ))}
-    </div>
+    <>
+      <div className={styles.planGrid}>
+        {plans.map((plan) => (
+          <PlanCard key={plan.id} plan={plan} highlighted={plan.id === highlightId} />
+        ))}
+      </div>
+      {comparison && plans.length > 1 && <PlanComparison plans={plans} />}
+    </>
   )
 }
 
@@ -177,7 +237,7 @@ export function DecorativeQr({ size = 180 }: { size?: number }) {
       aria-label="Illustration of a QR code"
     >
       <rect x={-1} y={-1} width={n + 2} height={n + 2} rx={2} fill="#fff" />
-      <g fill="#1b1340" color="#1b1340">
+      <g fill="#30243d" color="#30243d">
         {cells}
         {eye(0, 0)}
         {eye(n - 7, 0)}
@@ -187,18 +247,33 @@ export function DecorativeQr({ size = 180 }: { size?: number }) {
   )
 }
 
-export function CtaBanner({ title, subtitle }: { title: string; subtitle: string }) {
+export function CtaBanner({
+  title,
+  subtitle,
+  secondary,
+}: {
+  title: string
+  subtitle: string
+  secondary?: { label: string; to: string }
+}) {
   const { status } = useAuth()
   return (
-    <section className={styles.section}>
+    <section className={styles.section} aria-label={title}>
       <div className={styles.cta}>
         <div>
           <h2>{title}</h2>
           <p>{subtitle}</p>
         </div>
-        <Button to={status === 'authenticated' ? '/dashboard' : '/register'} size="lg">
-          {status === 'authenticated' ? 'Open Dashboard' : 'Get Started Now'}
-        </Button>
+        <div className={styles.ctaActions}>
+          <Button to={status === 'authenticated' ? '/dashboard' : '/register'} size="lg" variant="premium">
+            {status === 'authenticated' ? 'Open Dashboard' : 'Get Started Now'}
+          </Button>
+          {secondary && (
+            <Button to={secondary.to} size="lg" variant="light">
+              {secondary.label}
+            </Button>
+          )}
+        </div>
       </div>
     </section>
   )

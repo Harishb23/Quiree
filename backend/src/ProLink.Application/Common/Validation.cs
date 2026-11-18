@@ -34,7 +34,8 @@ public static partial class SlugRules
     {
         "admin", "api", "app", "dashboard", "login", "register", "signup", "logout", "settings",
         "about", "pricing", "features", "contact", "help", "support", "p", "q", "www", "static",
-        "uploads", "assets", "icons", "prolink", "root", "system", "null", "undefined"
+        "uploads", "assets", "icons", "prolink", "root", "system", "null", "undefined",
+        "business", "businesses", "bq"
     };
 
     [GeneratedRegex("^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")]

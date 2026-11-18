@@ -23,6 +23,7 @@ public static class DependencyInjection
         services.Configure<GoogleAuthOptions>(configuration.GetSection(GoogleAuthOptions.SectionName));
         services.Configure<RazorpayOptions>(configuration.GetSection(RazorpayOptions.SectionName));
         services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.SectionName));
+        services.Configure<SubscriptionOptions>(configuration.GetSection(SubscriptionOptions.SectionName));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
@@ -32,6 +33,12 @@ public static class DependencyInjection
         services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IEnquiryRepository, EnquiryRepository>();
+        services.AddScoped<IBusinessCategoryRepository, BusinessCategoryRepository>();
+        services.AddScoped<IBusinessRepository, BusinessRepository>();
+        services.AddScoped<IBusinessCatalogRepository, BusinessCatalogRepository>();
+        services.AddScoped<IBusinessEngagementRepository, BusinessEngagementRepository>();
+        services.AddScoped<IBusinessAnalyticsRepository, BusinessAnalyticsRepository>();
+        services.AddScoped<IBusinessQrCampaignRepository, BusinessQrCampaignRepository>();
 
         services.AddSingleton<ITokenService, JwtTokenService>();
         services.AddSingleton<IGoogleTokenValidator, GoogleTokenValidator>();

@@ -244,7 +244,7 @@ export function ProfileViewer({ profile }: { profile: PublicProfile }) {
 
 function ProfileUnavailable({ title, text }: { title: string; text: string }) {
   return (
-    <div className={`${styles.page} app-dark-bg`}>
+    <div className={`${styles.page} app-bg`}>
       <div className={styles.center}>
         <div className={styles.unavailable}>
           <UserX />

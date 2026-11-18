@@ -7,17 +7,21 @@
   justify-content: center;
   gap: 8px;
   border: 1px solid transparent;
-  border-radius: $radius-pill;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  border-radius: $radius-control;
+  font-family: inherit;
+  font-weight: $fw-semibold;
+  line-height: 1;
+  letter-spacing: 0.005em;
   white-space: nowrap;
+  text-decoration: none;
   cursor: pointer;
   transition:
-    transform 0.2s $ease,
-    box-shadow 0.25s $ease,
-    background 0.25s $ease,
-    border-color 0.25s $ease,
-    opacity 0.2s;
+    transform $dur-fast $ease,
+    box-shadow $dur $ease,
+    background-color $dur $ease,
+    border-color $dur $ease,
+    color $dur $ease,
+    opacity $dur-fast;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
@@ -28,78 +32,107 @@
   }
 
   &:disabled {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 }
 
 .sm {
-  padding: 7px 14px;
-  font-size: 13px;
+  min-height: $control-sm;
+  padding: 0 14px;
+  font-size: $fs-sm;
 }
 
 .md {
-  padding: 10px 20px;
-  font-size: 14px;
+  min-height: $control-md;
+  padding: 0 18px;
+  font-size: $fs-base;
 }
 
 .lg {
-  padding: 14px 28px;
-  font-size: 15px;
+  min-height: $control-lg;
+  padding: 0 26px;
+  font-size: $fs-md;
 }
 
 .full {
   width: 100%;
 }
 
+// Purple — main call to action
 .primary {
-  color: #fff;
-  background: $gradient-brand;
-  box-shadow: $shadow-glow;
+  color: $text-white;
+  background: $purple-primary;
+  box-shadow: 0 6px 16px -8px rgba($purple-primary, 0.6);
 
   &:hover:not(:disabled) {
-    background: $gradient-brand-hover;
-    box-shadow: 0 16px 44px -10px rgba($violet-500, 0.7);
+    background: $purple-royal;
+    box-shadow: 0 10px 22px -10px rgba($purple-royal, 0.7);
   }
 }
 
+// Lavender — supporting actions
 .secondary {
-  color: $text-on-dark;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px);
+  color: $purple-royal;
+  background: $purple-light;
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: $purple-light-hover;
+  }
+}
+
+// White with purple border
+.outline {
+  color: $purple-primary;
+  background: $bg-primary;
+  border-color: $purple-primary;
+
+  &:hover:not(:disabled) {
+    color: $purple-royal;
+    background: $bg-secondary;
+    border-color: $purple-royal;
   }
 }
 
 .ghost {
-  color: $text-muted-dark;
+  color: $text-secondary;
   background: transparent;
 
   &:hover:not(:disabled) {
-    color: $text-on-dark;
-    background: rgba(255, 255, 255, 0.06);
+    color: $purple-royal;
+    background: $purple-light;
+  }
+}
+
+// Gold — premium / important (upgrade, pay)
+.premium {
+  color: $text-primary;
+  background: $gold-primary;
+  box-shadow: 0 6px 16px -8px rgba($gold-premium, 0.7);
+
+  &:hover:not(:disabled) {
+    background: $gold-premium;
   }
 }
 
 .danger {
-  color: #fff;
-  background: linear-gradient(135deg, #f43f5e, #dc2626);
-  box-shadow: 0 10px 30px -12px rgba(220, 38, 38, 0.6);
+  color: $text-white;
+  background: $danger;
+
+  &:hover:not(:disabled) {
+    background: $danger-hover;
+  }
 }
 
-// For light surfaces (public profile templates)
+// For coloured / photographic surfaces (public profile templates)
 .light {
-  color: $violet-700;
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba($violet-500, 0.35);
+  color: $purple-royal;
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba($purple-primary, 0.3);
 
   &:hover:not(:disabled) {
     background: #fff;
-    border-color: $violet-500;
+    border-color: $purple-primary;
   }
 }
 

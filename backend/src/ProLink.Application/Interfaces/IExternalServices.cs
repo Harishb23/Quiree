@@ -37,6 +37,8 @@ public interface IRazorpayClient
 public interface IQrCodeGenerator
 {
     byte[] GeneratePng(string content, int pixelsPerModule = 20);
+    /// <summary>PNG with custom colours (hex "#RRGGBB").</summary>
+    byte[] GeneratePng(string content, int pixelsPerModule, string darkHex, string lightHex);
     string GenerateSvg(string content);
 }
 

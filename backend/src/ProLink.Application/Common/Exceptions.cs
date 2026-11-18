@@ -20,3 +20,6 @@ public sealed class UnauthorizedAppException(string message = "Invalid credentia
 
 /// <summary>Raised when the user's plan does not allow an operation.</summary>
 public sealed class PlanLimitException(string message) : AppException(message, 402);
+
+/// <summary>The resource existed but has been deliberately switched off (e.g. a disabled QR code).</summary>
+public sealed class GoneException(string message) : AppException(message, 410);

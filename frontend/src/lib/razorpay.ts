@@ -36,7 +36,7 @@ export async function openRazorpayCheckout(order: CreateOrderResponse, appName: 
       name: appName,
       description: order.planName,
       prefill: { name: order.customerName, email: order.customerEmail },
-      theme: { color: '#7c5cff' },
+      theme: { color: '#6b3fa0' },
       handler: (r: RazorpaySuccess) =>
         resolve({
           razorpayOrderId: r.razorpay_order_id,

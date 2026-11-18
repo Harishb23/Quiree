@@ -17,13 +17,14 @@ using ProLink.Infrastructure.Services;
 namespace ProLink.Tests.Infrastructure;
 
 /// <summary>Boots the real API (controllers, services, EF Core) against an in-memory SQLite database.</summary>
-public sealed class TestApp : WebApplicationFactory<Program>
+public class TestApp : WebApplicationFactory<Program>
 {
     public const string RazorpaySecret = "test_key_secret";
     public const string WebhookSecret = "test_webhook_secret";
     public const string PublicBaseUrl = "https://prolink.test";
 
     private readonly SqliteConnection _connection = new("DataSource=:memory:");
+    private readonly string _uploads = Path.Combine(Path.GetTempPath(), "prolink-tests", Guid.NewGuid().ToString("N"));
 
     public FakeEmailSender Emails { get; } = new();
     public FakeRazorpayClient Razorpay { get; } = new();
@@ -33,6 +34,9 @@ public sealed class TestApp : WebApplicationFactory<Program>
     {
         Converters = { new JsonStringEnumConverter() }
     };
+
+    /// <summary>Plan limits are enforced in tests unless a subclass opts into the promotional unlock.</summary>
+    protected virtual bool UnlockAllFeatures => false;
 
     public TestApp() => _connection.Open();
 
@@ -50,12 +54,16 @@ public sealed class TestApp : WebApplicationFactory<Program>
         builder.UseSetting("Database:MigrateOnStartup", "false");
         builder.UseSetting("RateLimiting:AuthPerMinute", "10000");
         builder.UseSetting("RateLimiting:PublicPerMinute", "10000");
+        builder.UseSetting("Subscription:UnlockAllFeatures", UnlockAllFeatures ? "true" : "false");
 
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<DbContextOptions<AppDbContext>>();
             services.RemoveAll<AppDbContext>();
             services.AddDbContext<AppDbContext>(o => o.UseSqlite(_connection));
+
+            // Uploaded test files go to a throwaway folder, never the real wwwroot/uploads.
+            services.Configure<StorageOptions>(o => o.RootPath = _uploads);
 
             services.RemoveAll<IEmailSender>();
             services.AddSingleton<IEmailSender>(Emails);
@@ -80,7 +88,12 @@ public sealed class TestApp : WebApplicationFactory<Program>
     }
 
     /// <summary>Registers a user and returns an authenticated client.</summary>
-    public async Task<(HttpClient Client, AuthResponse Auth)> RegisterAsync(string? username = null, string? email = null)
+    /// <summary>Registers a business account (business profiles only) and returns an authenticated client.</summary>
+    public Task<(HttpClient Client, AuthResponse Auth)> RegisterBusinessAsync(string? username = null, string? email = null) =>
+        RegisterAsync(username, email, "Business");
+
+    public async Task<(HttpClient Client, AuthResponse Auth)> RegisterAsync(string? username = null, string? email = null,
+        string accountType = "Personal")
     {
         var client = CreateClient();
         var response = await client.PostAsJsonAsync("/api/auth/register", new
@@ -88,7 +101,8 @@ public sealed class TestApp : WebApplicationFactory<Program>
             fullName = "Harish Baskar",
             email = email ?? $"user{Guid.NewGuid():N}@example.com",
             password = "Passw0rd!",
-            username
+            username,
+            accountType
         }, Json);
         response.EnsureSuccessStatusCode();
         var auth = (await response.Content.ReadFromJsonAsync<AuthResponse>(Json))!;
@@ -99,7 +113,11 @@ public sealed class TestApp : WebApplicationFactory<Program>
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing) _connection.Dispose();
+        if (disposing)
+        {
+            _connection.Dispose();
+            try { if (Directory.Exists(_uploads)) Directory.Delete(_uploads, recursive: true); } catch (IOException) { }
+        }
     }
 }
 

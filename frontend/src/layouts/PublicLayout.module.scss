@@ -5,33 +5,41 @@
   display: flex;
   flex-direction: column;
   overflow-x: clip;
+  background: $bg-primary;
 }
 
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: rgba($bg-primary, 0.82);
   border-bottom: 1px solid transparent;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
   transition:
-    background 0.3s $ease,
-    border-color 0.3s $ease,
-    backdrop-filter 0.3s;
+    background $dur $ease,
+    border-color $dur $ease,
+    box-shadow $dur $ease;
 }
 
 .scrolled {
-  background: rgba(11, 8, 32, 0.72);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  background: rgba($bg-primary, 0.94);
+  border-bottom-color: $border;
+  box-shadow: $shadow-xs;
 }
 
 .headerInner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   gap: 24px;
+  color: $purple-deep;
+
+  @include down($bp-sm) {
+    padding: 10px 16px;
+  }
 }
 
 .desktopNav {
@@ -47,23 +55,24 @@
 .navLink {
   position: relative;
   padding: 8px 14px;
-  border-radius: $radius-pill;
-  font-size: 14px;
-  font-weight: 500;
-  color: $text-muted-dark;
+  border-radius: $radius-sm;
+  font-size: $fs-base;
+  font-weight: $fw-medium;
+  color: $text-secondary;
   transition:
-    color 0.2s,
-    background 0.2s;
+    color $dur-fast $ease,
+    background $dur-fast $ease;
 
   &:hover {
-    color: $text-on-dark;
-    background: rgba(255, 255, 255, 0.06);
+    color: $purple-royal;
+    background: $purple-light;
   }
 }
 
 .active {
-  color: $text-on-dark;
-  background: rgba($violet-500, 0.18);
+  color: $purple-royal;
+  background: $purple-light;
+  font-weight: $fw-semibold;
 }
 
 .desktopActions {
@@ -76,14 +85,8 @@
 }
 
 .menuButton {
+  @include icon-button($control-md);
   margin-left: auto;
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
 
   svg {
     width: 20px;
@@ -96,16 +99,17 @@
 }
 
 .mobileMenu {
+  @include card;
   margin: 0 12px 12px;
-  padding: 12px;
+  padding: 10px;
   border-radius: $radius-lg;
-  @include glass-dark(0.08);
-  background: rgba(20, 14, 52, 0.95);
-  animation: drop 0.25s $ease;
+  box-shadow: $shadow-lg;
+  animation: drop $dur $ease;
 
   nav {
     display: flex;
     flex-direction: column;
+    gap: 2px;
   }
 
   @include up($bp-md) {
@@ -114,14 +118,17 @@
 }
 
 .mobileLink {
-  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 14px;
   border-radius: $radius-md;
-  font-weight: 500;
-  color: $text-muted-dark;
+  font-weight: $fw-medium;
+  color: $text-secondary;
 
   &:hover {
-    color: $text-on-dark;
-    background: rgba(255, 255, 255, 0.06);
+    color: $purple-royal;
+    background: $purple-light;
   }
 }
 
@@ -129,7 +136,7 @@
   display: flex;
   gap: 10px;
   padding: 12px 4px 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid $border;
   margin-top: 8px;
 
   > * {
@@ -142,9 +149,8 @@
 }
 
 .footer {
-  margin-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(7, 5, 19, 0.55);
+  border-top: 1px solid $border;
+  background: $bg-primary;
 }
 
 .footerInner {
@@ -160,7 +166,98 @@
   }
 
   @include up($bp-md) {
-    grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include up($bp-lg) {
+    grid-template-columns: 1.7fr repeat(4, 1fr);
+  }
+}
+
+.footerBrand {
+  @include down($bp-lg) {
+    grid-column: 1 / -1;
+  }
+}
+
+.footerContact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a,
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: $fs-sm;
+    color: $text-secondary;
+    overflow-wrap: anywhere;
+    transition: color $dur-fast $ease;
+  }
+
+  a:hover {
+    color: $purple-primary;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $purple-primary;
+  }
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a,
+  .socialSoon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: $purple-primary;
+    background: $bg-secondary;
+    border: 1px solid $border;
+    transition:
+      color $dur-fast $ease,
+      background $dur-fast $ease,
+      border-color $dur-fast $ease;
+  }
+
+  a:hover {
+    color: $text-white;
+    background: $purple-primary;
+    border-color: $purple-primary;
+  }
+
+  a:focus-visible {
+    @include focus-ring;
+  }
+
+  .socialSoon {
+    opacity: 0.55;
+    cursor: default;
+  }
+}
+
+.footerLegal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  a {
+    color: $text-muted;
+    transition: color $dur-fast $ease;
+
+    &:hover {
+      color: $purple-primary;
+    }
   }
 }
 
@@ -169,11 +266,12 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 14px;
+  color: $purple-deep;
 
   p {
     max-width: 340px;
-    font-size: 14px;
-    color: $text-muted-dark;
+    font-size: $fs-base;
+    color: $text-secondary;
   }
 }
 
@@ -184,7 +282,9 @@
   min-width: 0;
 
   h4 {
-    font-size: 14px;
+    font-size: $fs-base;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
     margin-bottom: 4px;
   }
 
@@ -193,17 +293,19 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
-    color: $text-muted-dark;
+    font-size: $fs-base;
+    color: $text-secondary;
     overflow-wrap: anywhere;
+    transition: color $dur-fast $ease;
   }
 
   a:hover {
-    color: $violet-200;
+    color: $purple-primary;
   }
 
   svg {
     flex-shrink: 0;
+    color: $purple-primary;
   }
 }
 
@@ -215,9 +317,9 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px;
-  font-size: 13px;
-  color: rgba(228, 223, 255, 0.5);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: $fs-sm;
+  color: $text-muted;
+  border-top: 1px solid $border;
 }
 
 @keyframes drop {

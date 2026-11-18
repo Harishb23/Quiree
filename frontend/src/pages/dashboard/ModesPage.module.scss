@@ -10,14 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  transition:
-    transform 0.25s $ease,
-    border-color 0.25s $ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    border-color: rgba($violet-300, 0.3);
-  }
+  @include card-hover;
 }
 
 .top {
@@ -31,7 +24,9 @@
   min-width: 0;
 
   h3 {
-    font-size: 16px;
+    font-size: $fs-md;
+    font-weight: $fw-semibold;
+    color: $purple-deep;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -40,7 +35,7 @@
   span {
     display: block;
     font-size: 13px;
-    color: $text-muted-dark;
+    color: $text-secondary;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -59,5 +54,5 @@
   align-items: center;
   gap: 6px;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid $border;
 }
