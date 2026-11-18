@@ -1,0 +1,1 @@
+const o="_page_636wo_1",n="_footer_636wo_6",_="_center_636wo_31",s="_missing_636wo_40",t="_loading_636wo_78",e="_loadingCard_636wo_86",a={page:o,footer:n,center:_,missing:s,loading:t,loadingCard:e};export{a as s};

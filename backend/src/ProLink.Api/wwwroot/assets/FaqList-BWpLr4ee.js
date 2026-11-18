@@ -1,0 +1,1 @@
+import{j as s}from"./index-hWwRcYiO.js";import{s as i}from"./Marketing.module-B95Y1jjZ.js";import{C as e}from"./chevron-down-Cle4lQ8l.js";function m({items:a}){return s.jsx("div",{className:i.faq,children:a.map(r=>s.jsxs("details",{children:[s.jsxs("summary",{children:[r.q,s.jsx(e,{size:18,"aria-hidden":!0})]}),s.jsx("p",{children:r.a})]},r.q))})}export{m as F};

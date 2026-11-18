@@ -1,0 +1,1 @@
+import{r as e}from"./index-hWwRcYiO.js";function s({onCredential:t,text:n="continue_with"}){e.useRef(null);const u=e.useRef(t);u.current=t;const[r,o]=e.useState(!1);return e.useEffect(()=>{},[n]),null}function a(){return null}export{a as G,s as a};
