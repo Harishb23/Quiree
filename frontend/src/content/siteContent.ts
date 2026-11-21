@@ -37,7 +37,7 @@ export const features: FeatureItem[] = [
   {
     icon: 'layers',
     title: 'Multiple Profiles',
-    description: 'Run separate identities — developer, consultant, founder or your shop — from one account, each with its own content and look.',
+    description: 'Run separate professional identities — developer, consultant, founder — from one personal account, each with its own content and look.',
   },
   {
     icon: 'qr',
@@ -190,7 +190,7 @@ export const footerLinks = {
     { label: 'Business Profiles', to: '/#solutions' },
     { label: 'Business Categories', to: '/#categories' },
     { label: 'Analytics', to: '/#analytics' },
-    { label: 'Create Business Profile', to: '/register' },
+    { label: 'Create Business Profile', to: '/register?type=business' },
   ],
   support: [
     { label: 'Contact Support', to: '/contact' },

@@ -1,0 +1,29 @@
+@use '../../styles/tokens' as *;
+
+.done {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
+  color: $success;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.steps {
+  display: grid;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding-left: 20px;
+  font-size: $fs-sm;
+  color: $text-secondary;
+
+  strong {
+    color: $text-primary;
+  }
+}

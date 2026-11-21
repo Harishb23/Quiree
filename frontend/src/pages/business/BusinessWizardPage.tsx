@@ -213,7 +213,7 @@ function BusinessWizard({ business, onSaved }: { business: BusinessDetail | null
           <h1>{isCreate ? 'Create your business profile' : 'Business profile'}</h1>
           <p>
             {isCreate
-              ? 'A separate digital storefront for your shop or service, with its own QR code. Your personal profile stays as it is.'
+              ? 'A digital storefront for your shop or service, with its own QR code.'
               : 'Update what customers see on your storefront. Changes go live as soon as you save a published profile.'}
           </p>
         </div>

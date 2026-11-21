@@ -4,6 +4,7 @@ import { ArrowRight, LayoutDashboard, Mail, MapPin, Menu, Phone, X } from 'lucid
 import { Logo } from '../components/ui/Logo'
 import { Button } from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
+import { homeFor } from '../lib/accounts'
 import { config } from '../config'
 import { company, footerLinks } from '../content/siteContent'
 import { socialLinks } from '../content/landingContent'
@@ -19,7 +20,7 @@ const navItems = [
 ]
 
 export default function PublicLayout() {
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -54,7 +55,7 @@ export default function PublicLayout() {
   const authenticated = status === 'authenticated'
 
   const actions = authenticated ? (
-    <Button to="/dashboard" size="sm" icon={<LayoutDashboard />}>
+    <Button to={homeFor(user?.accountType)} size="sm" icon={<LayoutDashboard />}>
       Dashboard
     </Button>
   ) : (
@@ -156,7 +157,7 @@ export default function PublicLayout() {
                 )
               })}
             </ul>
-            <Button to={authenticated ? '/dashboard' : '/register'} size="sm" iconRight={<ArrowRight />}>
+            <Button to={authenticated ? homeFor(user?.accountType) : '/register'} size="sm" iconRight={<ArrowRight />}>
               {authenticated ? 'Go to Dashboard' : 'Create your profile'}
             </Button>
           </div>

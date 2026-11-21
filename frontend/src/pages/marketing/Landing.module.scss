@@ -1392,3 +1392,11 @@
     animation: none !important;
   }
 }
+
+// Doubled class beats the hero paragraph rule (.heroCopy p) from Marketing.module.scss.
+.heroAccountNote.heroAccountNote {
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $text-secondary;
+}

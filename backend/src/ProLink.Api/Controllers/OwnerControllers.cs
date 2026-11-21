@@ -102,14 +102,14 @@ public sealed class QrController(IQrCodeService qr) : ControllerBase
     public async Task<IActionResult> Png([FromQuery] int size = 600, [FromQuery] bool download = false, CancellationToken ct = default)
     {
         var bytes = await qr.GetPngForUserAsync(User.GetUserId(), Math.Clamp(size, 150, 1200), ct);
-        return download ? File(bytes, "image/png", "prolink-qr.png") : File(bytes, "image/png");
+        return download ? File(bytes, "image/png", "quiree-qr.png") : File(bytes, "image/png");
     }
 
     [HttpGet("svg")]
     public async Task<IActionResult> Svg([FromQuery] bool download = false, CancellationToken ct = default)
     {
         var bytes = System.Text.Encoding.UTF8.GetBytes(await qr.GetSvgForUserAsync(User.GetUserId(), ct));
-        return download ? File(bytes, "image/svg+xml", "prolink-qr.svg") : File(bytes, "image/svg+xml");
+        return download ? File(bytes, "image/svg+xml", "quiree-qr.svg") : File(bytes, "image/svg+xml");
     }
 }
 

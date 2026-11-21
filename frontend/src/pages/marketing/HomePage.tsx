@@ -48,6 +48,7 @@ import {
 } from '../../content/landingContent'
 import { sampleModes, sampleOwner } from '../../content/sampleProfile'
 import { initials } from '../../lib/format'
+import { homeFor } from '../../lib/accounts'
 import { CtaBanner, DecorativeQr, FeatureIcon, PlanGrid, SectionHeading } from './shared'
 import { FaqList } from './FaqList'
 import styles from './Marketing.module.scss'
@@ -55,10 +56,12 @@ import l from './Landing.module.scss'
 
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(' ')
 
+/** Personal and business are separate accounts: sign-up links pick the type; signed-in users go to their own dashboard. */
 function useStartTarget() {
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   const authed = status === 'authenticated'
-  return { authed, to: authed ? '/dashboard' : '/register' }
+  const home = homeFor(user?.accountType)
+  return { authed, home, personal: authed ? home : '/register', business: authed ? home : '/register?type=business' }
 }
 
 // Illustrative sample business used in visuals only (clearly labelled "Sample" wherever shown).
@@ -144,7 +147,7 @@ function HeroVisual() {
       <div className={l.heroQrBadge}>
         <DecorativeQr size={84} />
         <span>
-          <ScanLine /> One QR for both
+          <ScanLine /> A permanent QR for each
         </span>
       </div>
     </div>
@@ -152,7 +155,7 @@ function HeroVisual() {
 }
 
 function Hero() {
-  const { authed, to } = useStartTarget()
+  const { authed, home } = useStartTarget()
   return (
     <section className={cx(styles.hero, l.hero)} aria-labelledby="hero-title">
       <div className={styles.heroCopy}>
@@ -178,13 +181,22 @@ function Hero() {
           </li>
         </ul>
         <div className={styles.heroActions}>
-          <Button to={to} size="lg" iconRight={<ArrowRight />}>
-            {authed ? 'Open Dashboard' : 'Get Started'}
-          </Button>
-          <Button href="#features" variant="outline" size="lg" icon={<Sparkles />}>
-            Explore Features
-          </Button>
+          {authed ? (
+            <Button to={home} size="lg" iconRight={<ArrowRight />}>
+              Open Dashboard
+            </Button>
+          ) : (
+            <>
+              <Button to="/register" size="lg" icon={<UserRound />} iconRight={<ArrowRight />}>
+                Personal profile
+              </Button>
+              <Button to="/register?type=business" variant="outline" size="lg" icon={<Store />} iconRight={<ArrowRight />}>
+                Business profile
+              </Button>
+            </>
+          )}
         </div>
+        {!authed && <p className={l.heroAccountNote}>Personal and business are separate accounts, each with its own login and dashboard.</p>}
       </div>
       <HeroVisual />
     </section>
@@ -254,14 +266,14 @@ function OfferingCard({
 }
 
 function PersonalVsBusiness() {
-  const { to } = useStartTarget()
+  const { personal, business } = useStartTarget()
   return (
     <section className={styles.section} id="solutions" aria-labelledby="solutions-title">
       <SectionHeading
         id="solutions-title"
         eyebrow="Two Experiences, One Platform"
         title="Built for individuals and the businesses they run"
-        subtitle="Choose a personal profile, a business profile, or use both under the same account."
+        subtitle="Personal and business profiles are separate accounts — each with its own login, dashboard and QR code. Need both? Register each with a different email."
       />
       <div className={l.offeringGrid}>
         <OfferingCard
@@ -269,7 +281,7 @@ function PersonalVsBusiness() {
           icon={UserRound}
           data={offerings.personal}
           cta={
-            <Button to={to} variant="outline" iconRight={<ArrowRight />}>
+            <Button to={personal} variant="outline" iconRight={<ArrowRight />}>
               Create personal profile
             </Button>
           }
@@ -279,7 +291,7 @@ function PersonalVsBusiness() {
           icon={BriefcaseBusiness}
           data={offerings.business}
           cta={
-            <Button to={to} iconRight={<ArrowRight />}>
+            <Button to={business} iconRight={<ArrowRight />}>
               Create business profile
             </Button>
           }
@@ -799,7 +811,7 @@ export default function HomePage() {
       <Faq />
       <CtaBanner
         title="Create your digital identity today"
-        subtitle="Launch a personal profile, a business storefront, or both — and share everything with one permanent QR code."
+        subtitle="Launch a personal profile or a business storefront — each with its own account and a permanent QR code that never needs reprinting."
         secondary={{ label: 'View pricing', to: '/pricing' }}
       />
     </>

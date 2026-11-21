@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { onUnauthorized } from '../api/client'
 import { authApi } from '../api/endpoints'
 import { tokenStorage } from '../lib/tokenStorage'
+import { clearWidget } from '../lib/nativeWidget'
 import type { AccountType, AuthResponse, CurrentUser, RegisterRequest } from '../types/api'
 
 type Status = 'loading' | 'authenticated' | 'anonymous'
@@ -68,6 +69,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           /* token may already be invalid - logging out locally is what matters */
         }
         tokenStorage.clear()
+        // Don't leave this account's QR on the phone's home-screen widget (Quiree app only).
+        void clearWidget()
         setUser(null)
         setStatus('anonymous')
       },

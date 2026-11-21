@@ -8,6 +8,7 @@ import { formatDate } from '../../lib/format'
 import { svgToPng } from '../../lib/qrCard'
 import { copyToClipboard, downloadBlob, shareLink } from '../../lib/share'
 import { BrandedQr } from '../../components/qr/BrandedQr'
+import { HomeWidgetCard } from '../../components/qr/HomeWidgetCard'
 import { Button } from '../../components/ui/Button'
 import { Alert, Badge, ErrorState, PageLoader } from '../../components/ui/Feedback'
 import { CardHeader, GlassCard, Toggle } from '../../components/ui/Surface'
@@ -150,6 +151,7 @@ export default function BusinessQrPage() {
               </div>
             </div>
 
+            <HomeWidgetCard qr={{ url: q.qrUrl, title: business.name, openPath: `/dashboard/business/${business.id}/qr` }} />
             <GlassCard>
               <CardHeader title="Storefront link" subtitle="The page your QR code opens." />
               <div className={styles.link}>

@@ -1,4 +1,4 @@
-/* ProLink ID service worker — makes public profiles installable and available offline after a visit. */
+/* Quiree service worker — makes public profiles installable and available offline after a visit. */
 const VERSION = 'v3'
 const STATIC_CACHE = `prolink-static-${VERSION}`
 const RUNTIME_CACHE = `prolink-runtime-${VERSION}`

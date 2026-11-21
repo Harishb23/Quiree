@@ -1,4 +1,4 @@
-# ProLink ID — Multi-Mode Digital Profile & Smart QR Platform
+# Quiree — Personal & Business Digital Profiles with Smart QR Codes
 
 One account, many professional identities (HR Manager, Developer, Entrepreneur…), each with its own resume-style
 profile and template — all shared through **one permanent QR code** and URL (`/p/{username}`).
@@ -46,7 +46,7 @@ in production (`Section__Key`).
 |---|---|
 | `ConnectionStrings:DefaultConnection` | SQL Server |
 | `Jwt:SigningKey` | **Required**, ≥ 32 bytes random. The dev key in `appsettings.Development.json` must not be used in production |
-| `App:PublicBaseUrl` | Origin baked into every permanent URL / QR code (e.g. `https://prolink.id`). **Set it correctly before the first real user registers — it is stored permanently.** |
+| `App:PublicBaseUrl` | Origin baked into every permanent URL / QR code (e.g. `https://quiree.runasp.net`). **Set it correctly before the first real user registers — it is stored permanently.** |
 | `App:FrontendBaseUrl` | Used in password-reset links |
 | `App:AdminEmails` | Accounts with these emails get the Admin role (can list enquiries) |
 | `GoogleAuth:ClientId` | Google OAuth client id (also set `VITE_GOOGLE_CLIENT_ID` in the frontend) |

@@ -1,3 +1,4 @@
+import { config } from '../../config'
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Copy, EyeOff, Link2, LogOut, Rocket, Trash2, UserPlus } from 'lucide-react'
@@ -280,7 +281,7 @@ function TeamCard() {
             placeholder="colleague@example.com"
             value={email}
             error={error ?? undefined}
-            hint="They need a ProLink account with this email."
+            hint={`They need a ${config.appName} business account with this email.`}
             onChange={(e) => setEmail(e.target.value)}
           />
           <SelectField
@@ -347,7 +348,7 @@ function DangerZone() {
       <div className={styles.dangerRow}>
         <p>
           Permanently deletes this business profile, its products, services, offers, gallery, enquiries, reviews and analytics. The QR code stops
-          working. Your personal profile is not affected. This can’t be undone.
+          working. This can’t be undone.
         </p>
         <Button variant="danger" icon={<Trash2 />} onClick={() => setOpen(true)}>
           Delete business

@@ -31,7 +31,7 @@ export default function AboutPage() {
           <div className={styles.statGrid}>
             <div>
               <strong>Multi-mode</strong>
-              <span>Independent identities, one account</span>
+              <span>Independent identities, one personal account</span>
             </div>
             <div>
               <strong>Permanent</strong>

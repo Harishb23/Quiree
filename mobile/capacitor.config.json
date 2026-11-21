@@ -1,0 +1,13 @@
+{
+  "appId": "com.quiree.app",
+  "appName": "Quiree",
+  "webDir": "www",
+  "server": {
+    "url": "https://quiree.runasp.net",
+    "androidScheme": "https",
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

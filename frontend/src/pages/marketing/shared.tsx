@@ -17,6 +17,7 @@ import { Badge, ErrorState, Spinner } from '../../components/ui/Feedback'
 import { subscriptionApi } from '../../api/endpoints'
 import { useAsync } from '../../hooks/useAsync'
 import { useAuth } from '../../context/AuthContext'
+import { homeFor } from '../../lib/accounts'
 import { formatMoney, initials } from '../../lib/format'
 import { founder, type FeatureItem } from '../../content/siteContent'
 import type { Plan } from '../../types/api'
@@ -67,9 +68,10 @@ function durationLabel(days: number) {
 }
 
 function PlanCard({ plan, highlighted }: { plan: Plan; highlighted: boolean }) {
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   const isFree = plan.priceInPaise <= 0
-  const target = status === 'authenticated' ? '/dashboard/subscription' : '/register'
+  // Plans apply to personal accounts; business accounts are sent to their own dashboard.
+  const target = status === 'authenticated' ? (user?.accountType === 'Business' ? homeFor('Business') : '/dashboard/subscription') : '/register'
   const perks = [
     `Up to ${plan.maxModes} professional modes`,
     plan.allowsPremiumTemplates ? 'All 10 premium templates' : 'Essential glass templates',
@@ -256,7 +258,7 @@ export function CtaBanner({
   subtitle: string
   secondary?: { label: string; to: string }
 }) {
-  const { status } = useAuth()
+  const { status, user } = useAuth()
   return (
     <section className={styles.section} aria-label={title}>
       <div className={styles.cta}>
@@ -265,7 +267,7 @@ export function CtaBanner({
           <p>{subtitle}</p>
         </div>
         <div className={styles.ctaActions}>
-          <Button to={status === 'authenticated' ? '/dashboard' : '/register'} size="lg" variant="premium">
+          <Button to={status === 'authenticated' ? homeFor(user?.accountType) : '/register'} size="lg" variant="premium">
             {status === 'authenticated' ? 'Open Dashboard' : 'Get Started Now'}
           </Button>
           {secondary && (

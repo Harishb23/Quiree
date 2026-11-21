@@ -4,11 +4,11 @@ public sealed class AppOptions
 {
     public const string SectionName = "App";
 
-    /// <summary>Public origin used to build permanent profile URLs, e.g. https://prolink.id</summary>
+    /// <summary>Public origin used to build permanent profile URLs, e.g. https://quiree.runasp.net</summary>
     public string PublicBaseUrl { get; set; } = "http://localhost:5173";
     /// <summary>Origin of the frontend (used for password reset links).</summary>
     public string FrontendBaseUrl { get; set; } = "http://localhost:5173";
-    public string BrandName { get; set; } = "ProLink ID";
+    public string BrandName { get; set; } = "Quiree";
     /// <summary>Accounts registered with these emails receive the Admin role.</summary>
     public string[] AdminEmails { get; set; } = [];
     public int PasswordResetTokenMinutes { get; set; } = 60;
@@ -52,7 +52,7 @@ public sealed class SmtpOptions
     public string UserName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string FromEmail { get; set; } = "no-reply@prolink.id";
-    public string FromName { get; set; } = "ProLink ID";
+    public string FromName { get; set; } = "Quiree";
 }
 
 public sealed class SubscriptionOptions

@@ -8,6 +8,8 @@ import { copyToClipboard, downloadBlob, shareLink } from '../../lib/share'
 import { svgToPng } from '../../lib/qrCard'
 import { config } from '../../config'
 import { BrandedQr, BrandedQrTile } from '../../components/qr/BrandedQr'
+import { HomeWidgetCard } from '../../components/qr/HomeWidgetCard'
+import { useAuth } from '../../context/AuthContext'
 import { Button } from '../../components/ui/Button'
 import { Alert, Badge, ErrorState, PageLoader } from '../../components/ui/Feedback'
 import { CardHeader, GlassCard } from '../../components/ui/Surface'
@@ -24,6 +26,7 @@ const NEVER_CHANGES = [
 
 export default function QrCodePage() {
   const toast = useToast()
+  const { user } = useAuth()
   const info = useAsync(() => qrApi.info())
   const brandedRef = useRef<SVGSVGElement>(null)
   const tileRef = useRef<SVGSVGElement>(null)
@@ -109,6 +112,7 @@ export default function QrCodePage() {
         </GlassCard>
 
         <div className={styles.stack}>
+          <HomeWidgetCard qr={{ url: q.permanentUrl, title: user?.fullName ?? q.publicSlug, openPath: `/q/${q.publicSlug}` }} />
           <GlassCard>
             <CardHeader title="Put your QR on your phone’s home screen" />
             <ol className={local.steps}>

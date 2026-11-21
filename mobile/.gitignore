@@ -1,0 +1,5 @@
+node_modules/
+# Release signing secrets — never commit
+*.jks
+*.keystore
+android/keystore.properties

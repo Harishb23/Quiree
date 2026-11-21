@@ -1,4 +1,4 @@
-import { ExternalLink, Plus, QrCode, Settings2, Store, UserRound } from 'lucide-react'
+import { ExternalLink, Plus, QrCode, Settings2, Store } from 'lucide-react'
 import { businessApi } from '../../api/businessApi'
 import { useAsync } from '../../hooks/useAsync'
 import { assetUrl } from '../../lib/url'
@@ -41,11 +41,11 @@ export default function BusinessListPage() {
           <div className={styles.intro}>
             <div className={styles.introCard}>
               <span>
-                <UserRound />
+                <QrCode />
               </span>
               <div>
-                <h3>Your personal profile</h3>
-                <p>Your professional identity: resume, skills and contact card. It stays exactly as it is.</p>
+                <h3>QR codes &amp; enquiries</h3>
+                <p>A permanent QR code for your counter, packaging and posters, plus customer enquiries and reviews in one place.</p>
               </div>
             </div>
             <div className={[styles.introCard, styles.introGold].join(' ')}>

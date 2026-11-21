@@ -7,7 +7,7 @@ export const offerings = {
     tagline: 'For professionals, freelancers and creators',
     description: 'A complete digital identity that replaces paper cards and scattered links.',
     points: [
-      'Multiple professional identities under one account',
+      'Multiple professional identities in one personal account',
       'Social links, website and contact details',
       'Resume with experience, skills, education and certifications',
       'Portfolio of projects and achievements',
@@ -47,7 +47,7 @@ export type BusinessCategoryKey = (typeof businessCategories)[number]['key']
 export const landingSteps = [
   {
     title: 'Create your profile',
-    description: 'Sign up and build a personal profile, a business profile, or both — no design skills needed.',
+    description: 'Sign up for a personal or a business account and build your profile — no design skills needed.',
   },
   {
     title: 'Get one permanent QR code',
@@ -94,6 +94,10 @@ export const homeFaq = [
   {
     q: 'What is a business profile?',
     a: 'A mobile storefront for your shop or service: business details, opening hours, products, services, offers, location and an enquiry form customers can use right after scanning.',
+  },
+  {
+    q: 'Can I have both a personal and a business profile?',
+    a: 'Yes. They are separate accounts, each with its own login, dashboard and QR code. Register the second one with a different email address.',
   },
   {
     q: 'Do people need an app to scan my QR code?',

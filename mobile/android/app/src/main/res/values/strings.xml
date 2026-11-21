@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Quiree</string>
+    <string name="title_activity_main">Quiree</string>
+    <string name="package_name">com.quiree.app</string>
+    <string name="custom_url_scheme">com.quiree.app</string>
+    <string name="widget_label">Quiree QR</string>
+    <string name="widget_description">Your Quiree QR code, ready to scan from the home screen.</string>
+    <string name="widget_empty_title">Open Quiree</string>
+    <string name="widget_empty_body">Tap to choose which QR code to show here.</string>
+    <string name="widget_qr_description">QR code for %1$s</string>
+    <string name="widget_preview_title">Your QR code</string>
+    <string name="widget_preview_description">Sample QR code</string>
+</resources>
